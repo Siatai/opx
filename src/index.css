@@ -47,12 +47,16 @@ html,
 body {
   width: 100%;
   overflow-x: hidden;
+  background: var(--bg);
+  color-scheme: dark;
 }
 
 body {
   font-family: var(--font-body);
   font-size: 20px;
   color: var(--ink);
+  min-height: 100svh;
+  overscroll-behavior-y: none;
   background:
     radial-gradient(1200px 640px at 5% -10%, rgba(52, 255, 138, 0.18), transparent 60%),
     radial-gradient(900px 600px at 92% 2%, rgba(255, 255, 255, 0.08), transparent 55%),
@@ -1059,4 +1063,18 @@ footer {
   section { padding: 52px 16px; }
   .section-title { margin-bottom: 22px; }
   .cta-band { padding: 28px; }
+
+  .tokenomics-chart {
+    perspective: none;
+    transform: none;
+  }
+
+  .token-chart {
+    transform: none;
+    filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px rgba(52, 255, 138, 0.25));
+  }
+
+  .tokenomics-chart:hover .token-chart {
+    transform: none;
+  }
 }
