@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPX Token | OPAI Ecosystem</title>
+  <meta name="description" content="OPX is the utility token for OPAI, an AI-powered digital ecosystem built for smart, transparent growth." />
+  <link rel="icon" href="assets/brand.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/brand.svg" sizes="180x180" />
+  <meta property="og:title" content="OPX Token" />
+  <meta property="og:description" content="OPX is the utility token for OPAI, an AI-powered digital ecosystem built for smart, transparent growth." />
+  <meta property="og:image" content="assets/brand.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/brand.svg" />
+  <meta property="og:type" content="website" />
+  <style>
+    @font-face {
+      font-family: "Sharkon Demo";
+      src: url("assets/fonts/Sharkon Demo.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Zen Dots";
+      src: url("assets/fonts/Zen_Dots/ZenDots-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "BankGothic";
+      src: url("assets/fonts/BankGothic/bank gothic medium bt.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Nevera";
+      src: url("assets/fonts/Nevera-Regular.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Neuropol";
+      src: url("assets/fonts/Neuropol.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #040911;
+      --bg-2: #0a1528;
+      --panel: rgba(7, 16, 32, 0.86);
+      --panel-strong: rgba(9, 18, 36, 0.92);
+      --ink: #f4fbff;
+      --muted: rgba(244, 251, 255, 0.68);
+      --neon: #34ff8a;
+      --neon-2: #1bc86a;
+      --line: rgba(52, 255, 138, 0.22);
+      --shadow: 0 24px 70px -40px rgba(10, 255, 120, 0.35);
+      --shadow-soft: 0 12px 30px -18px rgba(10, 255, 120, 0.25);
+      --header-h: 96px;
+      --font-display: "Nevera", "Sharkon Demo", sans-serif;
+      --font-body: "BankGothic", "Segoe UI", "Arial", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 22px;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 640px at 5% -10%, rgba(52, 255, 138, 0.18), transparent 60%),
+        radial-gradient(900px 600px at 92% 2%, rgba(255, 255, 255, 0.08), transparent 55%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 45%, #050c18 85%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      overflow-x: clip;
+      padding-top: var(--header-h);
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-grid {
+      background: url("assets/elite/pattern-microgrid.png") center/cover no-repeat;
+      opacity: 0.12;
+      mix-blend-mode: screen;
+    }
+
+    .bg-lines {
+      background:
+        linear-gradient(transparent 0%, rgba(52, 255, 138, 0.08) 48%, transparent 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 90px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 90px);
+      opacity: 0.35;
+      mix-blend-mode: screen;
+    }
+
+    .art-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .contour {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Cpath d='M40 140 C160 40 330 40 450 140 C570 240 740 240 860 140' fill='none' stroke='rgba(52,255,138,0.22)' stroke-width='2'/%3E%3Cpath d='M20 220 C200 120 320 120 460 220 C600 320 740 320 880 220' fill='none' stroke='rgba(52,255,138,0.14)' stroke-width='2'/%3E%3Cpath d='M30 320 C200 240 340 240 470 320 C600 400 760 400 880 320' fill='none' stroke='rgba(52,255,138,0.10)' stroke-width='2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 110% 18%;
+      background-size: 75%;
+      opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+
+    .vector-orb {
+      position: fixed;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(52, 255, 138, 0.35), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(120, 230, 255, 0.18), transparent 58%);
+      filter: blur(2px);
+      opacity: 0.65;
+    }
+
+    .vector-orb.one { top: -120px; right: -140px; }
+    .vector-orb.two { bottom: -160px; left: -120px; }
+
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(5, 12, 24, 0.78);
+      border-bottom: 1px solid rgba(52, 255, 138, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    header.header--hidden {
+      transform: translateY(-110%);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      font-size: 16px;
+      color: var(--neon);
+      line-height: 1;
+    }
+
+    .logo-badge {
+      width: 84px;
+      height: 64px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(52, 255, 138, 0.95), rgba(27, 200, 106, 0.85));
+      color: #03140b;
+      box-shadow: 0 18px 34px rgba(52, 255, 138, 0.28);
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      flex: 0 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-badge::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 12px;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120' viewBox='0 0 200 120'%3E%3Cpath d='M0 30 C20 18 40 18 60 30 C80 42 100 42 120 30 C140 18 160 18 180 30' fill='none' stroke='rgba(255,255,255,0.35)' stroke-width='2'/%3E%3Cpath d='M0 70 C22 58 44 58 66 70 C88 82 110 82 132 70 C154 58 176 58 198 70' fill='none' stroke='rgba(255,255,255,0.28)' stroke-width='2'/%3E%3Cpath d='M0 100 C20 90 40 90 60 100 C80 110 100 110 120 100 C140 90 160 90 180 100' fill='none' stroke='rgba(255,255,255,0.22)' stroke-width='2'/%3E%3C/svg%3E") center/cover no-repeat;
+      mix-blend-mode: soft-light;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .logo-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      white-space: nowrap;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: var(--neon);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(52, 255, 138, 0.4);
+      background: rgba(5, 12, 24, 0.6);
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(52, 255, 138, 0.95), rgba(27, 200, 106, 0.8));
+      color: #04120b;
+      border-color: rgba(52, 255, 138, 0.8);
+      box-shadow: 0 18px 38px rgba(52, 255, 138, 0.32);
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 7px 24px 70px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--neon);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(52, 255, 138, 0.25);
+      background: rgba(6, 18, 24, 0.7);
+      box-shadow: var(--shadow-soft);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.8vw, 52px);
+      line-height: 1.08;
+      letter-spacing: 0.01em;
+      margin: 18px 0 20px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 540px;
+      font-size: 15px;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-stats {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(6, 14, 28, 0.75);
+      border: 1px solid rgba(52, 255, 138, 0.25);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat strong {
+      display: block;
+      font-family: var(--font-display);
+      color: var(--neon);
+      font-size: 16px;
+    }
+
+    .stat span {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 0;
+      max-width: 520px;
+      margin-left: auto;
+      border-radius: 32px;
+      overflow: hidden;
+      background: linear-gradient(160deg, rgba(7, 16, 32, 0.95), rgba(5, 12, 24, 0.75));
+      border: 1px solid rgba(52, 255, 138, 0.25);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(140deg, rgba(15, 35, 55, 0.92) 0%, rgba(7, 16, 32, 0.75) 55%, rgba(7, 16, 32, 0.92) 100%),
+        url("assets/elite/hero-ribbon.png") center/cover no-repeat,
+        linear-gradient(120deg, rgba(120, 200, 255, 0.22) 0%, transparent 55%),
+        repeating-linear-gradient(
+          135deg,
+          rgba(100, 180, 255, 0.22) 0px,
+          rgba(100, 180, 255, 0.22) 36px,
+          transparent 36px,
+          transparent 72px
+        ),
+        repeating-linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.18) 0px,
+          rgba(255, 255, 255, 0.18) 3px,
+          transparent 3px,
+          transparent 72px
+        ),
+        repeating-linear-gradient(
+          45deg,
+          rgba(60, 130, 255, 0.3) 0px,
+          rgba(60, 130, 255, 0.3) 28px,
+          transparent 28px,
+          transparent 56px
+        ),
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.14) 0px,
+          rgba(255, 255, 255, 0.14) 2px,
+          transparent 2px,
+          transparent 56px
+        );
+      opacity: 0.85;
+      mix-blend-mode: screen;
+    }
+
+    .section-abstract {
+      position: relative;
+    }
+
+    .section-abstract::before {
+      content: "";
+      position: absolute;
+      inset: -40px 0 auto;
+      height: 220px;
+      background:
+        conic-gradient(from 210deg, rgba(52, 255, 138, 0.18), transparent 30%, rgba(120, 230, 255, 0.18), transparent 65%, rgba(52, 255, 138, 0.16)),
+        radial-gradient(circle at 20% 10%, rgba(52, 255, 138, 0.2), transparent 55%);
+      opacity: 0.65;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .section-abstract::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: 40px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(52, 255, 138, 0.25);
+      box-shadow: 0 0 24px rgba(52, 255, 138, 0.22);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(7, 16, 32, 0.85), transparent 60%),
+        radial-gradient(circle at 85% 80%, rgba(52, 255, 138, 0.15), transparent 50%);
+    }
+
+    .hero-panel-content {
+      position: relative;
+      z-index: 2;
+      padding: 26px 24px 20px;
+    }
+
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+    }
+
+    .panel-desc {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 420px;
+    }
+
+    .panel-strip {
+      margin: 16px 0 6px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(52, 255, 138, 0.8), transparent);
+      box-shadow: 0 0 12px rgba(52, 255, 138, 0.35);
+      border-radius: 999px;
+    }
+
+    .panel-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .panel-card {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(160deg, rgba(6, 14, 28, 0.9), rgba(6, 14, 28, 0.5));
+      border: 1px solid rgba(52, 255, 138, 0.22);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(52, 255, 138, 0.15);
+      color: var(--neon);
+      box-shadow: inset 0 0 0 1px rgba(52, 255, 138, 0.2);
+    }
+
+    .panel-card h4 {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .panel-card h4.narrow {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .panel-card p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .panel-coin {
+      position: absolute;
+      width: 130px;
+      top: -30px;
+      left: -30px;
+      opacity: 0.75;
+    }
+
+    section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 52px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 4vw, 42px);
+      color: var(--ink);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .section-title p {
+      margin: 12px auto 0;
+      max-width: 640px;
+      color: rgba(244, 251, 255, 0.78);
+      font-size: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .longform {
+      display: grid;
+      gap: 18px;
+    }
+
+    .long-card {
+      background:
+        linear-gradient(145deg, rgba(7, 18, 32, 0.92), rgba(5, 12, 24, 0.78));
+      border: 1px solid rgba(52, 255, 138, 0.28);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .long-card::before {
+      content: "";
+      position: absolute;
+      inset: -40% 50% auto -20%;
+      height: 180px;
+      background: radial-gradient(circle, rgba(52, 255, 138, 0.18), transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .long-card h3 {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 10px;
+    }
+
+    .long-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .long-card ul {
+      margin-top: 10px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .long-card li { margin-bottom: 6px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      border: 1px solid rgba(52, 255, 138, 0.35);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neon);
+      background: rgba(6, 14, 28, 0.6);
+    }
+
+    .card {
+      background:
+        linear-gradient(150deg, rgba(8, 18, 36, 0.95), rgba(6, 14, 28, 0.78));
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid rgba(52, 255, 138, 0.3);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -60% 20% auto -20%;
+      height: 200px;
+      background: radial-gradient(circle, rgba(52, 255, 138, 0.2), transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .card .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(52, 255, 138, 0.12);
+      color: var(--neon);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .flow-step {
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid rgba(52, 255, 138, 0.32);
+      background: linear-gradient(160deg, rgba(7, 16, 32, 0.92), rgba(5, 12, 24, 0.7));
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -60% -20%;
+      height: 200px;
+      background: radial-gradient(circle, rgba(120, 230, 255, 0.18), transparent 70%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .flow-step strong {
+      font-family: var(--font-display);
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--neon);
+    }
+
+    .flow-step p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .roadmap {
+      display: grid;
+      gap: 18px;
+    }
+
+    .roadmap-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(52, 255, 138, 0.28);
+      background: linear-gradient(150deg, rgba(9, 18, 36, 0.94), rgba(6, 14, 28, 0.78));
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .roadmap-item::before {
+      content: "";
+      position: absolute;
+      inset: -60% 40% auto -30%;
+      height: 220px;
+      background: radial-gradient(circle, rgba(52, 255, 138, 0.2), transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .roadmap-item span {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+    }
+
+    .roadmap-item h4 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .roadmap-item p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cta-band {
+      position: relative;
+      z-index: 2;
+      margin: 70px auto 40px;
+      max-width: 1100px;
+      padding: 36px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(9, 18, 34, 0.98), rgba(7, 16, 32, 0.78));
+      color: var(--ink);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band h3 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3.4vw, 32px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .cta-band p {
+      color: rgba(244, 251, 255, 0.75);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    footer {
+      padding: 28px 24px 50px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid rgba(52, 255, 138, 0.18);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .roadmap-item { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --header-h: 82px; }
+
+      .nav {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        row-gap: 12px;
+      }
+
+      .logo {
+        font-size: 14px;
+        letter-spacing: 0.08em;
+      }
+
+      .logo-badge {
+        width: 64px;
+        height: 52px;
+        font-size: 14px;
+      }
+
+      .logo-text { letter-spacing: 0.08em; }
+
+      .nav-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .nav-actions .btn {
+        padding: 8px 14px;
+        font-size: 11px;
+      }
+
+      header .nav-actions { display: none; }
+
+      .section-abstract {
+        text-align: center;
+      }
+
+      .section-title h2,
+      .section-title p {
+        text-align: center;
+      }
+
+      .hero-panel {
+        max-width: 100%;
+      }
+
+      .hero-panel::before {
+        background:
+          linear-gradient(140deg, rgba(15, 35, 55, 0.92) 0%, rgba(7, 16, 32, 0.75) 55%, rgba(7, 16, 32, 0.92) 100%),
+          url("assets/elite/hero-ribbon.png") center/cover no-repeat,
+          radial-gradient(circle at 20% 15%, rgba(120, 200, 255, 0.22), transparent 60%);
+      }
+
+      .hero-panel::after {
+        background:
+          linear-gradient(160deg, rgba(7, 16, 32, 0.88), transparent 65%),
+          radial-gradient(circle at 50% 85%, rgba(52, 255, 138, 0.18), transparent 52%);
+      }
+
+      .hero { padding: 7px 16px 44px; }
+      .hero-panel-content { padding: 20px; }
+      .hero-stats { margin-top: 18px; }
+      section { padding: 52px 16px; }
+      .section-title { margin-bottom: 22px; }
+      .panel-grid { grid-template-columns: 1fr; }
+      .cta-band { padding: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-lines"></div>
+    <div class="art-layer contour"></div>
+    <div class="vector-orb one"></div>
+    <div class="vector-orb two"></div>
+
+    <header>
+      <div class="nav">
+        <a class="logo" href="https://ordinarypeopleai.com/">
+          <div class="logo-badge">OPX</div>
+          <span class="logo-text">TOKEN</span>
+        </a>
+        <nav class="nav-links">
+          <a href="#vision">Vision</a>
+          <a href="#utility">Utility</a>
+          <a href="#tokenomics">Tokenomics</a>
+          <a href="#roadmap">Roadmap</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-primary" href="https://ordinarypeopleai.com/">Explore Utility</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <span class="kicker">OPAI ECOSYSTEM</span>
+            <h1 style="font-size: clamp(26px, 3.8vw, 50px); line-height: 1.08; letter-spacing: 0.01em;">
+              <span style="color: var(--neon);">OPX</span> · THE PRECISION TOKEN FOR SMART GROWTH.
+            </h1>
+          <p>
+            OPAI is an AI-powered digital ecosystem that empowers individuals with intelligent automation,
+            smart tools, and a transparent, future-ready platform for growth. OPX aligns rewards, access,
+            and participation across every layer of the OPAI experience.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://ordinarypeopleai.com/">Explore Utility</a>
+            <a class="btn" href="#tokenomics">Tokenomics</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>01</strong>
+              <span>Unified Rewards</span>
+            </div>
+            <div class="stat">
+              <strong>02</strong>
+              <span>Access Layer</span>
+            </div>
+            <div class="stat">
+              <strong>03</strong>
+              <span>Community Utility</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="hero-panel-content">
+            <div class="panel-title">OPX AT A GLANCE</div>
+            <div class="panel-desc">
+              Designed for clarity, OPX connects OPAI users, builders, and partners with a token layer that is
+              elegant, transparent, and future-ready.
+            </div>
+            <div class="panel-strip"></div>
+            <div class="panel-grid">
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3l8 4v5c0 5-3.5 9-8 9s-8-4-8-9V7l8-4z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Trust by design</h4>
+                  <p>Clean mechanics and clear value exchange.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M4 12h4m8 0h4M12 4v4m0 8v4" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="narrow">Automation first</h4>
+                  <p>Aligned incentives across AI workflows.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="12" r="4" />
+                    <circle cx="16" cy="12" r="4" />
+                    <path d="M12 8v8" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Unified access</h4>
+                  <p>Perks, tiers, and tools under one layer.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 16l4-4 4 4 8-8" />
+                    <path d="M20 6v6h-6" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Smart growth</h4>
+                  <p>Participation that compounds over time.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M7 6v12a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3V6" />
+                    <path d="M9 10h6M9 14h6" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Stable mechanics</h4>
+                  <p>Clear token flows built for longevity.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="8" />
+                    <path d="M12 8v8M8 12h8" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Utility layers</h4>
+                  <p>Access, perks, and rewards in sync.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 12h16" />
+                    <path d="M12 4v16" />
+                    <path d="M6.5 6.5l11 11" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Secure access</h4>
+                  <p>Protected flows for users and teams.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12l4 4 10-10" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Instant rewards</h4>
+                  <p>Fast incentives for meaningful actions.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7h16M7 7v10a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3V7" />
+                    <path d="M9 11h6" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Liquidity ready</h4>
+                  <p>Engineered for smooth participation.</p>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="panel-icon">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 12h12" />
+                    <path d="M12 6v12" />
+                    <path d="M6 6l12 12" />
+                  </svg>
+                </div>
+                <div>
+                  <h4>Always on</h4>
+                  <p>24/7 availability for the ecosystem.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <img class="panel-coin" src="assets/elite/opx-coin.png" alt="" />
+        </div>
+      </section>
+
+      <section id="vision">
+        <div class="section-title">
+          <h2>OPX Token Master Framework</h2>
+          <p>Utility-driven. Deflationary. Ecosystem-locked. Current price: $0.001.</p>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <div class="tag">Supply</div>
+            <h3>Total supply: 75,000,000 OPX</h3>
+            <p>Fixed cap. No minting ever. Smart contract renounced or multi‑sig governed. Hard‑coded max supply.</p>
+          </div>
+          <div class="card">
+            <div class="tag">Rationale</div>
+            <h3>Why 75M?</h3>
+            <p>Small enough for scarcity, large enough for ecosystem scaling, psychologically strong for sub‑$1 early phase growth.</p>
+          </div>
+          <div class="card">
+            <div class="tag">Anti‑Dump</div>
+            <h3>Structured by design</h3>
+            <p>No large unlocked founder wallets. No single wallet &gt;3%. Vesting enforced via smart contract.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="utility">
+        <div class="section-title">
+          <h2>Core utility engine</h2>
+          <p>OPX creates demand through burns, access, and platform-required actions.</p>
+        </div>
+        <div class="longform">
+          <div class="long-card">
+            <h3>OPX as platform fuel (hard demand)</h3>
+            <p>Mandatory OPX use for discounts and accelerators, all burned:</p>
+            <div class="pill-row">
+              <span class="pill">Withdrawal fee discount</span>
+              <span class="pill">Internal transfer discount</span>
+              <span class="pill">Package upgrades</span>
+              <span class="pill">Reactivation fee</span>
+              <span class="pill">Rank unlock acceleration</span>
+            </div>
+          </div>
+          <div class="long-card">
+            <h3>Burn-to-unlock earnings boost</h3>
+            <ul>
+              <li>Remove earning caps temporarily.</li>
+              <li>Increase uni‑level depth.</li>
+              <li>Accelerate rank qualification.</li>
+              <li>Boost matching bonus %.</li>
+            </ul>
+          </div>
+          <div class="long-card">
+            <h3>Leaderboard + education access</h3>
+            <ul>
+              <li>500 OPX burn = 7‑day visibility boost.</li>
+              <li>2,000 OPX burn = premium badge.</li>
+              <li>Access via staking: AI tools, Forex modules, strategy rooms, closed signals, mastermind access.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="tokenomics" class="section-abstract">
+        <div class="section-title">
+          <h2>Distribution, deflation & safeguards</h2>
+          <p>Anti‑dump structure with emissions capped and burns visible.</p>
+        </div>
+        <div class="longform">
+          <div class="long-card">
+            <h3>Phase‑wise allocation</h3>
+            <ul>
+              <li>Pioneer Airdrop 12% (9,000,000) — 24‑month vesting.</li>
+              <li>Ecosystem Rewards 25% (18,750,000) — emission‑based.</li>
+              <li>Platform Utility Reserve 18% (13,500,000) — usage‑based release.</li>
+              <li>Treasury & Liquidity 15% (11,250,000) — locked + strategic.</li>
+              <li>Development Fund 10% (7,500,000) — 36‑month vesting.</li>
+              <li>Strategic Partners 8% (6,000,000) — milestone unlock.</li>
+              <li>Governance Pool 7% (5,250,000) — voting + staking.</li>
+              <li>Emergency Reserve 5% (3,750,000) — DAO controlled.</li>
+            </ul>
+          </div>
+          <div class="long-card">
+            <h3>Pioneer release model</h3>
+            <ul>
+              <li>30% liquid in first 6 months.</li>
+              <li>70% unlocked monthly over 24 months.</li>
+              <li>Early heavy selling reduces governance weight + leaderboard eligibility.</li>
+            </ul>
+          </div>
+          <div class="long-card">
+            <h3>Deflationary model</h3>
+            <ul>
+              <li>Burn sources: platform utility, upgrade acceleration, leaderboard boosts, NFT mints (future), event access.</li>
+              <li>Monthly: 5% of platform revenue buys OPX from market and burns.</li>
+              <li>Quarterly: public on‑chain burn events.</li>
+              <li>Target burn 3–6% annually; emissions capped 2–3%.</li>
+            </ul>
+          </div>
+          <div class="long-card">
+            <h3>Anti‑dump architecture</h3>
+            <ul>
+              <li>Utility &gt; speculation.</li>
+              <li>Vesting for team & pioneers.</li>
+              <li>Governance weight tied to holding.</li>
+              <li>Access privileges tied to staking.</li>
+              <li>Buybacks funded by platform revenue.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="roadmap">
+        <div class="section-title">
+          <h2>Long‑term price structure strategy</h2>
+          <p>Value grows with usage, burn, and staking — not hype.</p>
+        </div>
+        <div class="roadmap">
+          <div class="roadmap-item">
+            <span>Phase 01</span>
+            <div>
+              <h4>Controlled launch (low float)</h4>
+              <p>Fixed supply, phased distribution, and strict vesting.</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <span>Phase 02</span>
+            <div>
+              <h4>Utility expansion</h4>
+              <p>Platform fuel, burn‑to‑unlock boosts, and leaderboard mechanics.</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <span>Phase 03</span>
+            <div>
+              <h4>Staking lock</h4>
+              <p>Access privileges tied to staked OPX to reduce circulating supply.</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <span>Phase 04</span>
+            <div>
+              <h4>Governance decentralization</h4>
+              <p>Proposal rights, voting weight, treasury direction.</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <span>Phase 05</span>
+            <div>
+              <h4>Ecosystem integration</h4>
+              <p>Marketplace, AI tools, advertising, B2B services, and on‑chain analytics.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cta-band">
+        <div>
+          <h3>Build with OPX. Grow with OPAI.</h3>
+          <p>A clean, future-ready token layer designed to align access, rewards, and participation across the ecosystem.</p>
+        </div>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end;">
+          <a class="btn" href="https://whatsapp.com/channel/0029Vb73mX0002TBJI3gMp0E">Join Community</a>
+          <a class="btn btn-primary" href="https://user.ordinarypeopleai.com/login">Launch App</a>
+        </div>
+      </div>
+
+      <footer>
+        2026 OPX Token - OPAI Ecosystem. All rights reserved.
+      </footer>
+    </main>
+  </div>
+  </body>
+  <script>
+    (() => {
+      const header = document.querySelector("header");
+      if (!header) return;
+      let lastY = window.scrollY;
+      let ticking = false;
+
+      const onScroll = () => {
+        const currentY = window.scrollY;
+        const delta = currentY - lastY;
+        if (currentY > 140 && delta > 12) {
+          header.classList.add("header--hidden");
+        } else if (delta < -8 || currentY < 140) {
+          header.classList.remove("header--hidden");
+        }
+        lastY = currentY;
+        ticking = false;
+      };
+
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+  </script>
+</html>
