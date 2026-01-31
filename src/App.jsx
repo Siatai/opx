@@ -3,12 +3,12 @@ import { useEffect, useMemo, useState } from 'react'
 const tokenomicsData = [
   { label: 'Pioneer Airdrop', value: 12, color: '#34ff8a' },
   { label: 'Ecosystem Rewards', value: 25, color: '#1bc86a' },
-  { label: 'Platform Utility Reserve', value: 18, color: '#4fe3a7' },
-  { label: 'Treasury & Liquidity', value: 15, color: '#3bd4ff' },
-  { label: 'Development Fund', value: 10, color: '#8cffc1' },
-  { label: 'Strategic Partners', value: 8, color: '#5aa8ff' },
-  { label: 'Governance Pool', value: 7, color: '#9cff7b' },
-  { label: 'Emergency Reserve', value: 5, color: '#ffd85a' },
+  { label: 'Platform Utility Reserve', value: 18, color: '#42e5ff' },
+  { label: 'Treasury & Liquidity', value: 15, color: '#5b8dff' },
+  { label: 'Development Fund', value: 10, color: '#b07bff' },
+  { label: 'Strategic Partners', value: 8, color: '#ff7ad9' },
+  { label: 'Governance Pool', value: 7, color: '#ffd166' },
+  { label: 'Emergency Reserve', value: 5, color: '#9cff7b' },
 ]
 
 function polarToCartesian(cx, cy, r, angle) {
@@ -46,22 +46,12 @@ function TokenomicsChart() {
   return (
     <div className="tokenomics-chart">
       <svg viewBox="0 0 240 240" className="token-chart">
-        <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
         {slices.map((slice, idx) => (
           <path
             key={slice.label}
             d={arcPath(120, 120, idx === active ? 106 : 100, slice.start, slice.end)}
             fill={slice.color}
             opacity={idx === active ? 0.95 : 0.75}
-            filter="url(#glow)"
             onMouseEnter={() => setActive(idx)}
             onClick={() => setActive(idx)}
             className="slice"
