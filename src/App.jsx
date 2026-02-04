@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { OpasLogo } from './components/OpasLogo'
 
 const tokenomicsData = [
   { label: 'Pioneer Airdrop', value: 5, color: '#34ff8a' },
@@ -140,7 +141,7 @@ function App() {
       <header className={hidden ? 'header--hidden' : ''}>
         <div className="nav">
           <a className="logo" href="#top">
-            <div className="logo-badge">OPAS</div>
+            <OpasLogo className="logo-badge" />
             <div className="logo-copy">
               <span className="logo-sub logo-sub-main">OPAI PERKS</span>
             </div>
@@ -394,12 +395,14 @@ function App() {
           <div className="cards">
             <div className="card">
               <div className="tag">Supply</div>
-              <h3>Total supply: 1111111111 OPAS</h3>
+              <h3>
+                Total supply: <span className="supply-mask" aria-label="1111111111">██████████</span> OPAS
+              </h3>
               <p>Fixed maximum supply with no additional minting beyond this cap.</p>
             </div>
             <div className="card">
               <div className="tag">Rationale</div>
-              <h3>Why 1.11B?</h3>
+              <h3>Why <span className="supply-mask" aria-label="1.11B">████</span>?</h3>
               <p>Designed as a scalable tentative base for broad OPAI adoption, campaign velocity, and future utility depth.</p>
             </div>
             <div className="card">

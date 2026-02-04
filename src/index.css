@@ -162,34 +162,17 @@ header.header--hidden {
   font-size: 16px;
   color: var(--neon);
   line-height: 1;
+  align-items: center;
 }
 
 .logo-badge {
-  width: 122px;
-  height: 54px;
-  border-radius: 24px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, rgba(52, 255, 138, 0.95), rgba(27, 200, 106, 0.85));
-  color: #03140b;
-  font-family: var(--font-display);
-  font-size: 26px;
-  letter-spacing: 0.05em;
-  line-height: 1;
-  box-shadow: 0 18px 34px rgba(52, 255, 138, 0.28);
+  width: 60px;
+  height: 24px;
+  border-radius: 0;
+  transform: none;
+  background: transparent;
+  box-shadow: none;
   flex: 0 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.logo-badge::after {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border-radius: 18px;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.14), transparent 55%);
-  mix-blend-mode: soft-light;
-  pointer-events: none;
 }
 
 .logo-text {
@@ -205,6 +188,7 @@ header.header--hidden {
   display: flex;
   flex-direction: column;
   line-height: 1;
+  justify-content: center;
 }
 
 .logo-sub {
@@ -218,6 +202,32 @@ header.header--hidden {
   font-size: 12px;
   letter-spacing: 0.1em;
   color: #ffffff;
+  transform: translateY(3px);
+}
+
+.opas-logo-draw {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  opacity: 0;
+  animation: opasLogoDraw 1.5s ease-out forwards;
+}
+
+.opas-logo-packets {
+  stroke-dashoffset: 0;
+  animation: opasLogoPackets 8s linear infinite;
+}
+
+@keyframes opasLogoDraw {
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes opasLogoPackets {
+  to {
+    stroke-dashoffset: -200;
+  }
 }
 
 .logo-text-accent {
@@ -1202,6 +1212,40 @@ section {
   text-transform: uppercase;
 }
 
+.supply-mask {
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.2em;
+  color: transparent;
+  background: linear-gradient(90deg, rgba(52, 255, 138, 0.2), rgba(223, 251, 255, 0.9), rgba(52, 255, 138, 0.2));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: supplyShimmer 1.8s linear infinite;
+}
+
+.supply-mask::after {
+  content: "";
+  position: absolute;
+  inset: 55% -6% auto -6%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(52, 255, 138, 0.9), transparent);
+  box-shadow: 0 0 10px rgba(52, 255, 138, 0.6);
+  opacity: 0.8;
+  animation: supplyScan 2.4s ease-in-out infinite;
+}
+
+@keyframes supplyShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes supplyScan {
+  0% { transform: translateX(-20%); opacity: 0.2; }
+  50% { transform: translateX(20%); opacity: 1; }
+  100% { transform: translateX(-20%); opacity: 0.2; }
+}
+
 .card p {
   color: var(--muted);
   font-size: 13px;
@@ -1720,10 +1764,10 @@ footer {
   }
 
   .logo-badge {
-    width: 90px;
-    height: 40px;
-    border-radius: 18px;
-    font-size: 17px;
+    width: 50px;
+    height: 20px;
+    border-radius: 0;
+    transform: none;
   }
 
   .logo-text { letter-spacing: 0.08em; }
@@ -1891,5 +1935,12 @@ footer {
   .wallet-banner,
   .wallet-banner::before {
     animation: none;
+  }
+
+  .opas-logo-draw,
+  .opas-logo-packets {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
   }
 }
