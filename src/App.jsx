@@ -141,9 +141,9 @@ function App() {
         <div className="nav">
           <a className="logo" href="#top">
             <div className="logo-badge">OPAS</div>
-            <span className="logo-text">
-              T<span className="logo-text-accent">O</span>KEN
-            </span>
+            <div className="logo-copy">
+              <span className="logo-sub logo-sub-main">OPAI PERKS</span>
+            </div>
           </a>
           <nav className="nav-links">
             <a href="#vision">Vision</a>

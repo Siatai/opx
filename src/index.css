@@ -165,17 +165,18 @@ header.header--hidden {
 }
 
 .logo-badge {
-  width: 84px;
+  width: 122px;
   height: 54px;
-  border-radius: 14px;
+  border-radius: 24px;
   display: grid;
   place-items: center;
   background: linear-gradient(135deg, rgba(52, 255, 138, 0.95), rgba(27, 200, 106, 0.85));
   color: #03140b;
-  box-shadow: 0 18px 34px rgba(52, 255, 138, 0.28);
   font-family: var(--font-display);
-  font-size: 24px;
-  letter-spacing: 0.08em;
+  font-size: 26px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  box-shadow: 0 18px 34px rgba(52, 255, 138, 0.28);
   flex: 0 0 auto;
   position: relative;
   overflow: hidden;
@@ -185,10 +186,9 @@ header.header--hidden {
   content: "";
   position: absolute;
   inset: 6px;
-  border-radius: 12px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120' viewBox='0 0 200 120'%3E%3Cpath d='M0 30 C20 18 40 18 60 30 C80 42 100 42 120 30 C140 18 160 18 180 30' fill='none' stroke='rgba(255,255,255,0.35)' stroke-width='2'/%3E%3Cpath d='M0 70 C22 58 44 58 66 70 C88 82 110 82 132 70 C154 58 176 58 198 70' fill='none' stroke='rgba(255,255,255,0.28)' stroke-width='2'/%3E%3Cpath d='M0 100 C20 90 40 90 60 100 C80 110 100 110 120 100 C140 90 160 90 180 100' fill='none' stroke='rgba(255,255,255,0.22)' stroke-width='2'/%3E%3C/svg%3E") center/cover no-repeat;
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.14), transparent 55%);
   mix-blend-mode: soft-light;
-  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -198,6 +198,25 @@ header.header--hidden {
   gap: 0;
   white-space: nowrap;
   letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.logo-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-sub {
+  margin-top: 0;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(244, 251, 255, 0.78);
+}
+
+.logo-sub-main {
+  font-size: 12px;
+  letter-spacing: 0.1em;
   color: #ffffff;
 }
 
@@ -415,18 +434,19 @@ header.header--hidden {
 .hero-title::before {
   bottom: 4px;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(52, 255, 138, 0), rgba(52, 255, 138, 0.9), rgba(120, 230, 255, 0.95), rgba(52, 255, 138, 0));
-  opacity: 0.8;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(52, 255, 138, 0), rgba(52, 255, 138, 0.45), rgba(120, 230, 255, 0.5), rgba(52, 255, 138, 0));
+  opacity: 0.55;
 }
 
 .hero-title::after {
   bottom: 0;
-  width: 42%;
-  height: 4px;
+  width: 34%;
+  height: 3px;
   background: linear-gradient(90deg, #34ff8a, #7bf7ff, #34ff8a);
-  box-shadow: 0 0 14px rgba(52, 255, 138, 0.7);
-  animation: heroUnderlineFlow 2.8s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(52, 255, 138, 0.35);
+  opacity: 0.75;
+  animation: heroUnderlineFlow 3.6s ease-in-out infinite;
 }
 
 @keyframes heroUnderlineFlow {
@@ -489,7 +509,7 @@ header.header--hidden {
 }
 
 .stat-vector {
-  display: grid;
+  display: none;
   place-items: center;
   overflow: hidden;
   position: relative;
@@ -1237,7 +1257,9 @@ section {
 
 .tokenomics-side {
   display: grid;
+  grid-template-rows: auto 1fr;
   gap: 18px;
+  align-self: stretch;
 }
 
 .token-aux-vector {
@@ -1253,11 +1275,17 @@ section {
   padding: 14px;
   overflow: hidden;
   position: relative;
+  min-height: 300px;
+  height: 100%;
+  display: grid;
+  place-items: center;
 }
 
 .stat-orbit-token {
-  max-width: 220px;
-  height: 160px;
+  width: 100%;
+  max-width: 360px;
+  height: 100%;
+  min-height: 250px;
 }
 
 .token-aux-vector::before {
@@ -1672,6 +1700,9 @@ footer {
   .nav-links { display: none; }
   .roadmap-item { grid-template-columns: 1fr; }
   .tokenomics-layout { grid-template-columns: 1fr; }
+  .token-aux-vector { display: none; }
+  .tokenomics-side { grid-template-rows: auto auto; }
+  .token-aux-vector { min-height: 220px; }
 }
 
 @media (max-width: 640px) {
@@ -1689,12 +1720,22 @@ footer {
   }
 
   .logo-badge {
-    width: 64px;
-    height: 41px;
-    font-size: 15px;
+    width: 90px;
+    height: 40px;
+    border-radius: 18px;
+    font-size: 17px;
   }
 
   .logo-text { letter-spacing: 0.08em; }
+
+  .logo-sub {
+    font-size: 8px;
+    margin-top: 0;
+  }
+
+  .logo-sub-main {
+    font-size: 10px;
+  }
 
   .nav-actions {
     width: auto;
