@@ -141,7 +141,9 @@ function App() {
         <div className="nav">
           <a className="logo" href="#top">
             <div className="logo-badge">OPAS</div>
-            <span className="logo-text">TOKEN</span>
+            <span className="logo-text">
+              T<span className="logo-text-accent">O</span>KEN
+            </span>
           </a>
           <nav className="nav-links">
             <a href="#vision">Vision</a>
@@ -155,7 +157,13 @@ function App() {
               className="btn btn-wallet"
               onClick={() => setWalletBannerOpen(true)}
             >
-              Connect Wallet
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="wallet-icon">
+                <path d="M3.5 7.5A2.5 2.5 0 0 1 6 5h12a2.5 2.5 0 0 1 2.5 2.5v1.2h-4.2a3.3 3.3 0 0 0 0 6.6h4.2v1.2A2.5 2.5 0 0 1 18 19H6a2.5 2.5 0 0 1-2.5-2.5z" />
+                <path d="M16.3 9.8h4.2a1 1 0 0 1 1 1v2.4a1 1 0 0 1-1 1h-4.2a2.2 2.2 0 0 1 0-4.4z" />
+                <circle cx="16.8" cy="12" r="0.9" />
+              </svg>
+              <span className="wallet-label-full">Connect Wallet</span>
+              <span className="wallet-label-mobile">Wallet</span>
             </button>
           </div>
         </div>
@@ -216,6 +224,53 @@ function App() {
               <div className="stat">
                 <strong>03</strong>
                 <span>Governance Locked</span>
+              </div>
+              <div className="stat stat-vector" aria-hidden="true">
+                <svg viewBox="0 0 220 140" className="stat-orbit">
+                  <defs>
+                    <linearGradient id="orbitGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#34ff8a" />
+                      <stop offset="100%" stopColor="#7be6ff" />
+                    </linearGradient>
+                    <radialGradient id="orbitCorePulse" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#dffbff" />
+                      <stop offset="45%" stopColor="#34ff8a" />
+                      <stop offset="100%" stopColor="rgba(52,255,138,0)" />
+                    </radialGradient>
+                  </defs>
+                  <g className="orbit-grid">
+                    <path d="M34 70h152" className="orbit-grid-line" />
+                    <path d="M42 50h136" className="orbit-grid-line" />
+                    <path d="M42 90h136" className="orbit-grid-line" />
+                  </g>
+                  <g className="orbit-rotator orbit-rotator-a">
+                    <ellipse cx="110" cy="70" rx="72" ry="34" className="orbit-line" />
+                    <circle cx="182" cy="70" r="4" className="orbit-dot orbit-dot-1" />
+                  </g>
+                  <g className="orbit-rotator orbit-rotator-b">
+                    <ellipse cx="110" cy="70" rx="56" ry="26" className="orbit-line inner" />
+                    <circle cx="54" cy="70" r="3.4" className="orbit-dot orbit-dot-2" />
+                  </g>
+                  <g className="orbit-rotator orbit-rotator-c">
+                    <path d="M110 20c28 0 50 22 50 50s-22 50-50 50-50-22-50-50 22-50 50-50z" className="orbit-line ring" />
+                    <circle cx="110" cy="20" r="3.2" className="orbit-dot orbit-dot-3" />
+                  </g>
+                  <path d="M40 70h140" className="orbit-axis" />
+                  <path d="M110 18v104" className="orbit-axis v" />
+                  <path d="M40 44l140 52" className="orbit-axis diag" />
+                  <path d="M180 44l-140 52" className="orbit-axis diag-2" />
+                  <g className="orbit-scan-wrap">
+                    <rect x="44" y="58" width="132" height="24" rx="12" className="orbit-scan" />
+                  </g>
+                  <g className="orbit-rotator orbit-rotator-d">
+                    <polygon points="110,28 116,38 104,38" className="orbit-node orbit-node-a" />
+                    <polygon points="190,70 180,76 180,64" className="orbit-node orbit-node-b" />
+                    <polygon points="110,112 116,102 104,102" className="orbit-node orbit-node-c" />
+                    <polygon points="30,70 40,76 40,64" className="orbit-node orbit-node-d" />
+                  </g>
+                  <circle cx="110" cy="70" r="16" className="orbit-core-glow" />
+                  <circle cx="110" cy="70" r="7" className="orbit-core" />
+                </svg>
               </div>
             </div>
           </div>
@@ -392,7 +447,51 @@ function App() {
             <p>Chart slices reflect tentative OPAS values and may change before final tokenomics approval.</p>
           </div>
           <div className="tokenomics-layout">
-            <TokenomicsChart />
+            <div className="tokenomics-side">
+              <TokenomicsChart />
+              <div className="token-aux-vector" aria-hidden="true">
+                <svg viewBox="0 0 240 240" className="aux-vector">
+                  <defs>
+                    <linearGradient id="auxLine" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#34ff8a" />
+                      <stop offset="100%" stopColor="#7be6ff" />
+                    </linearGradient>
+                    <linearGradient id="auxSheen" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="rgba(52,255,138,0)" />
+                      <stop offset="50%" stopColor="rgba(120,230,255,0.75)" />
+                      <stop offset="100%" stopColor="rgba(52,255,138,0)" />
+                    </linearGradient>
+                  </defs>
+                  <g className="aux-grid">
+                    <path d="M30 80h180" className="aux-grid-line" />
+                    <path d="M30 120h180" className="aux-grid-line" />
+                    <path d="M30 160h180" className="aux-grid-line" />
+                    <path d="M80 30v180" className="aux-grid-line v" />
+                    <path d="M120 30v180" className="aux-grid-line v" />
+                    <path d="M160 30v180" className="aux-grid-line v" />
+                  </g>
+                  <g className="aux-rotor aux-rotor-a">
+                    <rect x="66" y="66" width="108" height="108" rx="18" className="aux-ring" />
+                  </g>
+                  <g className="aux-rotor aux-rotor-b">
+                    <rect x="84" y="84" width="72" height="72" rx="12" className="aux-ring inner" />
+                  </g>
+                  <g className="aux-rotor aux-rotor-c">
+                    <polygon points="120,44 172,74 172,134 120,164 68,134 68,74" className="aux-hex" />
+                    <circle cx="172" cy="104" r="4" className="aux-dot aux-dot-c" />
+                  </g>
+                  <path d="M26 120h188" className="aux-axis" />
+                  <path d="M120 26v188" className="aux-axis v" />
+                  <path d="M44 44l152 152" className="aux-axis d1" />
+                  <path d="M196 44L44 196" className="aux-axis d2" />
+                  <path d="M44 154c18-28 44-44 76-44s58 16 76 44" className="aux-wave" />
+                  <rect x="40" y="108" width="160" height="24" rx="12" className="aux-scan" />
+                  <circle cx="120" cy="120" r="11" className="aux-core" />
+                  <circle cx="174" cy="120" r="4.3" className="aux-dot aux-dot-a" />
+                  <circle cx="120" cy="66" r="4" className="aux-dot aux-dot-b" />
+                </svg>
+              </div>
+            </div>
             <div className="longform">
               <div className="long-card">
                 <h3>Phase-wise allocation (tentative)</h3>
