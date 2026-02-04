@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 
 const tokenomicsData = [
-  { label: 'Pioneer Airdrop', value: 12, color: '#34ff8a' },
-  { label: 'Ecosystem Rewards', value: 25, color: '#1bc86a' },
-  { label: 'Platform Utility Reserve', value: 18, color: '#42e5ff' },
-  { label: 'Treasury & Liquidity', value: 15, color: '#5b8dff' },
-  { label: 'Development Fund', value: 10, color: '#b07bff' },
-  { label: 'Strategic Partners', value: 8, color: '#ff7ad9' },
-  { label: 'Governance Pool', value: 7, color: '#ffd166' },
-  { label: 'Emergency Reserve', value: 5, color: '#9cff7b' },
+  { label: 'Pioneer Airdrop', value: 5, color: '#34ff8a' },
+  { label: 'ITO', value: 20, color: '#8df5a6' },
+  { label: 'Ecosystem Rewards (Tentative)', value: 20, color: '#1bc86a' },
+  { label: 'Utility Reserve (TBD)', value: 30, color: '#42e5ff' },
+  { label: 'Treasury & Liquidity (Tentative)', value: 12, color: '#5b8dff' },
+  { label: 'Development Fund (Tentative)', value: 10, color: '#b07bff' },
+  { label: 'Strategic Partners (Tentative)', value: 8, color: '#ff7ad9' },
+  { label: 'Governance Pool (Tentative)', value: 6, color: '#ffd166' },
+  { label: 'Emergency Reserve (Tentative)', value: 5, color: '#9cff7b' },
 ]
 
 function polarToCartesian(cx, cy, r, angle) {
@@ -102,6 +103,7 @@ function TokenomicsChart() {
 
 function App() {
   const [hidden, setHidden] = useState(false)
+  const [walletBannerOpen, setWalletBannerOpen] = useState(false)
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -138,7 +140,7 @@ function App() {
       <header className={hidden ? 'header--hidden' : ''}>
         <div className="nav">
           <a className="logo" href="#top">
-            <div className="logo-badge">OPX</div>
+            <div className="logo-badge">OPAS</div>
             <span className="logo-text">TOKEN</span>
           </a>
           <nav className="nav-links">
@@ -148,24 +150,51 @@ function App() {
             <a href="#roadmap">Roadmap</a>
           </nav>
           <div className="nav-actions">
-            <a className="btn btn-primary" href="https://ordinarypeopleai.com/">
-              Explore Utility
-            </a>
+            <button
+              type="button"
+              className="btn btn-wallet"
+              onClick={() => setWalletBannerOpen(true)}
+            >
+              Connect Wallet
+            </button>
           </div>
         </div>
       </header>
+
+      {walletBannerOpen && (
+        <div className="wallet-overlay" onClick={() => setWalletBannerOpen(false)}>
+          <div
+            className="wallet-banner"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Wallet update"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="wallet-close"
+              aria-label="Close banner"
+              onClick={() => setWalletBannerOpen(false)}
+            >
+              ×
+            </button>
+            <span className="wallet-kicker">CONNECT WALLET</span>
+            <h3>Team OPAI is crafting your best Web3 experience.</h3>
+            <p>Wallet connection is in active build and launching soon with a premium, seamless flow.</p>
+          </div>
+        </div>
+      )}
 
       <main id="top">
         <section className="hero">
           <div>
             <span className="kicker">OPAI ECOSYSTEM</span>
             <h1 className="hero-title">
-              <span className="text-neon">OPX</span> · THE PRECISION TOKEN FOR SMART GROWTH.
+              <span className="text-neon">OPAS</span> - THE SIGNAL TOKEN OF OPAI'S NEXT WAVE.
             </h1>
             <p>
-              OPAI is an AI-powered digital ecosystem that empowers individuals with intelligent automation,
-              smart tools, and a transparent, future-ready platform for growth. OPX aligns rewards, access,
-              and participation across every layer of the OPAI experience.
+              OPAS is designed for early believers in the OPAI growth cycle, where participation,
+              visibility, and ecosystem momentum compound with every phase.
             </p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="https://ordinarypeopleai.com/">
@@ -193,9 +222,9 @@ function App() {
 
           <div className="hero-panel">
             <div className="hero-panel-content">
-              <div className="panel-title">OPX AT A GLANCE</div>
+              <div className="panel-title">OPAS AT A GLANCE</div>
               <div className="panel-desc">
-                Designed for clarity, OPX connects OPAI users, builders, and partners with a token layer that is
+                Designed for clarity, OPAS connects OPAI users, builders, and partners with a token layer that is
                 elegant, transparent, and future-ready.
               </div>
               <div className="panel-strip" />
@@ -304,62 +333,54 @@ function App() {
 
         <section id="vision">
           <div className="section-title">
-            <h2>OPX Token Master <span className="text-neon">Framework</span></h2>
-            <p>Utility-driven. Deflationary. Ecosystem-locked. Current price: $0.001.</p>
+            <h2>OPAS Token Master <span className="text-neon">Framework</span></h2>
+            <p>Structured framework for OPAS supply and distribution.</p>
           </div>
           <div className="cards">
             <div className="card">
               <div className="tag">Supply</div>
-              <h3>Total supply: 75,000,000 OPX</h3>
-              <p>Fixed cap. No minting ever. Smart contract renounced or multi‑sig governed. Hard‑coded max supply.</p>
+              <h3>Total supply: 1111111111 OPAS</h3>
+              <p>Fixed maximum supply with no additional minting beyond this cap.</p>
             </div>
             <div className="card">
               <div className="tag">Rationale</div>
-              <h3>Why 75M?</h3>
-              <p>Small enough for scarcity, large enough for ecosystem scaling, psychologically strong for sub‑$1 growth.</p>
+              <h3>Why 1.11B?</h3>
+              <p>Designed as a scalable tentative base for broad OPAI adoption, campaign velocity, and future utility depth.</p>
             </div>
             <div className="card">
-              <div className="tag">Anti‑Dump</div>
-              <h3>Structured by design</h3>
-              <p>No large unlocked founder wallets. No single wallet &gt;3%. Vesting enforced via smart contract.</p>
+              <div className="tag">Status</div>
+              <h3>Tokenomics in draft</h3>
+              <p>Allocation and release mechanics are tentative and will be finalized with governance and utility rollout.</p>
             </div>
           </div>
         </section>
 
-        <section id="utility">
+        <section id="utility" className="utility-section">
           <div className="section-title">
             <h2>Core <span className="text-neon">Utility</span> engine</h2>
-            <p>OPX creates demand through burns, access, and platform-required actions.</p>
+            <p>Utilities are currently TBD and will be announced in the next OPAS release update.</p>
           </div>
-          <div className="longform">
-          <div className="long-card">
-            <h3 className="heading-white">OPX as platform fuel (hard demand)</h3>
-            <p>Mandatory OPX use for discounts and accelerators, all burned:</p>
-              <div className="pill-row">
-                <span className="pill">Withdrawal fee discount</span>
-                <span className="pill">Internal transfer discount</span>
-                <span className="pill">Package upgrades</span>
-                <span className="pill">Reactivation fee</span>
-                <span className="pill">Rank unlock acceleration</span>
-                <span className="pill">Boosted level earnings</span>
-                <span className="pill">Higher‑level education unlock</span>
+          <div className="longform utility-longform">
+            <div className="long-card utility-card">
+              <div className="utility-beam" />
+              <h3 className="heading-white">Utilities TBD</h3>
+              <p>
+                OPAS utility layers are being finalized. Use-cases, access tiers, burn routes, and reward loops
+                will be published after internal validation.
+              </p>
+              <div className="utility-chip-row">
+                <span className="utility-chip">Demand design</span>
+                <span className="utility-chip">Access layers</span>
+                <span className="utility-chip">On-chain utility</span>
               </div>
             </div>
-          <div className="long-card">
-            <h3 className="heading-white">Burn-to-unlock earnings boost</h3>
-            <ul>
-                <li>Remove earning caps temporarily.</li>
-                <li>Increase uni‑level depth.</li>
-                <li>Accelerate rank qualification.</li>
-                <li>Boost matching bonus %.</li>
-              </ul>
-            </div>
-          <div className="long-card">
-            <h3 className="heading-white">Leaderboard + education access</h3>
-            <ul>
-                <li>500 OPX burn = 7‑day visibility boost.</li>
-                <li>2,000 OPX burn = premium badge.</li>
-                <li>Access via staking: AI tools, Forex modules, strategy rooms, closed signals, mastermind access.</li>
+            <div className="long-card utility-card">
+              <div className="utility-beam" />
+              <h3 className="heading-white">Current phase</h3>
+              <ul>
+                <li>Finalizing OPAS utility map.</li>
+                <li>Aligning utility with OPAI hype content flows.</li>
+                <li>Preparing public release notes for utility launch.</li>
               </ul>
             </div>
           </div>
@@ -368,97 +389,102 @@ function App() {
         <section id="tokenomics" className="section-abstract">
           <div className="section-title">
             <h2>Distribution, deflation & <span className="text-neon">Safeguards</span></h2>
-            <p>Anti‑dump structure with emissions capped and burns visible.</p>
+            <p>Chart slices reflect tentative OPAS values and may change before final tokenomics approval.</p>
           </div>
           <div className="tokenomics-layout">
             <TokenomicsChart />
             <div className="longform">
               <div className="long-card">
-                <h3>Phase‑wise allocation</h3>
+                <h3>Phase-wise allocation (tentative)</h3>
                 <ul className="phase-list">
                   <li>
                     <span className="phase-name">Pioneer Airdrop</span>
                     <div className="phase-line">
-                      <span className="phase-percent">12%</span>
-                      <span className="phase-desc">24‑month vesting.</span>
+                      <span className="phase-percent">5%</span>
+                      <span className="phase-desc">Community-first distribution.</span>
+                    </div>
+                  </li>
+                  <li>
+                    <span className="phase-name">ITO</span>
+                    <div className="phase-line">
+                      <span className="phase-percent">20%</span>
+                      <span className="phase-desc">Initial token offering allocation.</span>
                     </div>
                   </li>
                   <li>
                     <span className="phase-name">Ecosystem Rewards</span>
                     <div className="phase-line">
-                      <span className="phase-percent">25%</span>
-                      <span className="phase-desc">Emission‑based.</span>
+                      <span className="phase-percent">20%</span>
+                      <span className="phase-desc">Tentative emission model.</span>
                     </div>
                   </li>
                   <li>
-                    <span className="phase-name">Platform Utility Reserve</span>
+                    <span className="phase-name">Utility Reserve (TBD)</span>
                     <div className="phase-line">
-                      <span className="phase-percent">18%</span>
-                      <span className="phase-desc">Usage‑based release.</span>
+                      <span className="phase-percent">30%</span>
+                      <span className="phase-desc">Utility mapping in progress.</span>
                     </div>
                   </li>
                   <li>
                     <span className="phase-name">Treasury & Liquidity</span>
                     <div className="phase-line">
-                      <span className="phase-percent">15%</span>
-                      <span className="phase-desc">Locked + strategic.</span>
+                      <span className="phase-percent">12%</span>
+                      <span className="phase-desc">Liquidity for DEX and CEX.</span>
                     </div>
                   </li>
                   <li>
                     <span className="phase-name">Development Fund</span>
                     <div className="phase-line">
                       <span className="phase-percent">10%</span>
-                      <span className="phase-desc">36‑month vesting.</span>
+                      <span className="phase-desc">Tentative release schedule.</span>
                     </div>
                   </li>
                   <li>
                     <span className="phase-name">Strategic Partners</span>
                     <div className="phase-line">
                       <span className="phase-percent">8%</span>
-                      <span className="phase-desc">Milestone unlock.</span>
+                      <span className="phase-desc">Tentative milestone unlock.</span>
                     </div>
                   </li>
                   <li>
                     <span className="phase-name">Governance Pool</span>
                     <div className="phase-line">
-                      <span className="phase-percent">7%</span>
-                      <span className="phase-desc">Voting + staking.</span>
+                      <span className="phase-percent">6%</span>
+                      <span className="phase-desc">Draft governance allocation.</span>
                     </div>
                   </li>
                   <li>
                     <span className="phase-name">Emergency Reserve</span>
                     <div className="phase-line">
                       <span className="phase-percent">5%</span>
-                      <span className="phase-desc">DAO controlled.</span>
+                      <span className="phase-desc">Tentative safety reserve.</span>
                     </div>
                   </li>
                 </ul>
               </div>
               <div className="long-card">
-                <h3>Pioneer release model</h3>
+                <h3>Release model (TBD)</h3>
                 <ul>
-                  <li>30% liquid in first 6 months.</li>
-                  <li>70% unlocked monthly over 24 months.</li>
-                  <li>Early heavy selling reduces governance weight + leaderboard eligibility.</li>
+                  <li>Detailed release calendar is pending.</li>
+                  <li>Vesting logic will follow finalized utility design.</li>
+                  <li>Governance checkpoints will be announced before launch.</li>
                 </ul>
               </div>
               <div className="long-card">
-                <h3>Deflationary model</h3>
+                <h3>Deflationary model (draft)</h3>
                 <ul>
-                  <li>Burn sources: platform utility, upgrade acceleration, leaderboard boosts, NFT mints (future), event access.</li>
-                  <li>Monthly: 5% of platform revenue buys OPX from market and burns.</li>
-                  <li>Quarterly: public on‑chain burn events.</li>
-                  <li>Target burn 3–6% annually; emissions capped 2–3%.</li>
+                  <li>Burn and buyback mechanisms are not finalized.</li>
+                  <li>All deflation routes will be published with utilities.</li>
+                  <li>On-chain reporting format is being defined.</li>
                 </ul>
               </div>
               <div className="long-card">
-                <h3>Anti‑dump architecture</h3>
+                <h3>Risk controls (draft)</h3>
                 <ul>
-                  <li>Utility &gt; speculation.</li>
-                  <li>Vesting for team & pioneers.</li>
-                  <li>Governance weight tied to holding.</li>
-                  <li>Access privileges tied to staking.</li>
-                  <li>Buybacks funded by platform revenue.</li>
+                  <li>Utility-first framework over speculation.</li>
+                  <li>Vesting protections under review.</li>
+                  <li>Governance and staking controls are TBD.</li>
+                  <li>Treasury protections will be finalized pre-launch.</li>
                 </ul>
               </div>
             </div>
@@ -489,7 +515,7 @@ function App() {
               <span>Phase 03</span>
               <div>
                 <h4>Staking lock</h4>
-                <p>Access privileges tied to staked OPX to reduce circulating supply.</p>
+                <p>Access privileges tied to staked OPAS to reduce circulating supply.</p>
               </div>
             </div>
             <div className="roadmap-item">
@@ -512,7 +538,7 @@ function App() {
         <div className="cta-band">
           <div>
             <h3>
-              Build with <span className="text-neon">OPX</span>. Grow with <span className="text-neon">OPAI</span>.
+              Build with <span className="text-neon">OPAS</span>. Grow with <span className="text-neon">OPAI</span>.
             </h3>
             <p>A clean, future-ready token layer designed to align access, rewards, and participation across the ecosystem.</p>
           </div>
@@ -526,7 +552,7 @@ function App() {
           </div>
         </div>
 
-        <footer>2026 OPX Token - OPAI Ecosystem. All rights reserved.</footer>
+        <footer>2026 OPAS Token - OPAI Ecosystem. All rights reserved.</footer>
       </main>
     </div>
   )
