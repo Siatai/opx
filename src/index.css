@@ -598,9 +598,17 @@ header.header--hidden {
   opacity: 0.85;
 }
 
+.orbit-scan-token {
+  stroke: url(#orbitGlowToken);
+}
+
 .orbit-core-glow {
   fill: url(#orbitCorePulse);
   animation: coreBreath 2.4s ease-in-out infinite;
+}
+
+.orbit-core-glow-token {
+  fill: url(#orbitCorePulseToken);
 }
 
 .orbit-core {
@@ -1247,6 +1255,11 @@ section {
   position: relative;
 }
 
+.stat-orbit-token {
+  max-width: 220px;
+  height: 160px;
+}
+
 .token-aux-vector::before {
   content: "";
   position: absolute;
@@ -1659,7 +1672,6 @@ footer {
   .nav-links { display: none; }
   .roadmap-item { grid-template-columns: 1fr; }
   .tokenomics-layout { grid-template-columns: 1fr; }
-  .token-aux-vector { display: none; }
 }
 
 @media (max-width: 640px) {
@@ -1747,6 +1759,7 @@ footer {
   .hero { padding: 7px 16px 44px; }
   .hero-panel-content { padding: 20px; }
   .hero-stats { margin-top: 18px; }
+  .stat-vector { display: grid; }
   section { padding: 52px 16px; }
   .section-title { margin-bottom: 22px; }
   .cta-band { padding: 28px; }
@@ -1768,6 +1781,11 @@ footer {
   .stat-orbit {
     max-width: 150px;
     height: 86px;
+  }
+
+  .stat-orbit-token {
+    max-width: 170px;
+    height: 116px;
   }
 
   .utility-card:hover {
