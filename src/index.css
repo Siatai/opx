@@ -33,6 +33,7 @@
   --shadow: 0 24px 70px -40px rgba(10, 255, 120, 0.35);
   --shadow-soft: 0 12px 30px -18px rgba(10, 255, 120, 0.25);
   --header-h: 96px;
+  --ticker-h: 34px;
   --font-display: "Nevera", "Sharkon Demo", sans-serif;
   --font-body: "BankGothic", "Segoe UI", "Arial", sans-serif;
 }
@@ -70,7 +71,7 @@ img { max-width: 100%; display: block; }
   position: relative;
   min-height: 100vh;
   overflow-x: clip;
-  padding-top: var(--header-h);
+  padding-top: calc(var(--header-h) + var(--ticker-h));
 }
 
 .bg-layer {
@@ -144,14 +145,21 @@ header.header--hidden {
 }
 
 .price-ticker {
-  position: sticky;
-  top: calc(var(--header-h) - 1px);
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
   z-index: 9;
   width: 100%;
+  height: var(--ticker-h);
   overflow: hidden;
   background: rgba(5, 12, 24, 0.85);
   border-bottom: 1px solid rgba(52, 255, 138, 0.18);
   backdrop-filter: blur(10px);
+}
+
+.page.header-hidden {
+  padding-top: var(--ticker-h);
 }
 
 .page.header-hidden .price-ticker {
@@ -162,6 +170,7 @@ header.header--hidden {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  height: 100%;
   padding: 8px 18px;
   white-space: nowrap;
   animation: priceTicker 16s linear infinite;
