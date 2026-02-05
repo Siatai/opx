@@ -146,7 +146,7 @@ header.header--hidden {
 
 .price-ticker {
   position: fixed;
-  top: calc(var(--header-h) + 60px);
+  top: 63px;
   left: 0;
   right: 0;
   z-index: 9;
