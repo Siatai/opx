@@ -144,16 +144,18 @@ header.header--hidden {
 }
 
 .price-ticker {
-  position: fixed;
+  position: sticky;
   top: var(--header-h);
-  left: 0;
-  right: 0;
   z-index: 9;
   width: 100%;
   overflow: hidden;
   background: rgba(5, 12, 24, 0.85);
   border-bottom: 1px solid rgba(52, 255, 138, 0.18);
   backdrop-filter: blur(10px);
+}
+
+.page.header-hidden .price-ticker {
+  top: 0;
 }
 
 .price-ticker-track {

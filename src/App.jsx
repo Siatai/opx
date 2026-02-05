@@ -221,7 +221,7 @@ function App() {
   }, [])
 
   return (
-    <div className="page">
+    <div className={`page ${hidden ? 'header-hidden' : ''}`}>
       <div className="bg-layer bg-grid" />
       <div className="bg-layer bg-lines" />
       <div className="art-layer contour" />
