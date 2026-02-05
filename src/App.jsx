@@ -25,6 +25,35 @@ function arcPath(cx, cy, r, startAngle, endAngle) {
   return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 0 ${end.x} ${end.y} L ${cx} ${cy} Z`
 }
 
+function hexToRgb(hex) {
+  const clean = hex.replace('#', '')
+  const value = clean.length === 3
+    ? clean.split('').map((c) => c + c).join('')
+    : clean
+  const num = parseInt(value, 16)
+  return {
+    r: (num >> 16) & 255,
+    g: (num >> 8) & 255,
+    b: num & 255
+  }
+}
+
+function rgbToHex({ r, g, b }) {
+  const toHex = (value) => value.toString(16).padStart(2, '0')
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`
+}
+
+function mixColor(source, target, amount) {
+  const from = hexToRgb(source)
+  const to = hexToRgb(target)
+  const mix = (a, b) => Math.round(a + (b - a) * amount)
+  return rgbToHex({
+    r: mix(from.r, to.r),
+    g: mix(from.g, to.g),
+    b: mix(from.b, to.b)
+  })
+}
+
 function TokenomicsChart() {
   const [active, setActive] = useState(0)
   const total = tokenomicsData.reduce((sum, item) => sum + item.value, 0)
@@ -43,16 +72,51 @@ function TokenomicsChart() {
     })
   }, [total])
 
+  const gradients = useMemo(() => (
+    tokenomicsData.map((item, idx) => {
+      const highlight = mixColor(item.color, '#ffffff', 0.45)
+      const mid = mixColor(item.color, '#ffffff', 0.12)
+      const shadow = mixColor(item.color, '#000000', 0.35)
+      return { id: `slice-grad-${idx}`, highlight, mid, shadow }
+    })
+  ), [])
+
   const legendItems = tokenomicsData
 
   return (
     <div className="tokenomics-chart">
       <svg viewBox="0 0 240 240" className="token-chart">
+        <defs>
+          {gradients.map((gradient) => (
+            <linearGradient
+              key={gradient.id}
+              id={gradient.id}
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor={gradient.highlight} />
+              <stop offset="45%" stopColor={gradient.mid} />
+              <stop offset="100%" stopColor={gradient.shadow} />
+            </linearGradient>
+          ))}
+          <radialGradient id="token-core" cx="45%" cy="35%" r="70%">
+            <stop offset="0%" stopColor="#0e1c2c" stopOpacity="0.9" />
+            <stop offset="60%" stopColor="#060e1c" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="#01060e" stopOpacity="0.98" />
+          </radialGradient>
+          <linearGradient id="token-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.35" />
+            <stop offset="50%" stopColor="#ffffff" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
         {slices.map((slice, idx) => (
           <path
             key={slice.label}
             d={arcPath(120, 120, idx === active ? 106 : 100, slice.start, slice.end)}
-            fill={slice.color}
+            fill={`url(#slice-grad-${idx})`}
             opacity={idx === active ? 0.95 : 0.75}
             onMouseEnter={() => setActive(idx)}
             onClick={() => setActive(idx)}
@@ -66,7 +130,9 @@ function TokenomicsChart() {
             }}
           />
         ))}
-        <circle cx="120" cy="120" r="58" fill="rgba(6,14,28,0.9)" />
+        <circle cx="120" cy="120" r="105" fill="none" stroke="url(#token-rim)" strokeWidth="2" opacity="0.55" />
+        <circle cx="120" cy="120" r="98" fill="none" stroke="rgba(0, 0, 0, 0.4)" strokeWidth="6" opacity="0.35" />
+        <circle cx="120" cy="120" r="58" fill="url(#token-core)" />
         <text x="120" y="112" textAnchor="middle" className="chart-label">
           {tokenomicsData[active].value}%
         </text>
@@ -105,6 +171,30 @@ function TokenomicsChart() {
 function App() {
   const [hidden, setHidden] = useState(false)
   const [walletBannerOpen, setWalletBannerOpen] = useState(false)
+  const [prediction, setPrediction] = useState('0.5')
+  const memberships = [
+    { id: 'op5', label: 'OP 5', usd: 5, opas: 5000 },
+    { id: 'op10', label: 'OP 10', usd: 10, opas: 10000 },
+    { id: 'op25', label: 'OP 25', usd: 25, opas: 25000 },
+    { id: 'op50', label: 'OP 50', usd: 50, opas: 50000 }
+  ]
+  const [activeMembership, setActiveMembership] = useState(memberships[0].id)
+  const [customOpas, setCustomOpas] = useState('')
+  const selectedMembership = memberships.find((plan) => plan.id === activeMembership) || memberships[0]
+  const resolvedOpas = customOpas.trim() !== ''
+    ? Number(customOpas)
+    : selectedMembership.opas
+  const predictionValue = Number.isFinite(Number(prediction))
+    ? Number(prediction) * (Number.isFinite(resolvedOpas) ? resolvedOpas : 0)
+    : 0
+  const phasePrices = [
+    { label: 'Phase 1', value: 0.001, tag: 'Live' },
+    { label: 'Phase 2', value: 0.002, tag: 'Next' },
+    { label: 'Phase 3', value: 0.004, tag: 'Planned' },
+    { label: 'Phase 4', value: 0.008, tag: 'Planned' },
+    { label: 'ITO', value: 0.02, tag: 'ITO', tone: 'ito' },
+    { label: 'Listing', value: 0.5, tag: 'Listing', tone: 'listing' }
+  ]
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -443,11 +533,88 @@ function App() {
           </div>
         </section>
 
-        <section id="tokenomics" className="section-abstract">
-          <div className="section-title">
-            <h2>Distribution, deflation & <span className="text-neon">Safeguards</span></h2>
-            <p>Chart slices reflect tentative OPAS values and may change before final tokenomics approval.</p>
+      <section id="price-outlook" className="section-abstract price-outlook">
+        <div className="section-title">
+          <h2>Price Outlook & <span className="text-neon">Phases</span></h2>
+          <p>OPAS rewards are complimentary for active OPAI members, with exclusive access to Phase 1-4 airdrops.</p>
+        </div>
+        <div className="price-outlook-grid">
+          <div className="price-phase-grid">
+            {phasePrices.map((phase) => (
+              <div
+                className={`price-phase-card ${phase.tone ? `price-phase-card--${phase.tone}` : ''}`}
+                key={phase.label}
+              >
+                <div className="price-phase-label">
+                  <span>{phase.label}</span>
+                  <span className="price-phase-tag">{phase.tag}</span>
+                </div>
+                <strong>${phase.value.toFixed(3)}</strong>
+              </div>
+            ))}
           </div>
+          <div className="price-calc">
+            <div className="price-calc-head">
+              <span className="price-calc-kicker">Our Prediction</span>
+              <h3>Estimate Your OPAS Value</h3>
+              <p>Select your active membership or enter your OPAS holding to forecast future value.</p>
+            </div>
+            <div className="membership-block">
+              <span className="membership-label">Select Your Active Membership</span>
+              <div className="membership-grid">
+                {memberships.map((plan) => (
+                  <button
+                    type="button"
+                    key={plan.id}
+                    className={`membership-card ${activeMembership === plan.id ? 'active' : ''}`}
+                    onClick={() => {
+                      setActiveMembership(plan.id)
+                      setCustomOpas('')
+                    }}
+                  >
+                    <span>{plan.label}</span>
+                    <strong>${plan.usd}</strong>
+                    <em>{plan.opas.toLocaleString('en-US')} OPAS</em>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="price-inputs">
+              <label className="price-input">
+                <span>Prediction price (USD)</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.0001"
+                  value={prediction}
+                  onChange={(event) => setPrediction(event.target.value)}
+                />
+              </label>
+              <label className="price-input">
+                <span>Enter your OPAS holding</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder={selectedMembership.opas.toString()}
+                  value={customOpas}
+                  onChange={(event) => setCustomOpas(event.target.value)}
+                />
+              </label>
+            </div>
+            <div className="price-output">
+              <span>Estimated Value</span>
+              <strong>${predictionValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tokenomics" className="section-abstract">
+        <div className="section-title">
+          <h2>Distribution, deflation & <span className="text-neon">Safeguards</span></h2>
+          <p>Chart slices reflect tentative OPAS values and may change before final tokenomics approval.</p>
+        </div>
           <div className="tokenomics-layout">
             <div className="tokenomics-side">
               <TokenomicsChart />
