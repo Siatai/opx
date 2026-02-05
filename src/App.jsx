@@ -269,33 +269,9 @@ function App() {
           <span className="price-ticker-sep">|</span>
           <span className="price-ticker-item price-ticker-next">Phase 2 <span className="price-ticker-price">$0.002</span></span>
           <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">Phase 3 <span className="price-ticker-price">$0.004</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">Phase 4 <span className="price-ticker-price">$0.008</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">ITO <span className="price-ticker-price">$0.020</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">Listing <span className="price-ticker-price">$0.500</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">OP 5 <span className="price-ticker-price">5,000 OPAS</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">OP 10 <span className="price-ticker-price">10,000 OPAS</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">OP 25 <span className="price-ticker-price">25,000 OPAS</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">OP 50 <span className="price-ticker-price">50,000 OPAS</span></span>
-          <span className="price-ticker-sep">|</span>
           <span className="price-ticker-item">Phase 1 <span className="price-ticker-price">$0.001</span></span>
           <span className="price-ticker-sep">|</span>
           <span className="price-ticker-item price-ticker-next">Phase 2 <span className="price-ticker-price">$0.002</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">Phase 3 <span className="price-ticker-price">$0.004</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">Phase 4 <span className="price-ticker-price">$0.008</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">ITO <span className="price-ticker-price">$0.020</span></span>
-          <span className="price-ticker-sep">|</span>
-          <span className="price-ticker-item">Listing <span className="price-ticker-price">$0.500</span></span>
         </div>
       </div>
 

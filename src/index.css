@@ -144,8 +144,10 @@ header.header--hidden {
 }
 
 .price-ticker {
-  position: sticky;
+  position: fixed;
   top: var(--header-h);
+  left: 0;
+  right: 0;
   z-index: 9;
   width: 100%;
   overflow: hidden;
