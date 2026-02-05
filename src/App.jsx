@@ -141,8 +141,11 @@ function App() {
       <header className={hidden ? 'header--hidden' : ''}>
         <div className="nav">
           <a className="logo" href="#top">
-            <OpasLogo className="logo-badge" />
+            <div className="logo-stack">
+              <OpasLogo className="logo-badge" />
+            </div>
             <div className="logo-copy">
+              <span className="logo-main">OPAS</span>
               <span className="logo-sub logo-sub-main">OPAI PERKS</span>
             </div>
           </a>
@@ -426,11 +429,7 @@ function App() {
                 OPAS utility layers are being finalized. Use-cases, access tiers, burn routes, and reward loops
                 will be published after internal validation.
               </p>
-              <div className="utility-chip-row">
-                <span className="utility-chip">Demand design</span>
-                <span className="utility-chip">Access layers</span>
-                <span className="utility-chip">On-chain utility</span>
-              </div>
+              <div className="utility-circuit" aria-hidden="true" />
             </div>
             <div className="long-card utility-card">
               <div className="utility-beam" />
