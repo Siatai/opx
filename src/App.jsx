@@ -272,6 +272,18 @@ function App() {
           <span className="price-ticker-item">Phase 1 <span className="price-ticker-price">$0.001</span></span>
           <span className="price-ticker-sep">|</span>
           <span className="price-ticker-item price-ticker-next">Phase 2 <span className="price-ticker-price">$0.002</span></span>
+          <span className="price-ticker-sep">|</span>
+          <span className="price-ticker-item">Phase 1 <span className="price-ticker-price">$0.001</span></span>
+          <span className="price-ticker-sep">|</span>
+          <span className="price-ticker-item price-ticker-next">Phase 2 <span className="price-ticker-price">$0.002</span></span>
+          <span className="price-ticker-sep">|</span>
+          <span className="price-ticker-item">Phase 1 <span className="price-ticker-price">$0.001</span></span>
+          <span className="price-ticker-sep">|</span>
+          <span className="price-ticker-item price-ticker-next">Phase 2 <span className="price-ticker-price">$0.002</span></span>
+          <span className="price-ticker-sep">|</span>
+          <span className="price-ticker-item">Phase 1 <span className="price-ticker-price">$0.001</span></span>
+          <span className="price-ticker-sep">|</span>
+          <span className="price-ticker-item price-ticker-next">Phase 2 <span className="price-ticker-price">$0.002</span></span>
         </div>
       </div>
 
