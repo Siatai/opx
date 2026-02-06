@@ -154,7 +154,8 @@ header.header--hidden {
   height: var(--ticker-h);
   overflow: hidden;
   background: rgba(5, 12, 24, 0.85);
-  border-bottom: 1px solid rgba(52, 255, 138, 0.18);
+  border-top: 1px solid var(--neon);
+  border-bottom: 1px solid var(--neon);
   backdrop-filter: blur(10px);
 }
 
