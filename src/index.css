@@ -200,6 +200,12 @@ header.header--hidden {
   animation: pricePulse 2.8s ease-in-out infinite;
 }
 
+.price-ticker-next .price-ticker-price::before {
+  content: "▲ ";
+  color: var(--neon);
+  text-shadow: 0 0 10px rgba(52, 255, 138, 0.6);
+}
+
 .price-ticker-sep {
   color: rgba(244, 251, 255, 0.35);
 }
