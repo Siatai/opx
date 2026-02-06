@@ -2239,6 +2239,9 @@ footer {
   .price-phase-card {
     min-height: 120px;
   }
+  .price-ticker {
+    top: calc(var(--header-h) - 28px);
+  }
   section { padding: 52px 16px; }
   .section-title { margin-bottom: 22px; }
   .cta-band { padding: 28px; }
