@@ -187,9 +187,9 @@ header.header--hidden {
 }
 
 .price-ticker-price {
-  color: var(--neon);
+  color: #ffffff;
   font-weight: 600;
-  animation: pricePulse 2.8s ease-in-out infinite;
+  animation: none;
 }
 
 .price-ticker-next::after {
