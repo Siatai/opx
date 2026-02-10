@@ -607,6 +607,142 @@ header.header--hidden {
   mix-blend-mode: screen;
 }
 
+.stat-vector .orb-core {
+  width: min(220px, 70%);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), rgba(10, 16, 28, 0.95));
+  border: 1px solid rgba(120, 140, 160, 0.45);
+  display: grid;
+  place-items: center;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 30px 50px rgba(2, 8, 18, 0.65);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.stat-vector .reactor-rim {
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 45%),
+    radial-gradient(circle at 70% 25%, rgba(120, 200, 255, 0.15), transparent 50%);
+  border: 2px solid rgba(140, 170, 200, 0.55);
+  box-shadow:
+    inset 0 0 26px rgba(20, 40, 60, 0.6),
+    0 0 20px rgba(80, 140, 190, 0.35);
+}
+
+.stat-vector .reactor-plasma {
+  position: absolute;
+  inset: 36px;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 40deg,
+      rgba(255, 170, 60, 0.95),
+      rgba(255, 120, 40, 0.7),
+      rgba(255, 210, 120, 0.95),
+      rgba(255, 140, 40, 0.75),
+      rgba(255, 170, 60, 0.95)
+    );
+  filter: blur(1px);
+  box-shadow:
+    0 0 22px rgba(255, 150, 60, 0.55),
+    0 0 40px rgba(255, 120, 40, 0.35);
+  animation: plasmaSpin 10s linear infinite;
+}
+
+.stat-vector .reactor-outer-disc {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 160, 60, 0.45);
+  box-shadow: 0 0 18px rgba(255, 160, 60, 0.35);
+  opacity: 0.7;
+}
+
+.stat-vector .reactor-amber-rings {
+  position: absolute;
+  inset: 28px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.stat-vector .reactor-amber-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 160, 60, 0.82);
+  box-shadow: 0 0 28px rgba(255, 140, 40, 0.65);
+  opacity: 0.8;
+}
+
+.stat-vector .reactor-amber-ring.ring-1 { inset: 0; opacity: 0.85; }
+.stat-vector .reactor-amber-ring.ring-2 { inset: 12px; opacity: 0.7; }
+.stat-vector .reactor-amber-ring.ring-3 { inset: 24px; opacity: 0.55; }
+
+.stat-vector .reactor-core {
+  position: absolute;
+  inset: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10, 20, 35, 0.9), rgba(5, 8, 16, 0.95));
+  border: 1px solid rgba(60, 120, 170, 0.5);
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.8),
+    0 0 24px rgba(50, 160, 220, 0.4);
+  display: grid;
+  place-items: center;
+}
+
+.stat-vector .reactor-core__ring {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 208, 40, 0.8);
+  box-shadow: 0 0 26px rgba(40, 255, 234, 0.5);
+  filter: blur(0.9px);
+  animation: corePulse 3.2s ease-in-out infinite;
+}
+
+.stat-vector .orb-sub {
+  font-size: 7px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #cfe5f5;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--fx-font-mono);
+  z-index: 3;
+  text-shadow: 0 0 12px rgba(40, 200, 255, 0.5);
+}
+
+.stat-vector .orb-grid {
+  position: absolute;
+  inset: -20px;
+  border-radius: 20px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 40px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes plasmaSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes corePulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(40, 200, 255, 0.4); }
+  50% { box-shadow: 0 0 26px rgba(40, 200, 255, 0.9); }
+}
+
 .stat-orbit {
   width: 100%;
   max-width: 196px;
@@ -1377,25 +1513,30 @@ section {
 
 .price-phase-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 18px;
 }
 
 .price-phase-card {
-  padding: 18px 18px 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(52, 255, 138, 0.28);
+  padding: 20px 86px 22px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(52, 255, 138, 0.32);
   background:
-    linear-gradient(150deg, rgba(6, 14, 28, 0.95), rgba(7, 18, 34, 0.75));
-  box-shadow: var(--shadow-soft);
+    linear-gradient(160deg, rgba(6, 14, 28, 0.98), rgba(7, 18, 34, 0.78));
+  box-shadow:
+    var(--shadow-soft),
+    0 0 22px -14px var(--phase-glow);
+  --phase-glow: rgba(52, 255, 138, 0.18);
+  --phase-glow-strong: rgba(52, 255, 138, 0.32);
+  --phase-coin-core: #c98a3a;
+  --phase-coin-edge: #7c4a1f;
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-height: 150px;
-  gap: 12px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: start;
+  min-height: 168px;
+  gap: 10px;
 }
 
 .price-phase-card::before {
@@ -1403,7 +1544,7 @@ section {
   position: absolute;
   inset: 14px 14px 18px;
   border-radius: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='220' viewBox='0 0 260 220'%3E%3Cg fill='none' stroke='rgba(82,255,170,0.18)' stroke-width='1'%3E%3Cpath d='M18 36h78l12 12h60'/%3E%3Cpath d='M26 78h48l10 10h86'/%3E%3Cpath d='M34 150h70l12-12h56'/%3E%3Cpath d='M170 54h34l10 10h18'/%3E%3Cpath d='M180 118h40l8-8h18'/%3E%3Ccircle cx='36' cy='36' r='3'/%3E%3Ccircle cx='26' cy='78' r='3'/%3E%3Ccircle cx='34' cy='150' r='3'/%3E%3Ccircle cx='170' cy='54' r='3'/%3E%3Ccircle cx='180' cy='118' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22220%22%20viewBox%3D%220%200%20260%20220%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(82%2C255%2C170%2C0.26)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M16%2096h62l10%2010h46%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M16%20118h52l12-12h40%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M16%20140h46l10%2010h52%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M16%20162h40l12-12h36%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M120%2096h46l10%2010h34%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M120%20140h38l12-12h50%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M120%20162h28l12-12h44%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M28%2086h30l8%208h20%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M174%20104h28l8%208h22%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M40%20178h28l10-10h30%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(120%2C230%2C255%2C0.24)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M22%2074h48l8%208h26%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M22%20188h52l8-8h22%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M150%20126h30l8-8h30%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M150%20154h38l8-8h30%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22rgba(82%2C255%2C170%2C0.38)%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2216%22%20cy%3D%2296%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2216%22%20cy%3D%22118%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2216%22%20cy%3D%22140%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2216%22%20cy%3D%22162%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22120%22%20cy%3D%2296%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22120%22%20cy%3D%22140%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22120%22%20cy%3D%22162%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2222%22%20cy%3D%2274%22%20r%3D%222%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2222%22%20cy%3D%22188%22%20r%3D%222%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22150%22%20cy%3D%22126%22%20r%3D%222%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22150%22%20cy%3D%22154%22%20r%3D%222%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(82%2C255%2C170%2C0.34)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M208%2084l8%204-8%204%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M208%20152l8%204-8%204%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M54%20102l6%203-6%203%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M68%20146l6%203-6%203%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22rgba(120%2C230%2C255%2C0.3)%22%3E%0A%20%20%20%20%3Crect%20x%3D%22186%22%20y%3D%22118%22%20width%3D%2210%22%20height%3D%2210%22%20rx%3D%222%22%20%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22196%22%20y%3D%22118%22%20width%3D%2210%22%20height%3D%2210%22%20rx%3D%222%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position: center 70%;
   background-size: 85%;
@@ -1414,24 +1555,93 @@ section {
 .price-phase-card::after {
   content: "";
   position: absolute;
-  inset: -40% 60% auto -20%;
-  height: 120px;
-  background: radial-gradient(circle, rgba(52, 255, 138, 0.18), transparent 70%);
-  opacity: 0.6;
+  right: 16px;
+  top: 30%;
+  width: 44px;
+  height: 44px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), transparent 45%),
+    conic-gradient(
+      from 35deg,
+      color-mix(in srgb, var(--phase-coin-core) 85%, #ffffff 15%),
+      color-mix(in srgb, var(--phase-coin-edge) 90%, #000000 10%) 35%,
+      color-mix(in srgb, var(--phase-coin-core) 75%, #ffffff 25%) 65%,
+      color-mix(in srgb, var(--phase-coin-edge) 90%, #000000 10%)
+    ),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.6), transparent 72%);
+  box-shadow:
+    0 0 0 2px rgba(120, 230, 255, 0.24),
+    0 0 12px rgba(120, 230, 255, 0.28),
+    inset 0 0 10px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 6px rgba(255, 255, 255, 0.08),
+    inset 0 0 0 12px rgba(0, 0, 0, 0.38);
+  opacity: 0.92;
+  z-index: 0;
   pointer-events: none;
+  filter: saturate(1.05);
+  animation: priceOrbSpin 10s linear infinite;
+  -webkit-mask: radial-gradient(circle, transparent 0 40%, #000 42%);
+  mask: radial-gradient(circle, transparent 0 40%, #000 42%);
+}
+
+@keyframes priceOrbSpin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+.price-phase-card:nth-child(1) {
+  --phase-glow: rgba(52, 255, 138, 0.18);
+  --phase-glow-strong: rgba(52, 255, 138, 0.32);
+}
+
+.price-phase-card:nth-child(2) {
+  --phase-glow: rgba(120, 230, 255, 0.18);
+  --phase-glow-strong: rgba(120, 230, 255, 0.32);
+  --phase-coin-core: #3a8bd4;
+  --phase-coin-edge: #1e4f84;
+}
+
+.price-phase-card:nth-child(3) {
+  --phase-glow: rgba(91, 141, 255, 0.18);
+  --phase-glow-strong: rgba(91, 141, 255, 0.32);
+  --phase-coin-core: #6b6fe2;
+  --phase-coin-edge: #31356f;
+}
+
+.price-phase-card:nth-child(4) {
+  --phase-glow: rgba(176, 123, 255, 0.2);
+  --phase-glow-strong: rgba(176, 123, 255, 0.34);
+  --phase-coin-core: #8c6dd8;
+  --phase-coin-edge: #4a2e8c;
 }
 
 .price-phase-label {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 11px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--muted);
   margin-bottom: 0;
-  width: 100%;
+  width: max-content;
+  min-width: 96px;
+  max-width: 65%;
+  padding: 6px 10px;
+  border-radius: 8px 18px 8px 8px;
+  border: 1px solid rgba(52, 255, 138, 0.25);
+  background: rgba(6, 18, 30, 0.75);
+  line-height: 1.2;
+  min-height: 44px;
+  justify-content: center;
+}
+
+.price-phase-label span:first-child {
+  white-space: nowrap;
 }
 
 .price-phase-tag {
@@ -1441,21 +1651,29 @@ section {
   color: var(--neon);
   font-size: 9px;
   letter-spacing: 0.18em;
+  line-height: 1;
 }
 
 .price-phase-card strong {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: 0.08em;
   color: #ffffff;
   line-height: 1;
-  margin-top: auto;
+  margin-top: 0;
+  align-self: flex-start;
+  position: relative;
+  z-index: 1;
 }
 
 .price-phase-card--ito {
   border-color: rgba(255, 209, 102, 0.7);
   background: linear-gradient(150deg, rgba(24, 18, 6, 0.92), rgba(12, 10, 6, 0.85));
   box-shadow: 0 18px 36px -24px rgba(255, 209, 102, 0.6);
+  --phase-glow: rgba(255, 209, 102, 0.22);
+  --phase-glow-strong: rgba(255, 209, 102, 0.36);
+  --phase-coin-core: #c98a3a;
+  --phase-coin-edge: #6b3a10;
 }
 
 .price-phase-card--ito .price-phase-tag {
@@ -1467,12 +1685,8 @@ section {
   color: #ffd166;
 }
 
-.price-phase-card--ito::after {
-  background: radial-gradient(circle, rgba(255, 209, 102, 0.22), transparent 70%);
-}
-
 .price-phase-card--ito::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='220' viewBox='0 0 260 220'%3E%3Cg fill='none' stroke='rgba(255,209,102,0.28)' stroke-width='1.1'%3E%3Cpath d='M24 44h72l12 12h46'/%3E%3Cpath d='M30 92h44l10 10h92'/%3E%3Cpath d='M36 150h60l12-12h68'/%3E%3Ccircle cx='24' cy='44' r='3'/%3E%3Ccircle cx='30' cy='92' r='3'/%3E%3Ccircle cx='36' cy='150' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22220%22%20viewBox%3D%220%200%20260%20220%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(255%2C209%2C102%2C0.28)%22%20stroke-width%3D%221.1%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M18%20110h70l10-10h40%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M18%20130h60l12%2012h58%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M18%20150h44l12-12h32%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M128%20110h48l10%2010h34%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M120%20154h38l12-12h44%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(255%2C189%2C92%2C0.24)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M22%2094h52l8%208h28%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M150%20134h38l10-10h34%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22rgba(255%2C209%2C102%2C0.38)%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2218%22%20cy%3D%22110%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2218%22%20cy%3D%22130%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2218%22%20cy%3D%22150%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22128%22%20cy%3D%22110%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22120%22%20cy%3D%22154%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22150%22%20cy%3D%22134%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(255%2C209%2C102%2C0.3)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M210%2088l8%204-8%204%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M210%20152l8%204-8%204%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E");
 }
 
 .price-phase-card--listing {
@@ -1481,6 +1695,10 @@ section {
   box-shadow:
     0 22px 50px -28px rgba(52, 255, 138, 0.7),
     inset 0 0 0 1px rgba(120, 255, 200, 0.2);
+  --phase-glow: rgba(52, 255, 138, 0.24);
+  --phase-glow-strong: rgba(52, 255, 138, 0.4);
+  --phase-coin-core: #3fcf8a;
+  --phase-coin-edge: #1b6e4a;
 }
 
 .price-phase-card--listing .price-phase-tag {
@@ -1493,12 +1711,8 @@ section {
   text-shadow: 0 0 16px rgba(52, 255, 138, 0.45);
 }
 
-.price-phase-card--listing::after {
-  background: radial-gradient(circle, rgba(52, 255, 138, 0.3), transparent 70%);
-}
-
 .price-phase-card--listing::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='220' viewBox='0 0 260 220'%3E%3Cg fill='none' stroke='rgba(52,255,138,0.36)' stroke-width='1.3'%3E%3Cpath d='M22 40h88l12 12h50'/%3E%3Cpath d='M30 88h50l10 10h96'/%3E%3Cpath d='M40 154h74l12-12h64'/%3E%3Cpath d='M162 40h46l12 12h16'/%3E%3Ccircle cx='22' cy='40' r='3'/%3E%3Ccircle cx='30' cy='88' r='3'/%3E%3Ccircle cx='40' cy='154' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22220%22%20viewBox%3D%220%200%20260%20220%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(52%2C255%2C138%2C0.32)%22%20stroke-width%3D%221.2%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M18%20110h70l10-10h40%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M18%20130h60l12%2012h58%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M18%20150h44l12-12h32%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M128%20110h48l10%2010h34%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M120%20154h38l12-12h44%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(120%2C255%2C200%2C0.28)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M22%2094h52l8%208h28%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M150%20134h38l10-10h34%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22rgba(52%2C255%2C138%2C0.42)%22%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2218%22%20cy%3D%22110%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2218%22%20cy%3D%22130%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2218%22%20cy%3D%22150%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22128%22%20cy%3D%22110%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22120%22%20cy%3D%22154%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22150%22%20cy%3D%22134%22%20r%3D%222.2%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba(52%2C255%2C138%2C0.38)%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M210%2088l8%204-8%204%22%20%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M210%20152l8%204-8%204%22%20%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E");
   background-size: 88%;
   opacity: 1;
 }
@@ -2119,6 +2333,7 @@ footer {
   .nav-links { display: none; }
   .roadmap-item { grid-template-columns: 1fr; }
   .price-outlook-grid { grid-template-columns: 1fr; }
+  .price-phase-grid { grid-template-columns: 1fr; }
   .tokenomics-layout { grid-template-columns: 1fr; }
   .token-aux-vector { display: none; }
   .tokenomics-side { grid-template-rows: auto auto; }

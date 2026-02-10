@@ -344,51 +344,21 @@ function App() {
                 <span>Governance Locked</span>
               </div>
               <div className="stat stat-vector" aria-hidden="true">
-                <svg viewBox="0 0 220 140" className="stat-orbit">
-                  <defs>
-                    <linearGradient id="orbitGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#34ff8a" />
-                      <stop offset="100%" stopColor="#7be6ff" />
-                    </linearGradient>
-                    <radialGradient id="orbitCorePulse" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#dffbff" />
-                      <stop offset="45%" stopColor="#34ff8a" />
-                      <stop offset="100%" stopColor="rgba(52,255,138,0)" />
-                    </radialGradient>
-                  </defs>
-                  <g className="orbit-grid">
-                    <path d="M34 70h152" className="orbit-grid-line" />
-                    <path d="M42 50h136" className="orbit-grid-line" />
-                    <path d="M42 90h136" className="orbit-grid-line" />
-                  </g>
-                  <g className="orbit-rotator orbit-rotator-a">
-                    <ellipse cx="110" cy="70" rx="72" ry="34" className="orbit-line" />
-                    <circle cx="182" cy="70" r="4" className="orbit-dot orbit-dot-1" />
-                  </g>
-                  <g className="orbit-rotator orbit-rotator-b">
-                    <ellipse cx="110" cy="70" rx="56" ry="26" className="orbit-line inner" />
-                    <circle cx="54" cy="70" r="3.4" className="orbit-dot orbit-dot-2" />
-                  </g>
-                  <g className="orbit-rotator orbit-rotator-c">
-                    <path d="M110 20c28 0 50 22 50 50s-22 50-50 50-50-22-50-50 22-50 50-50z" className="orbit-line ring" />
-                    <circle cx="110" cy="20" r="3.2" className="orbit-dot orbit-dot-3" />
-                  </g>
-                  <path d="M40 70h140" className="orbit-axis" />
-                  <path d="M110 18v104" className="orbit-axis v" />
-                  <path d="M40 44l140 52" className="orbit-axis diag" />
-                  <path d="M180 44l-140 52" className="orbit-axis diag-2" />
-                  <g className="orbit-scan-wrap">
-                    <rect x="44" y="58" width="132" height="24" rx="12" className="orbit-scan" />
-                  </g>
-                  <g className="orbit-rotator orbit-rotator-d">
-                    <polygon points="110,28 116,38 104,38" className="orbit-node orbit-node-a" />
-                    <polygon points="190,70 180,76 180,64" className="orbit-node orbit-node-b" />
-                    <polygon points="110,112 116,102 104,102" className="orbit-node orbit-node-c" />
-                    <polygon points="30,70 40,76 40,64" className="orbit-node orbit-node-d" />
-                  </g>
-                  <circle cx="110" cy="70" r="16" className="orbit-core-glow" />
-                  <circle cx="110" cy="70" r="7" className="orbit-core" />
-                </svg>
+                <div className="orb-core">
+                  <div className="reactor-outer-disc" aria-hidden="true" />
+                  <div className="reactor-rim" aria-hidden="true" />
+                  <div className="reactor-plasma" aria-hidden="true" />
+                  <div className="reactor-amber-rings" aria-hidden="true">
+                    <div className="reactor-amber-ring ring-1" />
+                    <div className="reactor-amber-ring ring-2" />
+                    <div className="reactor-amber-ring ring-3" />
+                  </div>
+                  <div className="reactor-core">
+                    <div className="reactor-core__ring" />
+                    <div className="orb-sub">Adaptive Core</div>
+                  </div>
+                </div>
+                <div className="orb-grid" aria-hidden="true" />
               </div>
             </div>
           </div>
