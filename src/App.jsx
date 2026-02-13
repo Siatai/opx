@@ -355,7 +355,7 @@ function App() {
                   </div>
                   <div className="reactor-core">
                     <div className="reactor-core__ring" />
-                    <div className="orb-sub">Adaptive Core</div>
+                    <div className="orb-sub"></div>
                   </div>
                 </div>
                 <div className="orb-grid" aria-hidden="true" />
