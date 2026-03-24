@@ -315,6 +315,9 @@ function App() {
         <section className="hero">
           <div>
             <span className="kicker">OPAI ECOSYSTEM</span>
+            <div className="deploy-probe" aria-label="Deployment check banner">
+              Deployment check: March 24, 2026 17:10 IST
+            </div>
             <h1 className="hero-title">
               <span className="text-neon">OPAS</span> - THE SIGNAL TOKEN OF OPAI'S NEXT WAVE.
             </h1>

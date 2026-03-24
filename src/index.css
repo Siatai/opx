@@ -499,6 +499,21 @@ header.header--hidden {
   background: rgba(52, 255, 138, 0.08);
 }
 
+.deploy-probe {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 230, 255, 0.45);
+  background: rgba(120, 230, 255, 0.12);
+  color: #dffbff;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px -20px rgba(120, 230, 255, 0.7);
+}
+
 
 .hero-title {
   font-family: var(--font-display);
