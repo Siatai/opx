@@ -5,12 +5,12 @@ const tokenomicsData = [
   { label: 'Pioneer Airdrop', value: 5, color: '#34ff8a' },
   { label: 'ITO', value: 20, color: '#8df5a6' },
   { label: 'Ecosystem Rewards (Tentative)', value: 20, color: '#1bc86a' },
-  { label: 'Utility Reserve (TBD)', value: 30, color: '#42e5ff' },
+  { label: 'Utility Reserve (TBD)', value: 12.5, color: '#42e5ff' },
   { label: 'Treasury & Liquidity (Tentative)', value: 12, color: '#5b8dff' },
   { label: 'Development Fund (Tentative)', value: 10, color: '#b07bff' },
   { label: 'Strategic Partners (Tentative)', value: 8, color: '#ff7ad9' },
-  { label: 'Governance Pool (Tentative)', value: 6, color: '#ffd166' },
-  { label: 'Emergency Reserve (Tentative)', value: 5, color: '#9cff7b' },
+  { label: 'Team Tokens', value: 6.2, color: '#ffd166' },
+  { label: 'CSR / Charity Tokens', value: 6.3, color: '#9cff7b' },
 ]
 
 function polarToCartesian(cx, cy, r, angle) {
@@ -691,7 +691,7 @@ function App() {
                   <li>
                     <span className="phase-name">Utility Reserve (TBD)</span>
                     <div className="phase-line">
-                      <span className="phase-percent">30%</span>
+                      <span className="phase-percent">12.5%</span>
                       <span className="phase-desc">Utility mapping in progress.</span>
                     </div>
                   </li>
@@ -717,17 +717,17 @@ function App() {
                     </div>
                   </li>
                   <li>
-                    <span className="phase-name">Governance Pool</span>
+                    <span className="phase-name">Team Tokens</span>
                     <div className="phase-line">
-                      <span className="phase-percent">6%</span>
-                      <span className="phase-desc">Draft governance allocation.</span>
+                      <span className="phase-percent">6.2%</span>
+                      <span className="phase-desc">Reserved for core team allocation.</span>
                     </div>
                   </li>
                   <li>
-                    <span className="phase-name">Emergency Reserve</span>
+                    <span className="phase-name">CSR / Charity Tokens</span>
                     <div className="phase-line">
-                      <span className="phase-percent">5%</span>
-                      <span className="phase-desc">Tentative safety reserve.</span>
+                      <span className="phase-percent">6.3%</span>
+                      <span className="phase-desc">Dedicated to CSR and charity initiatives.</span>
                     </div>
                   </li>
                 </ul>
