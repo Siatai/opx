@@ -13,6 +13,81 @@ const tokenomicsData = [
   { label: 'CSR / Charity Tokens', value: 6.3, color: '#9cff7b' },
 ]
 
+const propositionBlocks = [
+  {
+    id: 'A',
+    title: 'Potential Equity Projection',
+    tag: '5% Share',
+    note: 'Repeat subscriptions will contribute additionally.',
+    headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', '5% Share'],
+    rows: [
+      ['100K', '1-2 months', '1M', '300K', '25,000'],
+      ['500K', '4-5 months', '5M', '1.5M', '75,000'],
+      ['1M', '6-7 months', '10M', '3M', '150,000'],
+    ],
+  },
+  {
+    id: 'B',
+    title: 'OPAI ID',
+    tag: 'Capped Model',
+    note: 'Single capped scenario extracted from the proposition PDF.',
+    headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', 'Capping'],
+    rows: [['50,000', '6 months', '500,000', '400,000', '500,000']],
+  },
+  {
+    id: 'C',
+    title: 'OPAS',
+    tag: 'Token Position',
+    note: 'Priority exit at ITO. Team token note preserved from the source proposition.',
+    headers: ['Total Supply', '5% of Team Tokens', 'ITO Price', 'ITO Value', 'Listing Price', 'Listing Value'],
+    rows: [['21,000,000,000', '31,500,000', '0.02', '630,000', '0.5', '15,750,000']],
+  },
+  {
+    id: 'D',
+    title: 'Trading Bot',
+    tag: 'Performance Layer',
+    note: 'Monthly return assumption taken directly from the proposition.',
+    headers: ['Allocation', 'Anticipated Performance', 'Monthly AR', '1 Year'],
+    rows: [['100,000', '5%', '5,000', '60,000']],
+  },
+]
+
+const projectionSummary = [
+  { label: 'A', title: 'Potential Equity Projection', value: '75,000' },
+  { label: 'B', title: 'OPAI ID', value: '400,000' },
+  { label: 'C', title: 'OPAS', value: '630,000' },
+  { label: 'D', title: 'Trading Bot', value: '60,000' },
+]
+
+const propositionIntro = {
+  title: 'Introduction',
+  body:
+    'OPAI is positioned as an educational and personal development platform focused on communication, leadership, digital skills, and AI literacy. This deal room frames the expansion opportunity, the value logic, and the operating scenarios in one place.',
+}
+
+const propositionExtracts = [
+  { title: 'Small Entry', body: 'The proposition is built around a low-friction starting point so users can enter without a heavy upfront barrier.' },
+  { title: 'Free Package', body: 'A free package for all users is positioned as a first-time industry move designed to widen access and participation.' },
+  { title: 'No Liability', body: 'The structure is presented as non-liability focused, reducing complexity and keeping the offer easier to understand.' },
+  { title: '5X Potential', body: 'The core upside message stays centered on a visible 5X potential theme that is easy for users to grasp quickly.' },
+  { title: 'Non Complicated', body: 'The message stays simple: clear entry, understandable flow, and no over-engineered explanation.' },
+  { title: 'Instant Income & Withdrawal', body: 'Immediate earning and withdrawal language is treated as a key attraction point in the proposition story.' },
+  { title: 'Expansion Promos', body: 'Promotional activity is positioned as expansion-focused, helping growth, reach, and repeated system momentum.' },
+  { title: 'Ecosystem Backing', body: 'Backed by a hyper-innovative, virtually unlimited ecosystem designed to stay compliant across both Web2 and Web3 environments.' },
+]
+
+function normalizeRoute(pathname) {
+  return pathname === '/dealroom' ? '/dealroom' : '/'
+}
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(value)
+}
+
 function polarToCartesian(cx, cy, r, angle) {
   const rad = (angle - 90) * (Math.PI / 180)
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) }
@@ -168,7 +243,7 @@ function TokenomicsChart() {
   )
 }
 
-function App() {
+function HomeLanding() {
   const [hidden, setHidden] = useState(false)
   const [walletBannerOpen, setWalletBannerOpen] = useState(false)
   const [prediction, setPrediction] = useState('0.5')
@@ -848,10 +923,197 @@ function App() {
           </div>
         </div>
 
-        <footer>2026 OPAS Token - OPAI Ecosystem. All rights reserved.</footer>
+        <footer>
+          <span>2026 OPAS Token - OPAI Ecosystem. All rights reserved.</span>
+          <a className="footer-dealroom-link" href="/dealroom">Value Proposition</a>
+        </footer>
       </main>
     </div>
   )
+}
+
+function DealRoomPage() {
+  const totalProjection = projectionSummary.reduce((sum, item) => sum + Number(item.value.replace(/,/g, '')), 0)
+
+  return (
+    <div className="dealroom-shell">
+      <div className="dealroom-topbar">
+        <a className="dealroom-brand" href="/">
+          <OpasLogo className="dealroom-brand-mark" />
+          <div>
+            <span className="dealroom-brand-name">OPAS</span>
+            <span className="dealroom-brand-sub">Deal Room</span>
+          </div>
+        </a>
+        <div className="dealroom-topbar-actions">
+          <a className="dealroom-ghost-link" href="/">Back to Home</a>
+          <a className="dealroom-primary-link" href="/assets/VP-June-26.pdf" target="_blank" rel="noreferrer">
+            Open Original PDF
+          </a>
+        </div>
+      </div>
+
+      <main className="dealroom-main">
+        <section className="prop-hero">
+          <div className="prop-hero-copy-wrap">
+            <div className="prop-hero-copy">
+              <span className="eyebrow">Investor Opportunity</span>
+              <h1>
+                An early-position opportunity to scale with <span className="brand-word brand-word-opai">OPAI</span> and the{' '}
+                <span className="brand-word brand-word-opas">OPAS</span> expansion curve.
+              </h1>
+              <p className="lede">Capital ask: $500,000 to accelerate the next phase of expansion.</p>
+            </div>
+            <div className="prop-summary">
+              <article className="summary-pill summary-pill-ask">
+                <span>Capital Ask</span>
+                <strong>{formatCurrency(500000)}</strong>
+              </article>
+              <article className="summary-pill summary-pill-projection">
+                <span>12-Month Projection</span>
+                <strong>{formatCurrency(totalProjection)}</strong>
+              </article>
+              <article className="summary-pill summary-pill-ito">
+                <span>OPAS ITO Value</span>
+                <strong>{formatCurrency(630000)}</strong>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="prop-context">
+          <article className="context-card context-card--intro">
+            <span className="eyebrow">{propositionIntro.title}</span>
+            <h2>Position the opportunity before the numbers.</h2>
+            <p>{propositionIntro.body}</p>
+          </article>
+          <article className="context-card context-card--extracts">
+            <span className="eyebrow">Main Extracts</span>
+            <div className="extract-grid">
+              {propositionExtracts.map((extract) => (
+                <div key={extract.title} className="extract-card">
+                  <strong>{extract.title}</strong>
+                  <p>{extract.body}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="projection-band">
+          {projectionSummary.map((item) => (
+            <a key={item.label} className="projection-chip" href={`#segment-${item.label.toLowerCase()}`}>
+              <span>Segment {item.label}</span>
+              <em>{item.title}</em>
+              <strong>{formatCurrency(Number(item.value.replace(/,/g, '')))}</strong>
+            </a>
+          ))}
+        </section>
+
+        <section className="prop-grid">
+          {propositionBlocks.map((block) => (
+            <article key={block.id} className="prop-card" id={`segment-${block.id.toLowerCase()}`}>
+              <div className="prop-card-head">
+                <div>
+                  <span className="card-kicker">
+                    {block.id}. {block.tag}
+                  </span>
+                  <h2>{block.title}</h2>
+                </div>
+                <div className="accent-orb" aria-hidden="true" />
+              </div>
+              <div className="prop-table-wrap">
+                <table className="prop-table">
+                  <thead>
+                    <tr>
+                      {block.headers.map((header) => (
+                        <th key={header}>{header}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {block.rows.map((row) => (
+                      <tr key={row.join('-')}>
+                        {row.map((cell, index) => (
+                          <td
+                            key={`${block.id}-${cell}-${index}`}
+                            className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="prop-mobile-rows">
+                {block.rows.map((row) => (
+                  <article key={`${block.id}-${row.join('-')}`} className="prop-mobile-row">
+                    {row.map((cell, index) => (
+                      <div key={`${block.id}-mobile-${cell}-${index}`} className="prop-mobile-cell">
+                        <span>{block.headers[index]}</span>
+                        <strong
+                          className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                        >
+                          {cell}
+                        </strong>
+                      </div>
+                    ))}
+                  </article>
+                ))}
+              </div>
+              <p className="prop-note">
+                {block.note}
+                {block.id === 'A' ? ' Scenario A in the deck reinforces repeat-paying system behavior.' : ''}
+                {block.id === 'B' ? ' Scenario B presents a lower-entry but still recurring participation path.' : ''}
+                {block.id === 'C' ? ' The deck also frames OPAS as part of a broader long-horizon value narrative.' : ''}
+                {block.id === 'D' ? ' This aligns with the deck message that effort and execution drive results.' : ''}
+              </p>
+            </article>
+          ))}
+        </section>
+
+        <section className="projection-total">
+          <div>
+            <span className="eyebrow">12 Months Projection</span>
+            <h2>Total extracted proposition value: {formatCurrency(totalProjection)}</h2>
+            <p>
+              The source PDF combines A, B, C, and D at a total of 1,165,000. This page preserves that total while
+              making the mechanics legible enough to present directly on-site.
+            </p>
+          </div>
+          <div className="projection-total-box">
+            <span>Combined Total</span>
+            <strong>{formatCurrency(totalProjection)}</strong>
+            <a href="/assets/VP-June-26.pdf" target="_blank" rel="noreferrer">
+              Review the original document
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer className="dealroom-footer">
+        <a href="/">Return to OPAS Home</a>
+      </footer>
+    </div>
+  )
+}
+
+function App() {
+  const [route, setRoute] = useState(() => normalizeRoute(window.location.pathname))
+
+  useEffect(() => {
+    const onPopState = () => setRoute(normalizeRoute(window.location.pathname))
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  useEffect(() => {
+    document.title = route === '/dealroom' ? 'OPAS | Deal Room' : 'OPAS | OPAI Ecosystem'
+  }, [route])
+
+  return route === '/dealroom' ? <DealRoomPage /> : <HomeLanding />
 }
 
 export default App

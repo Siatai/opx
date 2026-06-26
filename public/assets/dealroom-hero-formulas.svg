@@ -1,0 +1,51 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#090B12"/>
+  <g opacity="0.92" stroke="#F5F7FA" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M58 104c12 14 21 32 29 56m-29-56c-18 16-31 34-41 54m41-54c9 15 17 31 23 49"/>
+    <path d="M670 88c28 10 54 42 84 42s42-42 76-42 48 41 76 41 54-29 90-29"/>
+    <path d="M1018 170c34 0 46 16 46 42s-15 47-46 47"/>
+    <path d="M1310 214c40-30 72-46 112-52m-112 52c40 30 72 46 112 52"/>
+    <path d="M535 398l84-74m-84 74 84 74m-84-74h122"/>
+    <path d="M756 347c0 72 0 144 0 216m-72-108c48-66 96-66 144 0"/>
+    <path d="M1135 579c-12 28-22 57-28 90m28-90c14 28 24 57 31 89m-59-89h87"/>
+    <path d="M1317 610h118m-59-58v116"/>
+    <path d="M147 640l-42 104h84l-42-104z"/>
+    <path d="M475 688c44-38 98-38 142 0m-71-77v154"/>
+    <path d="M868 658c36-48 84-72 142-72m-71 18v148m-90-70h180"/>
+    <circle cx="1000" cy="708" r="78"/>
+    <circle cx="1000" cy="708" r="50"/>
+    <path d="M938 708h124m-62-62v124m-44-106 88 88m0-88-88 88"/>
+  </g>
+  <g opacity="0.88" fill="#FFFFFF" font-family="Comic Sans MS, Marker Felt, cursive" font-size="42">
+    <text x="44" y="68">Ψ(x)=1/√2 (4-e⁻ˣ + 4eʸ)</text>
+    <text x="556" y="74">Gₘ→Rₘ = ΣRᵧ = 8πG / c¹ Tₘ</text>
+    <text x="1068" y="82">L=t₁∫[g/t f₁, t²⁵ - i λ / bₓ] S</text>
+    <text x="84" y="170">H = PP/2π + Vω</text>
+    <text x="340" y="174">Sᵦ = kᵦ 4πG M / hc</text>
+    <text x="748" y="178">I = ∫ e⁻ᵅx dx = √2π</text>
+    <text x="1178" y="176">S = c³kA / 4ħG</text>
+    <text x="64" y="282">Rₘ - 1/2 Rgᵧ + 1/gₘ = 8πδTₘ</text>
+    <text x="428" y="290">H|Ψ(t)⟩ = iħ ∂/∂t |Ψ(t)⟩</text>
+    <text x="947" y="294">d/dt ⟨A⟩ = 1/ħ ⟨[Â,Ĥ]⟩ + ∂Â/∂t</text>
+    <text x="1224" y="298">δ(k₁+k₂)/k²</text>
+    <text x="72" y="404">Re[Ψ(x)] P = iħω̄</text>
+    <text x="316" y="404">P ∂f/∂A</text>
+    <text x="812" y="404">Aᵢⱼ = 8πħν³ / c³ Bᵢⱼ eᵅ</text>
+    <text x="1152" y="406">r = Θ / 2π + 4π / g₂</text>
+    <text x="78" y="510">r = Θ/2π + 4π/g₂</text>
+    <text x="308" y="514">∫ | βtA y = βᵧx</text>
+    <text x="658" y="514">u(γ) = x(i) + y(t)j</text>
+    <text x="1024" y="512">z = xe²</text>
+    <text x="1388" y="510">S₍F₎ = ⟨f|S||i⟩</text>
+    <text x="86" y="624">∇(B)x²y₃</text>
+    <text x="426" y="626">v(t₀)-rʳ</text>
+    <text x="828" y="626">√(2/β) / ct³²</text>
+    <text x="1118" y="626">E = mc²</text>
+    <text x="1346" y="626">y</text>
+    <text x="132" y="792">√(2/β) / ct³²</text>
+    <text x="484" y="792">π-(tθ)    ∂A / i²=¾</text>
+    <text x="918" y="794">πr·γ</text>
+    <text x="1176" y="792">S = c³kA / 4ħG</text>
+    <text x="1398" y="790">y=(t+b)</text>
+  </g>
+</svg>
