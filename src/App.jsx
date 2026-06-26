@@ -247,15 +247,6 @@ function HomeLanding() {
   const [hidden, setHidden] = useState(false)
   const [walletBannerOpen, setWalletBannerOpen] = useState(false)
   const [prediction, setPrediction] = useState('0.5')
-  const [probeTime, setProbeTime] = useState(() =>
-    new Intl.DateTimeFormat('en-IN', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-      timeZone: 'Asia/Kolkata'
-    }).format(new Date())
-  )
   const memberships = [
     { id: 'op5', label: 'OP 5', usd: 5, opas: 5000 },
     { id: 'op10', label: 'OP 10', usd: 10, opas: 10000 },
@@ -302,23 +293,6 @@ function HomeLanding() {
     }
     window.addEventListener('scroll', onScrollEvent, { passive: true })
     return () => window.removeEventListener('scroll', onScrollEvent)
-  }, [])
-
-  useEffect(() => {
-    const formatter = new Intl.DateTimeFormat('en-IN', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-      timeZone: 'Asia/Kolkata'
-    })
-
-    const updateProbeTime = () => setProbeTime(formatter.format(new Date()))
-
-    updateProbeTime()
-    const intervalId = window.setInterval(updateProbeTime, 1000)
-
-    return () => window.clearInterval(intervalId)
   }, [])
 
   return (
@@ -417,7 +391,8 @@ function HomeLanding() {
           <div>
             <span className="kicker">OPAI ECOSYSTEM</span>
             <div className="deploy-probe" aria-label="Deployment check banner">
-              TGE CHECK: TESTING FOR NOW {probeTime} IST
+              <span className="deploy-dot" aria-hidden="true" />
+              <strong className="deploy-inline">Live Deployment</strong>
             </div>
             <h1 className="hero-title">
               <span className="text-neon">OPAS</span> - THE SIGNAL TOKEN OF OPAI'S NEXT WAVE.
