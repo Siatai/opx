@@ -16,8 +16,11 @@ const tokenomicsData = [
 const propositionBlocks = [
   {
     id: 'A',
+    tone: 'a',
     title: 'Potential Equity Projection',
     tag: '5% Share',
+    synopsis: 'High-velocity user growth scenario with recurring subscription expansion.',
+    summary: 'Maps 100K to 1M users into revenue and 5% share outcomes over a 1-7 month window.',
     note: 'Repeat subscriptions will contribute additionally.',
     headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', '5% Share'],
     rows: [
@@ -28,24 +31,33 @@ const propositionBlocks = [
   },
   {
     id: 'B',
+    tone: 'b',
     title: 'OPAI ID',
     tag: 'Capped Model',
+    synopsis: 'Lower-entry participation route built around a capped value frame.',
+    summary: 'Shows a 50,000 user path with a 6-month revenue target and capped participation value.',
     note: 'Single capped scenario extracted from the proposition PDF.',
     headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', 'Capping'],
     rows: [['50,000', '6 months', '500,000', '400,000', '500,000']],
   },
   {
     id: 'C',
+    tone: 'c',
     title: 'OPAS',
     tag: 'Token Position',
+    synopsis: 'Token-side upside framed through ITO and listing value translation.',
+    summary: 'Connects team token allocation, ITO pricing, and listing valuation into one value story.',
     note: 'Priority exit at ITO. Team token note preserved from the source proposition.',
     headers: ['Total Supply', '5% of Team Tokens', 'ITO Price', 'ITO Value', 'Listing Price', 'Listing Value'],
     rows: [['21,000,000,000', '31,500,000', '0.02', '630,000', '0.5', '15,750,000']],
   },
   {
     id: 'D',
+    tone: 'd',
     title: 'Trading Bot',
     tag: 'Performance Layer',
+    synopsis: 'Execution-based yield layer attached to a fixed capital allocation.',
+    summary: 'Presents the 5% monthly assumption and its annualized result in a simplified performance model.',
     note: 'Monthly return assumption taken directly from the proposition.',
     headers: ['Allocation', 'Anticipated Performance', 'Monthly AR', '1 Year'],
     rows: [['100,000', '5%', '5,000', '60,000']],
@@ -53,10 +65,10 @@ const propositionBlocks = [
 ]
 
 const projectionSummary = [
-  { label: 'A', title: 'Potential Equity Projection', value: '75,000' },
-  { label: 'B', title: 'OPAI ID', value: '400,000' },
-  { label: 'C', title: 'OPAS', value: '630,000' },
-  { label: 'D', title: 'Trading Bot', value: '60,000' },
+  { label: 'A', title: 'Potential Equity Projection', synopsis: 'Growth scenario', summary: '5% share path', tone: 'a', value: '75,000' },
+  { label: 'B', title: 'OPAI ID', synopsis: 'Capped route', summary: 'Recurring entry model', tone: 'b', value: '400,000' },
+  { label: 'C', title: 'OPAS', synopsis: 'Token value lens', summary: 'ITO to listing bridge', tone: 'c', value: '630,000' },
+  { label: 'D', title: 'Trading Bot', synopsis: 'Performance layer', summary: '12-month output view', tone: 'd', value: '60,000' },
 ]
 
 const propositionIntro = {
@@ -975,19 +987,31 @@ function DealRoomPage() {
           </article>
         </section>
 
-        <section className="projection-band">
-          {projectionSummary.map((item) => (
-            <a key={item.label} className="projection-chip" href={`#segment-${item.label.toLowerCase()}`}>
-              <span>Segment {item.label}</span>
-              <em>{item.title}</em>
-              <strong>{formatCurrency(Number(item.value.replace(/,/g, '')))}</strong>
+        <section className="projection-band-wrap">
+          <div className="projection-band-heading">
+            <span className="eyebrow">Snapshot</span>
+            <h2>Segment snapshot across the four value engines.</h2>
+          </div>
+          <div className="projection-band">
+            {projectionSummary.map((item) => (
+              <a key={item.label} className={`projection-chip projection-chip--${item.tone}`} href={`#segment-${item.label.toLowerCase()}`}>
+                <span>Segment {item.label}</span>
+                <h3>{item.title}</h3>
+                <small>{item.synopsis}</small>
+                <strong>{formatCurrency(Number(item.value.replace(/,/g, '')))}</strong>
+              <b>{item.summary}</b>
             </a>
           ))}
+          </div>
+          <div className="projection-band-total">
+            <span>Combined Four-Segment Total</span>
+            <strong>{formatCurrency(totalProjection)}</strong>
+          </div>
         </section>
 
         <section className="prop-grid">
           {propositionBlocks.map((block) => (
-            <article key={block.id} className="prop-card" id={`segment-${block.id.toLowerCase()}`}>
+            <article key={block.id} className={`prop-card prop-card--${block.tone}`} id={`segment-${block.id.toLowerCase()}`}>
               <div className="prop-card-head">
                 <div>
                   <span className="card-kicker">
@@ -996,6 +1020,16 @@ function DealRoomPage() {
                   <h2>{block.title}</h2>
                 </div>
                 <div className="accent-orb" aria-hidden="true" />
+              </div>
+              <div className="prop-card-summary">
+                <div className="prop-summary-line">
+                  <span>Synopsis</span>
+                  <p>{block.synopsis}</p>
+                </div>
+                <div className="prop-summary-line">
+                  <span>Summary</span>
+                  <p>{block.summary}</p>
+                </div>
               </div>
               <div className="prop-table-wrap">
                 <table className="prop-table">
