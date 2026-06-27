@@ -2622,14 +2622,51 @@ footer {
 }
 
 .dealroom-shell {
+  --dealroom-accent: #34ff8a;
+  --dealroom-accent-soft: rgba(52, 255, 138, 0.18);
+  --dealroom-secondary: #7bf7ff;
+  --dealroom-secondary-soft: rgba(123, 247, 255, 0.12);
+  --dealroom-highlight: #ff7ad9;
   min-height: 100vh;
   padding: 22px 0 48px;
   scroll-behavior: smooth;
   background:
-    radial-gradient(circle at top left, rgba(52, 255, 138, 0.08), transparent 24%),
-    radial-gradient(circle at 88% 10%, rgba(255, 122, 217, 0.12), transparent 26%),
-    radial-gradient(circle at 50% 100%, rgba(123, 247, 255, 0.1), transparent 30%),
+    radial-gradient(circle at top left, var(--dealroom-accent-soft), transparent 24%),
+    radial-gradient(circle at 88% 10%, color-mix(in srgb, var(--dealroom-highlight) 32%, transparent), transparent 26%),
+    radial-gradient(circle at 50% 100%, var(--dealroom-secondary-soft), transparent 30%),
     linear-gradient(180deg, #04060c 0%, #050811 40%, #030509 100%);
+}
+
+.dealroom-shell--starter {
+  --dealroom-accent: #34ff8a;
+  --dealroom-accent-soft: rgba(52, 255, 138, 0.18);
+  --dealroom-secondary: #7bf7ff;
+  --dealroom-secondary-soft: rgba(123, 247, 255, 0.12);
+  --dealroom-highlight: #ff7ad9;
+}
+
+.dealroom-shell--growth {
+  --dealroom-accent: #42e5ff;
+  --dealroom-accent-soft: rgba(66, 229, 255, 0.18);
+  --dealroom-secondary: #5b8dff;
+  --dealroom-secondary-soft: rgba(91, 141, 255, 0.14);
+  --dealroom-highlight: #8df5a6;
+}
+
+.dealroom-shell--strategic {
+  --dealroom-accent: #ffd166;
+  --dealroom-accent-soft: rgba(255, 209, 102, 0.18);
+  --dealroom-secondary: #ff9f5b;
+  --dealroom-secondary-soft: rgba(255, 159, 91, 0.14);
+  --dealroom-highlight: #fff0b8;
+}
+
+.dealroom-shell--enterprise {
+  --dealroom-accent: #ff7ad9;
+  --dealroom-accent-soft: rgba(255, 122, 217, 0.2);
+  --dealroom-secondary: #b07bff;
+  --dealroom-secondary-soft: rgba(176, 123, 255, 0.16);
+  --dealroom-highlight: #ffd0f0;
 }
 
 .dealroom-shell * {
@@ -2651,7 +2688,7 @@ footer {
 .dealroom-topbar,
 .dealroom-main,
 .dealroom-footer {
-  width: min(1240px, calc(100% - 28px));
+  width: min(1380px, calc(100% - 28px));
   margin: 0 auto;
 }
 
@@ -2720,7 +2757,7 @@ footer {
 .dealroom-primary-link {
   border-color: transparent;
   color: #06070d;
-  background: linear-gradient(135deg, #34ff8a, #ff7ad9);
+  background: linear-gradient(135deg, var(--dealroom-accent), var(--dealroom-highlight));
   font-weight: 700;
 }
 
@@ -2735,6 +2772,205 @@ footer {
   gap: 22px;
 }
 
+.dealroom-layout {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  position: relative;
+}
+
+.dealroom-layout.is-sidebar-collapsed {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dealroom-content-column {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+
+.dealroom-sidebar {
+  min-width: 0;
+}
+
+.dealroom-sidebar.is-collapsed {
+  position: absolute;
+  left: -72px;
+  top: 0;
+  width: 64px;
+  z-index: 5;
+}
+
+.dealroom-sidebar-card {
+  position: sticky;
+  top: 108px;
+  display: grid;
+  gap: 14px;
+  border: 1px solid color-mix(in srgb, var(--dealroom-secondary) 22%, transparent);
+  border-radius: 32px;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(15, 19, 35, 0.88), rgba(7, 10, 20, 0.94));
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.dealroom-sidebar.is-collapsed .dealroom-sidebar-card {
+  padding: 12px;
+  border-radius: 24px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+}
+
+.dealroom-sidebar-toggle {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--dealroom-secondary) 26%, transparent);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-secondary) 12%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018));
+  color: #f5fbff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dealroom-sidebar-toggle span {
+  color: rgba(245, 251, 255, 0.72);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dealroom-sidebar-toggle strong {
+  font-family: "Nevera", "Sharkon Demo", sans-serif;
+  font-size: 0.98rem;
+  line-height: 0.94;
+}
+
+.dealroom-sidebar.is-collapsed .dealroom-sidebar-toggle {
+  min-height: 132px;
+  align-content: center;
+  padding: 10px 8px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center;
+}
+
+.dealroom-sidebar.is-collapsed .dealroom-sidebar-toggle strong {
+  font-size: 0.88rem;
+  line-height: 1.1;
+}
+
+.dealroom-sidebar-head {
+  display: grid;
+  gap: 10px;
+}
+
+.dealroom-sidebar-head h2 {
+  margin: 0;
+  color: #f5fbff;
+  font-family: "Nevera", "Sharkon Demo", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.tier-tab-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.tier-tab {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--tab-accent, var(--dealroom-secondary)) 14%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+}
+
+.tier-tab:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--tab-accent, var(--dealroom-secondary)) 36%, transparent);
+}
+
+.tier-tab.is-active {
+  border-color: color-mix(in srgb, var(--tab-accent, var(--dealroom-secondary)) 55%, transparent);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--tab-accent, var(--dealroom-secondary)) 18%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--tab-accent, var(--dealroom-secondary)) 24%, transparent),
+    0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.tier-tab span,
+.tier-tab b {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tier-tab span {
+  color: var(--tab-accent, var(--dealroom-secondary));
+}
+
+.tier-tab strong,
+.tier-tab b {
+  margin: 0;
+}
+
+.tier-tab strong {
+  display: block;
+  color: #f5fbff;
+  font-family: "Nevera", "Sharkon Demo", sans-serif;
+  font-size: 1.12rem;
+  line-height: 0.94;
+}
+
+.tier-tab b {
+  color: rgba(245, 251, 255, 0.66);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
+
+.tier-tab--starter {
+  --tab-accent: #34ff8a;
+}
+
+.tier-tab--growth {
+  --tab-accent: #42e5ff;
+}
+
+.tier-tab--strategic {
+  --tab-accent: #ffd166;
+}
+
+.tier-tab--enterprise {
+  --tab-accent: #ff7ad9;
+}
+
+.summary-pill strong,
+.projection-chip strong,
+.projection-total-box strong {
+  display: block;
+  margin-top: 10px;
+  color: #f5fbff;
+  font-family: "Nevera", "Sharkon Demo", sans-serif;
+  line-height: 0.95;
+}
+
 .prop-hero,
 .prop-context,
 .projection-total {
@@ -2747,9 +2983,9 @@ footer {
 .projection-band,
 .prop-grid,
 .projection-total {
-  width: min(100%, 1040px);
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .prop-hero,
@@ -2803,7 +3039,7 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.22em;
   font-size: 0.74rem;
-  color: #7bf7ff;
+  color: var(--dealroom-secondary);
 }
 
 .prop-hero-copy {
@@ -2813,7 +3049,7 @@ footer {
 .prop-hero-copy h1,
 .prop-page h2 {
   text-wrap: balance;
-  background: linear-gradient(120deg, #ffffff 0%, #7bf7ff 30%, #34ff8a 64%, #ff7ad9 100%);
+  background: linear-gradient(120deg, #ffffff 0%, var(--dealroom-secondary) 30%, var(--dealroom-accent) 64%, var(--dealroom-highlight) 100%);
   background-size: 220% 220%;
   animation: dealroomHeadingFlow 8s ease-in-out infinite;
   -webkit-background-clip: text;
@@ -2826,7 +3062,7 @@ footer {
   font-family: "Nevera", "Sharkon Demo", sans-serif;
   font-size: clamp(2.56rem, 3.4vw, 3.14rem);
   line-height: 0.98;
-  max-width: 13ch;
+  max-width: 15ch;
 }
 
 .brand-word {
@@ -2838,11 +3074,11 @@ footer {
 }
 
 .brand-word-opai {
-  background-image: linear-gradient(120deg, #7bf7ff 0%, #ffffff 45%, #b4fff2 100%);
+  background-image: linear-gradient(120deg, var(--dealroom-secondary) 0%, #ffffff 45%, color-mix(in srgb, var(--dealroom-secondary) 45%, white) 100%);
 }
 
 .brand-word-opas {
-  background-image: linear-gradient(120deg, #34ff8a 0%, #b8ffcf 45%, #ff7ad9 100%);
+  background-image: linear-gradient(120deg, var(--dealroom-accent) 0%, color-mix(in srgb, var(--dealroom-accent) 45%, white) 45%, var(--dealroom-highlight) 100%);
 }
 
 @keyframes dealroomHeadingFlow {
@@ -2870,7 +3106,7 @@ footer {
 .summary-pill,
 .projection-chip {
   min-width: 0;
-  border: 1px solid rgba(123, 247, 255, 0.14);
+  border: 1px solid color-mix(in srgb, var(--dealroom-secondary) 16%, transparent);
   border-radius: 28px;
   padding: 16px 18px;
   overflow: hidden;
@@ -2879,15 +3115,21 @@ footer {
 .summary-pill span,
 .projection-chip span {
   display: block;
-  color: rgba(245, 251, 255, 0.68);
-  font-size: 0.76rem;
-  letter-spacing: 0.16em;
+  color: rgba(245, 251, 255, 0.82);
+  font-size: 0.84rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .projection-chip {
+  display: grid;
+  grid-template-rows: auto 150px 52px auto auto;
   text-decoration: none;
   color: inherit;
+}
+
+.projection-chip--a {
+  grid-template-rows: auto 136px 52px auto auto;
 }
 
 .projection-chip h3 {
@@ -2895,9 +3137,10 @@ footer {
   margin-top: 7px;
   color: #f5fbff;
   font-family: "Nevera", "Sharkon Demo", sans-serif;
-  font-size: 1.18rem;
+  font-size: clamp(1.7rem, 2.1vw, 2.15rem);
   line-height: 0.98;
   margin-bottom: 0;
+  align-self: start;
 }
 
 .projection-chip small,
@@ -2907,17 +3150,27 @@ footer {
 
 .projection-chip small {
   margin-top: 8px;
-  color: rgba(245, 251, 255, 0.72);
-  font-size: 0.74rem;
-  line-height: 1.3;
+  color: rgba(245, 251, 255, 0.9);
+  font-size: 0.92rem;
+  line-height: 1.35;
+  align-self: end;
+}
+
+.projection-chip strong {
+  margin-top: 0;
+  padding-top: 0;
+  align-self: end;
+  width: 100%;
+  overflow: hidden;
 }
 
 .projection-chip b {
   margin-top: 10px;
-  color: rgba(123, 247, 255, 0.9);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--dealroom-secondary) 85%, white);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  align-self: start;
 }
 
 .summary-pill strong,
@@ -2929,23 +3182,129 @@ footer {
   line-height: 0.98;
 }
 
+.animated-figure {
+  display: inline;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-shadow: inherit;
+}
+
+.password-gate-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top, rgba(123, 247, 255, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 122, 217, 0.16), transparent 32%),
+    #050816;
+}
+
+.password-gate-card {
+  width: min(100%, 460px);
+  display: grid;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid rgba(123, 247, 255, 0.18);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(9, 15, 31, 0.94), rgba(4, 8, 18, 0.98));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+}
+
+.password-gate-kicker {
+  color: #7bf7ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.password-gate-card h1 {
+  margin: 0;
+  color: #f5fbff;
+}
+
+.password-gate-card p {
+  margin: 0;
+  color: rgba(228, 238, 255, 0.76);
+}
+
+.password-gate-form {
+  display: grid;
+  gap: 14px;
+}
+
+.password-gate-field {
+  display: grid;
+  gap: 8px;
+}
+
+.password-gate-field span {
+  color: #9db9d6;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.password-gate-field input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(123, 247, 255, 0.2);
+  border-radius: 14px;
+  background: rgba(8, 13, 26, 0.92);
+  color: #f5fbff;
+  outline: none;
+}
+
+.password-gate-field input:focus {
+  border-color: rgba(123, 247, 255, 0.62);
+  box-shadow: 0 0 0 4px rgba(123, 247, 255, 0.1);
+}
+
+.password-gate-error {
+  color: #ff8fb1;
+  font-size: 0.88rem;
+}
+
+.password-gate-submit {
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #7bf7ff, #5b8dff);
+  color: #04101f;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.password-gate-submit:hover {
+  filter: brightness(1.05);
+}
+
 .summary-pill-ask {
-  border-color: rgba(255, 122, 217, 0.3);
-  background: radial-gradient(circle at top right, rgba(255, 122, 217, 0.16), transparent 42%), linear-gradient(135deg, rgba(255, 122, 217, 0.12), rgba(16, 18, 28, 0.92));
+  border-color: color-mix(in srgb, var(--dealroom-accent) 34%, transparent);
+  background: radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-accent) 18%, transparent), transparent 42%), linear-gradient(135deg, color-mix(in srgb, var(--dealroom-accent) 14%, transparent), rgba(16, 18, 28, 0.92));
+}
+
+.summary-pill-ask strong {
+  color: var(--dealroom-accent);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--dealroom-accent) 22%, transparent);
 }
 
 .summary-pill-projection {
-  border-color: rgba(52, 255, 138, 0.34);
-  background: radial-gradient(circle at top right, rgba(52, 255, 138, 0.14), transparent 42%), linear-gradient(135deg, rgba(52, 255, 138, 0.12), rgba(12, 18, 22, 0.92));
+  border-color: color-mix(in srgb, var(--dealroom-secondary) 34%, transparent);
+  background: radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-secondary) 16%, transparent), transparent 42%), linear-gradient(135deg, color-mix(in srgb, var(--dealroom-secondary) 12%, transparent), rgba(12, 18, 22, 0.92));
 }
 
 .summary-pill-ito {
-  border-color: rgba(123, 247, 255, 0.3);
-  background: radial-gradient(circle at top right, rgba(123, 247, 255, 0.14), transparent 42%), linear-gradient(135deg, rgba(123, 247, 255, 0.1), rgba(14, 18, 28, 0.92));
+  border-color: color-mix(in srgb, var(--dealroom-highlight) 34%, transparent);
+  background: radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-highlight) 16%, transparent), transparent 42%), linear-gradient(135deg, color-mix(in srgb, var(--dealroom-highlight) 12%, transparent), rgba(14, 18, 28, 0.92));
 }
 
 .summary-pill strong {
-  font-size: clamp(1.15rem, 1.85vw, 1.7rem);
+  font-size: clamp(1.35rem, 2vw, 1.95rem);
   line-height: 1;
   word-break: break-word;
 }
@@ -3009,10 +3368,10 @@ footer {
   margin-top: 14px;
   padding: 18px 22px;
   border-radius: 24px;
-  border: 1px solid rgba(52, 255, 138, 0.26);
+  border: 1px solid color-mix(in srgb, var(--dealroom-accent) 26%, transparent);
   background:
-    radial-gradient(circle at top right, rgba(52, 255, 138, 0.14), transparent 38%),
-    linear-gradient(135deg, rgba(52, 255, 138, 0.1), rgba(8, 16, 18, 0.92));
+    radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-accent) 16%, transparent), transparent 38%),
+    linear-gradient(135deg, color-mix(in srgb, var(--dealroom-accent) 12%, transparent), rgba(8, 16, 18, 0.92));
   text-align: center;
 }
 
@@ -3024,17 +3383,29 @@ footer {
 }
 
 .projection-band-total strong {
-  color: #34ff8a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--dealroom-accent);
   font-family: "Nevera", "Sharkon Demo", sans-serif;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(3rem, 5vw, 4.4rem);
   line-height: 0.95;
-  text-shadow: 0 0 18px rgba(52, 255, 138, 0.22);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--dealroom-accent) 22%, transparent);
+}
+
+.projection-band-total strong .animated-figure {
+  display: block;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-shadow: inherit;
 }
 
 .projection-chip {
   padding: 20px 22px;
   border-radius: 26px;
   background: linear-gradient(135deg, rgba(255, 122, 217, 0.12), rgba(52, 255, 138, 0.08)), rgba(255, 255, 255, 0.03);
+  min-height: 0;
 }
 
 .projection-chip--a,
@@ -3070,7 +3441,11 @@ footer {
 }
 
 .projection-chip strong {
-  font-size: 1.65rem;
+  font-size: clamp(1.9rem, 2.15vw, 2.55rem);
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  line-height: 0.9;
 }
 
 .prop-grid {
@@ -3115,7 +3490,7 @@ footer {
 .prop-summary-line span {
   display: block;
   margin-bottom: 7px;
-  color: #7bf7ff;
+  color: var(--dealroom-secondary);
   font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3160,7 +3535,7 @@ footer {
 }
 
 .prop-table th {
-  color: #7bf7ff;
+  color: var(--dealroom-secondary);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3175,8 +3550,8 @@ footer {
 
 .prop-table td.table-figure,
 .prop-mobile-cell strong.table-figure {
-  color: #34ff8a;
-  text-shadow: 0 0 16px rgba(52, 255, 138, 0.22);
+  color: var(--dealroom-accent);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--dealroom-accent) 22%, transparent);
 }
 
 .prop-note {
@@ -3192,12 +3567,12 @@ footer {
   display: grid;
   gap: 10px;
   width: min(100%, 360px);
-  border-color: rgba(255, 122, 217, 0.28);
+  border-color: color-mix(in srgb, var(--dealroom-highlight) 28%, transparent);
 }
 
 .projection-total-box a,
 .dealroom-footer a {
-  color: #7bf7ff;
+  color: var(--dealroom-secondary);
 }
 
 .dealroom-footer {
@@ -3206,6 +3581,22 @@ footer {
 }
 
 @media (max-width: 1040px) {
+  .dealroom-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dealroom-layout.is-sidebar-collapsed {
+    grid-template-columns: 1fr;
+  }
+
+  .dealroom-sidebar-card {
+    position: static;
+  }
+
+  .dealroom-sidebar.is-collapsed .dealroom-sidebar-toggle {
+    min-height: 0;
+  }
+
   .prop-hero-copy-wrap {
     display: flex;
     flex-direction: column;
@@ -3267,6 +3658,10 @@ footer {
     width: min(100% - 16px, 1240px);
   }
 
+  .dealroom-layout {
+    gap: 14px;
+  }
+
   .dealroom-brand-name {
     font-size: 1.15rem;
   }
@@ -3285,7 +3680,9 @@ footer {
   .context-card,
   .prop-card,
   .projection-total,
-  .projection-total-box {
+  .projection-total-box,
+  .dealroom-sidebar-card,
+  .tier-tab {
     border-radius: 18px;
     padding: 14px;
   }
@@ -3293,7 +3690,7 @@ footer {
   .prop-hero {
     gap: 12px;
     background:
-      radial-gradient(circle at top right, rgba(52, 255, 138, 0.08), transparent 34%),
+      radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-accent) 12%, transparent), transparent 34%),
       linear-gradient(180deg, rgba(15, 19, 35, 0.92), rgba(7, 10, 20, 0.96));
   }
 
@@ -3373,8 +3770,8 @@ footer {
   .summary-pill-projection strong,
   .summary-pill-ito strong,
   .projection-chip strong {
-    color: #34ff8a;
-    text-shadow: 0 0 16px rgba(52, 255, 138, 0.22);
+    color: var(--dealroom-accent);
+    text-shadow: 0 0 16px color-mix(in srgb, var(--dealroom-accent) 22%, transparent);
   }
 
   .projection-band {
@@ -3492,6 +3889,26 @@ footer {
 
   .projection-total-box {
     width: 100%;
+  }
+
+  .dealroom-sidebar-head h2 {
+    font-size: 0.96rem;
+  }
+
+  .tier-tab-stack {
+    gap: 8px;
+  }
+
+  .tier-tab {
+    padding: 12px;
+  }
+
+  .tier-tab b {
+    font-size: 0.68rem;
+  }
+
+  .tier-tab strong {
+    font-size: 1.2rem;
   }
 
   .prop-card-summary {

@@ -88,6 +88,29 @@ const propositionExtracts = [
   { title: 'Ecosystem Backing', body: 'Backed by a hyper-innovative, virtually unlimited ecosystem designed to stay compliant across both Web2 and Web3 environments.' },
 ]
 
+const onboardingTiers = [
+  {
+    id: 'starter',
+    label: 'Foundation Entry',
+    amount: 500000,
+  },
+  {
+    id: 'growth',
+    label: 'Growth Acceleration',
+    amount: 1000000,
+  },
+  {
+    id: 'strategic',
+    label: 'Strategic Expansion',
+    amount: 3000000,
+  },
+  {
+    id: 'enterprise',
+    label: 'Enterprise Integration',
+    amount: 5000000,
+  },
+]
+
 function normalizeRoute(pathname) {
   return pathname === '/dealroom' ? '/dealroom' : '/'
 }
@@ -920,10 +943,15 @@ function HomeLanding() {
 }
 
 function DealRoomPage() {
-  const totalProjection = projectionSummary.reduce((sum, item) => sum + Number(item.value.replace(/,/g, '')), 0)
+  const [selectedTierId, setSelectedTierId] = useState(onboardingTiers[0].id)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const selectedTier = onboardingTiers.find((tier) => tier.id === selectedTierId) ?? onboardingTiers[0]
+  const activeProjectionSummary = projectionSummary
+  const activePropositionBlocks = propositionBlocks
+  const totalProjection = activeProjectionSummary.reduce((sum, item) => sum + Number(item.value.replace(/,/g, '')), 0)
 
   return (
-    <div className="dealroom-shell">
+    <div className={`dealroom-shell dealroom-shell--${selectedTier.id}`}>
       <div className="dealroom-topbar">
         <a className="dealroom-brand" href="/">
           <OpasLogo className="dealroom-brand-mark" />
@@ -941,165 +969,215 @@ function DealRoomPage() {
       </div>
 
       <main className="dealroom-main">
-        <section className="prop-hero">
-          <div className="prop-hero-copy-wrap">
-            <div className="prop-hero-copy">
-              <span className="eyebrow">Investor Opportunity</span>
-              <h1>
-                An early-position opportunity to scale with <span className="brand-word brand-word-opai">OPAI</span> and the{' '}
-                <span className="brand-word brand-word-opas">OPAS</span> expansion curve.
-              </h1>
-              <p className="lede">Capital ask: $500,000 to accelerate the next phase of expansion.</p>
-            </div>
-            <div className="prop-summary">
-              <article className="summary-pill summary-pill-ask">
-                <span>Capital Ask</span>
-                <strong>{formatCurrency(500000)}</strong>
-              </article>
-              <article className="summary-pill summary-pill-projection">
-                <span>12-Month Projection</span>
-                <strong>{formatCurrency(totalProjection)}</strong>
-              </article>
-              <article className="summary-pill summary-pill-ito">
-                <span>OPAS ITO Value</span>
-                <strong>{formatCurrency(630000)}</strong>
-              </article>
-            </div>
-          </div>
-        </section>
+        <div className={`dealroom-layout${isSidebarCollapsed ? ' is-sidebar-collapsed' : ''}`}>
+          <aside className={`dealroom-sidebar${isSidebarCollapsed ? ' is-collapsed' : ''}`}>
+            <section className="dealroom-sidebar-card">
+              <button
+                type="button"
+                className="dealroom-sidebar-toggle"
+                onClick={() => setIsSidebarCollapsed((current) => !current)}
+                aria-expanded={!isSidebarCollapsed}
+              >
+                <span>{isSidebarCollapsed ? 'Open Classes' : 'Hide Classes'}</span>
+                <strong>{selectedTier.label}</strong>
+              </button>
 
-        <section className="prop-context">
-          <article className="context-card context-card--intro">
-            <span className="eyebrow">{propositionIntro.title}</span>
-            <h2>Position the opportunity before the numbers.</h2>
-            <p>{propositionIntro.body}</p>
-          </article>
-          <article className="context-card context-card--extracts">
-            <span className="eyebrow">Main Extracts</span>
-            <div className="extract-grid">
-              {propositionExtracts.map((extract) => (
-                <div key={extract.title} className="extract-card">
-                  <strong>{extract.title}</strong>
-                  <p>{extract.body}</p>
-                </div>
-              ))}
-            </div>
-          </article>
-        </section>
+              {isSidebarCollapsed ? null : (
+                <>
+                  <div className="dealroom-sidebar-head">
+                    <span className="eyebrow">Onboarding Classes</span>
+                    <h2>Select a capital class.</h2>
+                  </div>
+                  <div className="tier-tab-stack" role="tablist" aria-label="Onboarding classes">
+                    {onboardingTiers.map((tier) => {
+                      const isActive = tier.id === selectedTier.id
 
-        <section className="projection-band-wrap">
-          <div className="projection-band-heading">
-            <span className="eyebrow">Snapshot</span>
-            <h2>Segment snapshot across the four value engines.</h2>
-          </div>
-          <div className="projection-band">
-            {projectionSummary.map((item) => (
-              <a key={item.label} className={`projection-chip projection-chip--${item.tone}`} href={`#segment-${item.label.toLowerCase()}`}>
-                <span>Segment {item.label}</span>
-                <h3>{item.title}</h3>
-                <small>{item.synopsis}</small>
-                <strong>{formatCurrency(Number(item.value.replace(/,/g, '')))}</strong>
-              <b>{item.summary}</b>
-            </a>
-          ))}
-          </div>
-          <div className="projection-band-total">
-            <span>Combined Four-Segment Total</span>
-            <strong>{formatCurrency(totalProjection)}</strong>
-          </div>
-        </section>
-
-        <section className="prop-grid">
-          {propositionBlocks.map((block) => (
-            <article key={block.id} className={`prop-card prop-card--${block.tone}`} id={`segment-${block.id.toLowerCase()}`}>
-              <div className="prop-card-head">
-                <div>
-                  <span className="card-kicker">
-                    {block.id}. {block.tag}
-                  </span>
-                  <h2>{block.title}</h2>
-                </div>
-                <div className="accent-orb" aria-hidden="true" />
-              </div>
-              <div className="prop-card-summary">
-                <div className="prop-summary-line">
-                  <span>Synopsis</span>
-                  <p>{block.synopsis}</p>
-                </div>
-                <div className="prop-summary-line">
-                  <span>Summary</span>
-                  <p>{block.summary}</p>
-                </div>
-              </div>
-              <div className="prop-table-wrap">
-                <table className="prop-table">
-                  <thead>
-                    <tr>
-                      {block.headers.map((header) => (
-                        <th key={header}>{header}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {block.rows.map((row) => (
-                      <tr key={row.join('-')}>
-                        {row.map((cell, index) => (
-                          <td
-                            key={`${block.id}-${cell}-${index}`}
-                            className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
-                          >
-                            {cell}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="prop-mobile-rows">
-                {block.rows.map((row) => (
-                  <article key={`${block.id}-${row.join('-')}`} className="prop-mobile-row">
-                    {row.map((cell, index) => (
-                      <div key={`${block.id}-mobile-${cell}-${index}`} className="prop-mobile-cell">
-                        <span>{block.headers[index]}</span>
-                        <strong
-                          className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                      return (
+                        <button
+                          key={tier.id}
+                          type="button"
+                          className={`tier-tab tier-tab--${tier.id}${isActive ? ' is-active' : ''}`}
+                          onClick={() => {
+                            setSelectedTierId(tier.id)
+                            setIsSidebarCollapsed(true)
+                          }}
+                          aria-pressed={isActive}
                         >
-                          {cell}
-                        </strong>
-                      </div>
-                    ))}
+                          <span>{tier.label}</span>
+                          <strong>{formatCurrency(tier.amount)}</strong>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </>
+              )}
+            </section>
+          </aside>
+
+          <div className="dealroom-content-column">
+            <section className="prop-hero">
+              <div className="prop-hero-copy-wrap">
+                <div className="prop-hero-copy">
+                  <span className="eyebrow">Investor Opportunity</span>
+                  <h1>
+                    An early-position opportunity to scale with <span className="brand-word brand-word-opai">OPAI</span> and the{' '}
+                    <span className="brand-word brand-word-opas">OPAS</span> expansion curve.
+                  </h1>
+                  <p className="lede">
+                    {selectedTier.label} begins at {formatCurrency(selectedTier.amount)} and expands through staged capital tiers.
+                  </p>
+                </div>
+                <div className="prop-summary">
+                  <article className="summary-pill summary-pill-ask">
+                    <span>{selectedTier.label} Capital Ask</span>
+                    <strong>{formatCurrency(selectedTier.amount)}</strong>
                   </article>
+                  <article className="summary-pill summary-pill-projection">
+                    <span>12-Month Projection</span>
+                    <strong>{formatCurrency(totalProjection)}</strong>
+                  </article>
+                  <article className="summary-pill summary-pill-ito">
+                    <span>OPAS ITO Value</span>
+                    <strong>{formatCurrency(630000)}</strong>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section className="prop-context">
+              <article className="context-card context-card--intro">
+                <span className="eyebrow">{propositionIntro.title}</span>
+                <h2>Position the opportunity before the numbers.</h2>
+                <p>{propositionIntro.body}</p>
+              </article>
+              <article className="context-card context-card--extracts">
+                <span className="eyebrow">Main Extracts</span>
+                <div className="extract-grid">
+                  {propositionExtracts.map((extract) => (
+                    <div key={extract.title} className="extract-card">
+                      <strong>{extract.title}</strong>
+                      <p>{extract.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            </section>
+
+            <section className="projection-band-wrap">
+              <div className="projection-band-heading">
+                <span className="eyebrow">Snapshot</span>
+                <h2>Segment snapshot across the four value engines.</h2>
+              </div>
+              <div className="projection-band">
+                {activeProjectionSummary.map((item) => (
+                  <a key={item.label} className={`projection-chip projection-chip--${item.tone}`} href={`#segment-${item.label.toLowerCase()}`}>
+                    <span>Segment {item.label}</span>
+                    <h3>{item.title}</h3>
+                    <small>{item.synopsis}</small>
+                    <strong>{formatCurrency(Number(item.value.replace(/,/g, '')))}</strong>
+                    <b>{item.summary}</b>
+                  </a>
                 ))}
               </div>
-              <p className="prop-note">
-                {block.note}
-                {block.id === 'A' ? ' Scenario A in the deck reinforces repeat-paying system behavior.' : ''}
-                {block.id === 'B' ? ' Scenario B presents a lower-entry but still recurring participation path.' : ''}
-                {block.id === 'C' ? ' The deck also frames OPAS as part of a broader long-horizon value narrative.' : ''}
-                {block.id === 'D' ? ' This aligns with the deck message that effort and execution drive results.' : ''}
-              </p>
-            </article>
-          ))}
-        </section>
+              <div className="projection-band-total">
+                <span>Combined Four-Segment Total</span>
+                <strong>{formatCurrency(totalProjection)}</strong>
+              </div>
+            </section>
 
-        <section className="projection-total">
-          <div>
-            <span className="eyebrow">12 Months Projection</span>
-            <h2>Total extracted proposition value: {formatCurrency(totalProjection)}</h2>
-            <p>
-              The source PDF combines A, B, C, and D at a total of 1,165,000. This page preserves that total while
-              making the mechanics legible enough to present directly on-site.
-            </p>
+            <section className="prop-grid">
+              {activePropositionBlocks.map((block) => (
+                <article key={block.id} className={`prop-card prop-card--${block.tone}`} id={`segment-${block.id.toLowerCase()}`}>
+                  <div className="prop-card-head">
+                    <div>
+                      <span className="card-kicker">
+                        {block.id}. {block.tag}
+                      </span>
+                      <h2>{block.title}</h2>
+                    </div>
+                    <div className="accent-orb" aria-hidden="true" />
+                  </div>
+                  <div className="prop-card-summary">
+                    <div className="prop-summary-line">
+                      <span>Synopsis</span>
+                      <p>{block.synopsis}</p>
+                    </div>
+                    <div className="prop-summary-line">
+                      <span>Summary</span>
+                      <p>{block.summary}</p>
+                    </div>
+                  </div>
+                  <div className="prop-table-wrap">
+                    <table className="prop-table">
+                      <thead>
+                        <tr>
+                          {block.headers.map((header) => (
+                            <th key={header}>{header}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {block.rows.map((row) => (
+                          <tr key={row.join('-')}>
+                            {row.map((cell, index) => (
+                              <td
+                                key={`${block.id}-${cell}-${index}`}
+                                className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                              >
+                                {cell}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="prop-mobile-rows">
+                    {block.rows.map((row) => (
+                      <article key={`${block.id}-${row.join('-')}`} className="prop-mobile-row">
+                        {row.map((cell, index) => (
+                          <div key={`${block.id}-mobile-${cell}-${index}`} className="prop-mobile-cell">
+                            <span>{block.headers[index]}</span>
+                            <strong
+                              className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                            >
+                              {cell}
+                            </strong>
+                          </div>
+                        ))}
+                      </article>
+                    ))}
+                  </div>
+                  <p className="prop-note">
+                    {block.note}
+                    {block.id === 'A' ? ' Scenario A in the deck reinforces repeat-paying system behavior.' : ''}
+                    {block.id === 'B' ? ' Scenario B presents a lower-entry but still recurring participation path.' : ''}
+                    {block.id === 'C' ? ' The deck also frames OPAS as part of a broader long-horizon value narrative.' : ''}
+                    {block.id === 'D' ? ' This aligns with the deck message that effort and execution drive results.' : ''}
+                  </p>
+                </article>
+              ))}
+            </section>
+
+            <section className="projection-total">
+              <div>
+                <span className="eyebrow">12 Months Projection</span>
+                <h2>Total extracted proposition value: {formatCurrency(totalProjection)}</h2>
+                <p>
+                  The source PDF combines A, B, C, and D at a total of 1,165,000. This page preserves that total while
+                  making the mechanics legible enough to present directly on-site.
+                </p>
+              </div>
+              <div className="projection-total-box">
+                <span>Combined Total</span>
+                <strong>{formatCurrency(totalProjection)}</strong>
+                <a href="/assets/VP-June-26.pdf" target="_blank" rel="noreferrer">
+                  Review the original document
+                </a>
+              </div>
+            </section>
           </div>
-          <div className="projection-total-box">
-            <span>Combined Total</span>
-            <strong>{formatCurrency(totalProjection)}</strong>
-            <a href="/assets/VP-June-26.pdf" target="_blank" rel="noreferrer">
-              Review the original document
-            </a>
-          </div>
-        </section>
+        </div>
       </main>
 
       <footer className="dealroom-footer">
@@ -1109,8 +1187,60 @@ function DealRoomPage() {
   )
 }
 
+const ACCESS_PASSWORD = 'Saturday1!1'
+const ACCESS_STORAGE_KEY = 'opai-access-granted'
+
+function PasswordGate({ onUnlock }) {
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    if (password === ACCESS_PASSWORD) {
+      window.sessionStorage.setItem(ACCESS_STORAGE_KEY, 'true')
+      setError('')
+      onUnlock()
+      return
+    }
+
+    setError('Incorrect password.')
+  }
+
+  return (
+    <main className="password-gate-shell">
+      <section className="password-gate-card">
+        <span className="password-gate-kicker">Restricted Access</span>
+        <h1>Enter password to continue.</h1>
+        <p>This build is locked behind a single shared password.</p>
+        <form className="password-gate-form" onSubmit={handleSubmit}>
+          <label className="password-gate-field" htmlFor="access-password">
+            <span>Password</span>
+            <input
+              id="access-password"
+              type="password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value)
+                if (error) setError('')
+              }}
+              placeholder="Enter password"
+              autoComplete="current-password"
+            />
+          </label>
+          {error ? <p className="password-gate-error">{error}</p> : null}
+          <button type="submit" className="password-gate-submit">
+            Unlock
+          </button>
+        </form>
+      </section>
+    </main>
+  )
+}
+
 function App() {
   const [route, setRoute] = useState(() => normalizeRoute(window.location.pathname))
+  const [hasAccess, setHasAccess] = useState(() => window.sessionStorage.getItem(ACCESS_STORAGE_KEY) === 'true')
 
   useEffect(() => {
     const onPopState = () => setRoute(normalizeRoute(window.location.pathname))
@@ -1121,6 +1251,10 @@ function App() {
   useEffect(() => {
     document.title = route === '/dealroom' ? 'OPAS | Deal Room' : 'OPAS | OPAI Ecosystem'
   }, [route])
+
+  if (route === '/dealroom' && !hasAccess) {
+    return <PasswordGate onUnlock={() => setHasAccess(true)} />
+  }
 
   return route === '/dealroom' ? <DealRoomPage /> : <HomeLanding />
 }
