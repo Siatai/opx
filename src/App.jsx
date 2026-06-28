@@ -1,5 +1,12 @@
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 import { OpasLogo } from './components/OpasLogo'
+
+const MotionAnchor = motion.a
+const MotionButton = motion.button
+const MotionDiv = motion.div
+const MotionSection = motion.section
+const MotionStrong = motion.strong
 
 const tokenomicsData = [
   { label: 'Pioneer Airdrop', value: 5, color: '#34ff8a' },
@@ -13,6 +20,10 @@ const tokenomicsData = [
   { label: 'CSR / Charity Tokens', value: 6.3, color: '#9cff7b' },
 ]
 
+const totalSupply = 21000000000
+const teamTokenPoolPercent = 3
+const teamTokenPool = totalSupply * (teamTokenPoolPercent / 100)
+
 const propositionBlocks = [
   {
     id: 'A',
@@ -20,9 +31,9 @@ const propositionBlocks = [
     title: 'Potential Equity Projection',
     tag: '5% Share',
     synopsis: 'High-velocity user growth scenario with recurring subscription expansion.',
-    summary: 'Maps 100K to 1M users into revenue and 5% share outcomes over a 1-7 month window.',
-    note: 'Repeat subscriptions will contribute additionally.',
-    scaleColumns: [3, 4],
+    summary: 'Stages the 5% share path by capital ask, moving from 100K users in 1-2 months to 1M users in 6-7 months as each tranche lands.',
+    note: 'Each row reflects the next capital ask tranche entering the system. Repeat subscriptions will contribute additionally.',
+    scaleColumns: [2, 3, 4],
     headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', '5% Share'],
     rows: [
       ['100K', '1-2 months', '1M', '300K', '25,000'],
@@ -36,9 +47,9 @@ const propositionBlocks = [
     title: 'OPAI ID',
     tag: 'Capped Model',
     synopsis: 'Lower-entry participation route built around a capped value frame.',
-    summary: 'Shows a 50,000 user path with a 6-month revenue target and capped participation value.',
-    note: 'Single capped scenario extracted from the proposition PDF.',
-    scaleColumns: [3, 4],
+    summary: 'Shows a single capped scenario that scales directly with each capital infusion.',
+    note: 'Users, revenue, earning, and capping all scale from the same base row.',
+    scaleColumns: [2, 3, 4],
     headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', 'Capping'],
     rows: [['50,000', '6 months', '500,000', '400,000', '500,000']],
   },
@@ -48,23 +59,18 @@ const propositionBlocks = [
     title: 'OPAS',
     tag: 'Token Position',
     synopsis: 'Token-side upside framed through ITO and listing value translation.',
-    summary: 'Connects team token allocation, ITO pricing, and listing valuation into one value story.',
-    note: 'Priority exit at ITO. Team token note preserved from the source proposition.',
-    scaleColumns: [1, 3, 5],
+    summary: 'Investor allocation is taken from the 3% team-token pool and increases by capital ask at 5%, 7%, 9%, and 11% respectively.',
+    note: 'Team token pool is 3% of 21 billion total supply.',
+    scaleColumns: [3, 5],
     headers: ['Total Supply', '5% of Team Tokens', 'ITO Price', 'ITO Value', 'Listing Price', 'Listing Value'],
-    rows: [['21,000,000,000', '31,500,000', '0.02', '630,000', '0.5', '15,750,000']],
-  },
-  {
-    id: 'D',
-    tone: 'd',
-    title: 'Trading Bot',
-    tag: 'Performance Layer',
-    synopsis: 'Execution-based yield layer attached to a fixed capital allocation.',
-    summary: 'Presents the 5% monthly assumption and its annualized result in a simplified performance model.',
-    note: 'Monthly return assumption taken directly from the proposition.',
-    scaleColumns: [0, 2, 3],
-    headers: ['Allocation', 'Anticipated Performance', 'Monthly AR', '1 Year'],
-    rows: [['100,000', '5%', '5,000', '60,000']],
+    rows: [[
+      formatWholeNumber(totalSupply),
+      '',
+      '0.02',
+      '',
+      '0.5',
+      '',
+    ]],
   },
 ]
 
@@ -72,8 +78,21 @@ const projectionSummary = [
   { label: 'A', title: 'Potential Equity Projection', synopsis: 'Growth scenario', summary: '5% share path', tone: 'a', value: 75000 },
   { label: 'B', title: 'OPAI ID', synopsis: 'Capped route', summary: 'Recurring entry model', tone: 'b', value: 400000 },
   { label: 'C', title: 'OPAS', synopsis: 'Token value lens', summary: 'ITO to listing bridge', tone: 'c', value: 630000 },
-  { label: 'D', title: 'Trading Bot', synopsis: 'Performance layer', summary: '12-month output view', tone: 'd', value: 60000 },
 ]
+
+const botIncomeSection = {
+  id: 'D',
+  tone: 'd',
+  title: 'Bot Income',
+  tag: 'Bot Layer',
+  synopsis: 'Bot income layer.',
+  summary: '12-month output.',
+  note: 'Shown on foundation and growth asks.',
+  scaleColumns: [0, 2, 3],
+  headers: ['Allocation', 'Anticipated Performance', 'Monthly AR', '1 Year'],
+  rows: [['100,000', '5%', '5,000', '60,000']],
+  value: 60000,
+}
 
 const propositionIntro = {
   title: 'Introduction',
@@ -97,21 +116,33 @@ const onboardingTiers = [
     id: 'starter',
     label: 'Foundation Entry',
     amount: 500000,
+    tokenPercent: 5,
+    protectedAsk: false,
   },
   {
     id: 'growth',
     label: 'Growth Acceleration',
     amount: 1000000,
+    tokenPercent: 7,
+    protectedAsk: false,
   },
   {
     id: 'strategic',
-    label: 'Strategic Expansion',
+    label: 'Strategic Entry',
     amount: 3000000,
+    tokenPercent: 9,
+    protectedAsk: true,
+    stakePercent: 1,
+    projectionValue: 350000000000,
   },
   {
     id: 'enterprise',
-    label: 'Enterprise Integration',
+    label: 'Platform Control',
     amount: 5000000,
+    tokenPercent: 11,
+    protectedAsk: true,
+    stakePercent: 3,
+    projectionValue: 350000000000,
   },
 ]
 
@@ -164,8 +195,13 @@ function formatCompactNumber(value, source) {
 }
 
 function scaleRowCell(cell, multiplier) {
-  if (typeof cell !== 'string' || cell.includes('%') || /month/i.test(cell) || /K$|M$/i.test(cell)) {
+  if (typeof cell !== 'string' || cell.includes('%') || /month/i.test(cell)) {
     return cell
+  }
+
+  const compactValue = parseCompactNumber(cell)
+  if (compactValue !== null) {
+    return formatCompactNumber(compactValue * multiplier, cell)
   }
 
   const numeric = Number(cell.replace(/,/g, ''))
@@ -229,6 +265,91 @@ function mixColor(source, target, amount) {
     g: mix(from.g, to.g),
     b: mix(from.b, to.b)
   })
+}
+
+function _maskText(length = 14) {
+  return '█'.repeat(length)
+}
+
+function formatProjectionFigure(value) {
+  return `${new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    notation: 'compact',
+    maximumFractionDigits: 0,
+  }).format(value)}+`
+}
+
+function formatWholeNumber(value) {
+  return new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 0,
+  }).format(value)
+}
+
+function formatPercent(value) {
+  return `${value}%`
+}
+
+function formatPercentValue(value) {
+  return `${new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: Number.isInteger(value) ? 0 : 1,
+    maximumFractionDigits: Number.isInteger(value) ? 0 : 1,
+  }).format(value)}%`
+}
+
+function formatProtectedValue(value, format = 'currency') {
+  return format === 'projection' ? formatProjectionFigure(value) : formatCurrency(value)
+}
+
+function buildMaskText(length = 14) {
+  return String.fromCharCode(9608).repeat(length)
+}
+
+function UnlockPrompt({ title = 'Sensitive projection', copy = 'Reveal opens only after NDA or co-founder approval.', compact = false, onClick }) {
+  return (
+    <button type="button" className={`unlock-prompt${compact ? ' unlock-prompt--compact' : ''}`} onClick={onClick}>
+      <span className="unlock-prompt-kicker">Locked</span>
+      <strong>{title}</strong>
+      {copy ? <p>{copy}</p> : null}
+      <span className="unlock-prompt-action">Open</span>
+    </button>
+  )
+}
+
+function RevealField({ hasAccess, label, lockedLabel = 'Protected Layer', value, maskedLength = 10, onRequestUnlock }) {
+  return (
+    <div className={`reveal-field${hasAccess ? ' is-revealed' : ''}`}>
+      <span>{hasAccess ? label : lockedLabel}</span>
+      <AnimatePresence mode="wait" initial={false}>
+        {hasAccess ? (
+          <MotionStrong
+            key="value"
+            className="reveal-field-value"
+            initial={{ opacity: 0, y: 14, filter: 'blur(14px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -8, filter: 'blur(10px)' }}
+            transition={{ duration: 0.28, ease: 'easeOut' }}
+          >
+            {value}
+          </MotionStrong>
+        ) : (
+          <MotionButton
+            key="masked"
+            type="button"
+            className="reveal-mask-button"
+            onClick={onRequestUnlock}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+          >
+            <span className="reveal-mask-copy">{buildMaskText(maskedLength)}</span>
+            <small>Reveal after approval</small>
+          </MotionButton>
+        )}
+      </AnimatePresence>
+    </div>
+  )
 }
 
 function TokenomicsChart() {
@@ -1009,40 +1130,124 @@ function HomeLanding() {
   )
 }
 
-function DealRoomPage() {
+function DealRoomPage({ hasAccess, onUnlock }) {
   const [selectedTierId, setSelectedTierId] = useState(onboardingTiers[0].id)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isMobileDealsOpen, setIsMobileDealsOpen] = useState(false)
+  const [isUnlockPromptOpen, setIsUnlockPromptOpen] = useState(false)
   const selectedTier = onboardingTiers.find((tier) => tier.id === selectedTierId) ?? onboardingTiers[0]
   const baseTierAmount = onboardingTiers[0].amount
-  const selectedTierIndex = onboardingTiers.findIndex((tier) => tier.id === selectedTier.id)
   const capitalMultiple = selectedTier.amount / baseTierAmount
-  const tierBonusRate = selectedTierIndex * 0.05
-  const userAcquisitionMultiplier = 1 + selectedTierIndex * 0.6
-  const tierBenefitMultiplier = capitalMultiple * (1 + tierBonusRate)
-  const tierBenefitLabel =
-    selectedTierIndex === 0
-      ? `1x base allocation from ${formatCurrency(baseTierAmount)}`
-      : `${capitalMultiple}x base allocation with ${selectedTierIndex * 5}% extra token benefit`
+  const tierBenefitMultiplier = capitalMultiple
+  const isProtectedAsk = Boolean(selectedTier.protectedAsk)
+  const tierBenefitLabel = isProtectedAsk
+    ? `${formatPercent(selectedTier.stakePercent)} protected platform stake`
+    : `${capitalMultiple}x capital ask multiplier from ${formatCurrency(baseTierAmount)}`
   const activeProjectionSummary = projectionSummary.map((item) => ({
     ...item,
     benefitValue: Math.round(item.value * tierBenefitMultiplier),
+    valueFormat: 'currency',
   }))
   const activePropositionBlocks = propositionBlocks.map((block, index) => ({
     ...block,
+    headers: block.id === 'C'
+      ? ['Total Supply', `${formatPercent(selectedTier.tokenPercent)} of Team Tokens`, 'ITO Price', 'ITO Value', 'Listing Price', 'Listing Value']
+      : block.headers,
     benefitValue: activeProjectionSummary[index]?.benefitValue ?? 0,
     benefitLabel: tierBenefitLabel,
-    scaledRows: block.rows.map((row) =>
-      row.map((cell, cellIndex) => {
-        if (cellIndex === 0 && block.headers[cellIndex] === 'Users') {
-          return scaleUserCell(cell, userAcquisitionMultiplier)
-        }
+    scaledRows: block.id === 'A'
+      ? block.rows.map((row) =>
+        row.map((cell, cellIndex) => {
+          if (cellIndex === 0 && block.headers[cellIndex] === 'Users') {
+            return scaleUserCell(cell, capitalMultiple)
+          }
 
-        return block.scaleColumns.includes(cellIndex) ? scaleRowCell(cell, tierBenefitMultiplier) : cell
-      })
-    ),
+          return block.scaleColumns.includes(cellIndex) ? scaleRowCell(cell, tierBenefitMultiplier) : cell
+        })
+      )
+      : block.id === 'B'
+        ? block.rows.map((row) =>
+          row.map((cell, cellIndex) => {
+            if (cellIndex === 0 && block.headers[cellIndex] === 'Users') {
+              return scaleUserCell(cell, capitalMultiple)
+            }
+
+            return block.scaleColumns.includes(cellIndex) ? scaleRowCell(cell, tierBenefitMultiplier) : cell
+          })
+        )
+      : block.id === 'C'
+        ? (() => {
+          const investorTokenAllocation = teamTokenPool * (selectedTier.tokenPercent / 100)
+          const itoValue = investorTokenAllocation * 0.02
+          const listingValue = investorTokenAllocation * 0.5
+
+          return [[
+            formatWholeNumber(totalSupply),
+            formatWholeNumber(investorTokenAllocation),
+            '0.02',
+            formatWholeNumber(itoValue),
+            '0.5',
+            formatWholeNumber(listingValue),
+          ]]
+        })()
+        : block.rows,
   }))
-  const totalProjection = activeProjectionSummary.reduce((sum, item) => sum + item.benefitValue, 0)
+  const stakeValue = isProtectedAsk ? selectedTier.projectionValue * (selectedTier.stakePercent / 100) : 0
+  const activeBotIncomeSection = {
+    ...botIncomeSection,
+    benefitValue: Math.round(botIncomeSection.value * tierBenefitMultiplier),
+    benefitLabel: `${capitalMultiple}x capital ask multiplier from ${formatCurrency(baseTierAmount)}`,
+    scaledRows: botIncomeSection.rows.map((row) =>
+      row.map((cell, cellIndex) => (
+        botIncomeSection.scaleColumns.includes(cellIndex) ? scaleRowCell(cell, tierBenefitMultiplier) : cell
+      ))
+    ),
+    valueFormat: 'currency',
+  }
+  const protectedSection = {
+    id: 'D',
+    tone: 'd',
+    title: 'Super Platform Stake',
+    tag: 'Protected Allocation',
+    synopsis: 'Co-founder protected ownership layer tied directly to the capital ask.',
+    summary: 'Reveals the reserved platform slice, five-year projection, and implied stake value.',
+    note: 'Protected allocation remains hidden until NDA clearance or direct co-founder approval is granted.',
+    headers: ['Capital Ask', 'Protected Stake', '5-Year Projection', 'Implied Stake Value'],
+    scaledRows: [[formatCurrency(selectedTier.amount), formatPercent(selectedTier.stakePercent), formatProjectionFigure(selectedTier.projectionValue), formatProjectionFigure(stakeValue)]],
+    benefitValue: stakeValue,
+    benefitLabel: tierBenefitLabel,
+    valueFormat: 'projection',
+  }
+  const protectedProjectionSummary = isProtectedAsk
+    ? [...activeProjectionSummary, {
+      label: 'D',
+      title: protectedSection.title,
+      synopsis: 'Protected co-founder layer',
+      summary: 'Stake and projection reveal',
+      tone: 'd',
+      benefitValue: protectedSection.benefitValue,
+      valueFormat: protectedSection.valueFormat,
+    }]
+    : [...activeProjectionSummary, {
+      label: 'D',
+      title: activeBotIncomeSection.title,
+      synopsis: activeBotIncomeSection.synopsis,
+      summary: activeBotIncomeSection.summary,
+      tone: 'd',
+      benefitValue: activeBotIncomeSection.benefitValue,
+      valueFormat: activeBotIncomeSection.valueFormat,
+    }]
+  const totalProjection = (isProtectedAsk ? activeProjectionSummary : [...activeProjectionSummary, activeBotIncomeSection])
+    .reduce((sum, item) => sum + item.benefitValue, 0)
+  const visibleBlocks = isProtectedAsk
+    ? [...activePropositionBlocks, protectedSection]
+    : [...activePropositionBlocks, activeBotIncomeSection]
+
+  const requestUnlock = () => {
+    if (isProtectedAsk && !hasAccess) {
+      setIsUnlockPromptOpen(true)
+    }
+  }
 
   const renderDealTabs = (closeMenu = false) => (
     <div className="tier-tab-stack" role="tablist" aria-label="Onboarding classes">
@@ -1154,7 +1359,11 @@ function DealRoomPage() {
                     <span className="brand-word brand-word-opas">OPAS</span> expansion curve.
                   </h1>
                   <p className="lede">
-                    {selectedTier.label} begins at {formatCurrency(selectedTier.amount)} and follows the {capitalMultiple}x base allocation model with {selectedTierIndex * 5}% extra token benefit over the {formatCurrency(baseTierAmount)} base ask.
+                    {isProtectedAsk && hasAccess
+                      ? `${selectedTier.label} begins at ${formatCurrency(selectedTier.amount)} and positions the ask around a protected Super Platform allocation. The concealed layer hints at the depth of the stack, the level of the tech, and the ownership logic reserved for approved conversations only.`
+                      : isProtectedAsk
+                        ? `${selectedTier.label} begins at ${formatCurrency(selectedTier.amount)} and opens into a protected layer where the deeper architecture, stack depth, and ownership logic stay masked until NDA approval or co-founder clearance.`
+                        : `${selectedTier.label} begins at ${formatCurrency(selectedTier.amount)} and stays fully open with the visible proposition model, including the bot-income layer.`}
                   </p>
                 </div>
                 <div className="prop-summary">
@@ -1162,14 +1371,41 @@ function DealRoomPage() {
                     <span>{selectedTier.label} Capital Ask</span>
                     <strong>{formatCurrency(selectedTier.amount)}</strong>
                   </article>
-                  <article className="summary-pill summary-pill-projection">
-                    <span>12-Month Projection</span>
-                    <strong>{formatCurrency(totalProjection)}</strong>
-                  </article>
-                  <article className="summary-pill summary-pill-ito">
-                    <span>OPAS ITO Value</span>
-                    <strong>{formatCurrency(630000)}</strong>
-                  </article>
+                  {isProtectedAsk ? (
+                    <>
+                      <article className="summary-pill summary-pill-projection">
+                        <RevealField
+                          hasAccess={hasAccess}
+                          label="Stake in Super Platform"
+                          lockedLabel="Protected Stake Layer"
+                          value={formatPercent(selectedTier.stakePercent)}
+                          maskedLength={6}
+                          onRequestUnlock={requestUnlock}
+                        />
+                      </article>
+                      <article className="summary-pill summary-pill-ito">
+                        <RevealField
+                          hasAccess={hasAccess}
+                          label="5-Year Super Platform Projection"
+                          lockedLabel="5-Year Protected Projection"
+                          value={formatProjectionFigure(selectedTier.projectionValue)}
+                          maskedLength={12}
+                          onRequestUnlock={requestUnlock}
+                        />
+                      </article>
+                    </>
+                  ) : (
+                    <>
+                      <article className="summary-pill summary-pill-projection">
+                        <span>12-Month Projection</span>
+                        <strong>{formatCurrency(totalProjection)}</strong>
+                      </article>
+                      <article className="summary-pill summary-pill-ito">
+                        <span>OPAS ITO Value</span>
+                        <strong>{formatCurrency(activeProjectionSummary[2]?.benefitValue ?? 0)}</strong>
+                      </article>
+                    </>
+                  )}
                 </div>
               </div>
             </section>
@@ -1196,117 +1432,258 @@ function DealRoomPage() {
             <section className="projection-band-wrap">
               <div className="projection-band-heading">
                 <span className="eyebrow">Snapshot</span>
-                <h2>Segment snapshot across the four value engines.</h2>
+                <h2>
+                  {isProtectedAsk
+                    ? hasAccess
+                      ? 'Segment snapshot across the four sections.'
+                      : 'Segment snapshot across the visible sections.'
+                    : 'Segment snapshot across the four value sections.'}
+                </h2>
               </div>
               <div className="projection-band">
-                {activeProjectionSummary.map((item) => (
-                  <a key={item.label} className={`projection-chip projection-chip--${item.tone}`} href={`#segment-${item.label.toLowerCase()}`}>
-                    <span>Segment {item.label}</span>
-                    <h3>{item.title}</h3>
-                    <small>{item.synopsis}</small>
-                    <strong>{formatCurrency(item.benefitValue)}</strong>
-                    <b>{item.summary}</b>
-                  </a>
+                {protectedProjectionSummary.map((item) => (
+                  hasAccess || !isProtectedAsk || item.label !== 'D' ? (
+                    <MotionAnchor
+                      key={item.label}
+                      className={`projection-chip projection-chip--${item.tone}`}
+                      href={`#segment-${item.label.toLowerCase()}`}
+                      initial={{ opacity: 0, y: 18, filter: 'blur(12px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      transition={{ duration: 0.28, ease: 'easeOut' }}
+                    >
+                      <span>Segment {item.label}</span>
+                      <h3>{item.title}</h3>
+                      <small>{item.synopsis}</small>
+                      <strong>{formatProtectedValue(item.benefitValue, item.valueFormat)}</strong>
+                      <b>{item.summary}</b>
+                    </MotionAnchor>
+                  ) : (
+                    <div
+                      key={item.label}
+                      className={`projection-chip projection-chip--${item.tone} projection-chip--locked`}
+                      onClick={requestUnlock}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault()
+                          requestUnlock()
+                        }
+                      }}
+                    >
+                      <span>{buildMaskText(7)}</span>
+                      <h3>{buildMaskText(12)}</h3>
+                      <small>{buildMaskText(18)}</small>
+                      <UnlockPrompt title={buildMaskText(8)} copy="" compact onClick={requestUnlock} />
+                    </div>
+                  )
                 ))}
               </div>
               <div className="projection-band-total">
-                <span>Combined Four-Segment Total</span>
-                <strong>{formatCurrency(totalProjection)}</strong>
+                <span>{isProtectedAsk ? 'Combined Three-Segment Total' : 'Combined Four-Segment Total'}</span>
+                <MotionStrong
+                  key="projection-total"
+                  initial={{ opacity: 0, y: 20, filter: 'blur(14px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.28, ease: 'easeOut' }}
+                >
+                  {formatCurrency(totalProjection)}
+                </MotionStrong>
               </div>
             </section>
 
             <section className="prop-grid">
-              {activePropositionBlocks.map((block) => (
+              {visibleBlocks.map((block) => (
                 <article key={block.id} className={`prop-card prop-card--${block.tone}`} id={`segment-${block.id.toLowerCase()}`}>
                   <div className="prop-card-head">
                     <div>
                       <span className="card-kicker">
-                        {block.id}. {block.tag}
+                        {hasAccess || !isProtectedAsk || block.id !== 'D' ? `${block.id}. ${block.tag}` : `Section ${block.id}`}
                       </span>
-                      <h2>{block.title}</h2>
+                      <h2>{hasAccess || !isProtectedAsk || block.id !== 'D' ? block.title : buildMaskText(16)}</h2>
                     </div>
                     <div className="accent-orb" aria-hidden="true" />
                   </div>
-                  <div className="prop-card-summary">
-                    <div className="prop-summary-line">
-                      <span>Synopsis</span>
-                      <p>{block.synopsis}</p>
-                    </div>
-                    <div className="prop-summary-line">
-                      <span>Summary</span>
-                      <p>{block.summary}</p>
-                    </div>
-                    <div className="prop-summary-line">
-                      <span>Benefit</span>
-                      <p>
-                        {formatCurrency(block.benefitValue)} under the {selectedTier.label} ask with {block.benefitLabel}.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="prop-table-wrap">
-                    <table className="prop-table">
-                      <thead>
-                        <tr>
-                          {block.headers.map((header) => (
-                            <th key={header}>{header}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {block.scaledRows.map((row) => (
-                          <tr key={row.join('-')}>
-                            {row.map((cell, index) => (
-                              <td
-                                key={`${block.id}-${cell}-${index}`}
-                                className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
-                              >
-                                {cell}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="prop-mobile-rows">
-                    {block.scaledRows.map((row) => (
-                      <article key={`${block.id}-${row.join('-')}`} className="prop-mobile-row">
-                        {row.map((cell, index) => (
-                          <div key={`${block.id}-mobile-${cell}-${index}`} className="prop-mobile-cell">
-                            <span>{block.headers[index]}</span>
-                            <strong
-                              className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
-                            >
-                              {cell}
-                            </strong>
+                  <AnimatePresence mode="wait" initial={false}>
+                    {hasAccess || !isProtectedAsk || block.id !== 'D' ? (
+                      <MotionDiv
+                        key={`${block.id}-revealed`}
+                        className="prop-sensitive-panel"
+                        initial={{ opacity: 0, y: 22, filter: 'blur(12px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -12, filter: 'blur(10px)' }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                      >
+                        <div className="prop-card-summary">
+                          <div className="prop-summary-line">
+                            <span>Synopsis</span>
+                            <p>{block.synopsis}</p>
                           </div>
-                        ))}
-                      </article>
-                    ))}
-                  </div>
-                  <p className="prop-note">
-                    {block.note}
-                    {block.id === 'A' ? ' Scenario A in the deck reinforces repeat-paying system behavior.' : ''}
-                    {block.id === 'B' ? ' Scenario B presents a lower-entry but still recurring participation path.' : ''}
-                    {block.id === 'C' ? ' The deck also frames OPAS as part of a broader long-horizon value narrative.' : ''}
-                    {block.id === 'D' ? ' This aligns with the deck message that effort and execution drive results.' : ''}
-                  </p>
+                          <div className="prop-summary-line">
+                            <span>Summary</span>
+                            <p>{block.summary}</p>
+                          </div>
+                          <div className="prop-summary-line">
+                            <span>Benefit</span>
+                            <p>
+                              {formatProtectedValue(block.benefitValue, block.valueFormat)} under the {selectedTier.label} ask with {block.benefitLabel}.
+                            </p>
+                          </div>
+                        </div>
+                        <div className="prop-table-wrap">
+                          <table className="prop-table">
+                            <thead>
+                              <tr>
+                                {block.headers.map((header) => (
+                                  <th key={header}>{header}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {block.scaledRows.map((row) => (
+                                <tr key={row.join('-')}>
+                                  {row.map((cell, index) => (
+                                    <td
+                                      key={`${block.id}-${cell}-${index}`}
+                                      className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                                    >
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                        <div className="prop-mobile-rows">
+                          {block.scaledRows.map((row) => (
+                            <article key={`${block.id}-${row.join('-')}`} className="prop-mobile-row">
+                              {row.map((cell, index) => (
+                                <div key={`${block.id}-mobile-${cell}-${index}`} className="prop-mobile-cell">
+                                  <span>{block.headers[index]}</span>
+                                  <strong
+                                    className={index === row.length - 1 || /(^\d+M$)|(^\d+\.\d+M$)|(^\d{1,3}(,\d{3})+$)/.test(cell) ? 'table-figure' : ''}
+                                  >
+                                    {cell}
+                                  </strong>
+                                </div>
+                              ))}
+                            </article>
+                          ))}
+                        </div>
+                        <p className="prop-note">
+                          {block.note}
+                          {block.id === 'A' ? ' Scenario A in the deck reinforces repeat-paying system behavior.' : ''}
+                          {block.id === 'B' ? ' Scenario B presents a lower-entry but still recurring participation path.' : ''}
+                          {block.id === 'C' ? ' The deck also frames OPAS as part of a broader long-horizon value narrative.' : ''}
+                          {block.id === 'D'
+                            ? isProtectedAsk
+                              ? ' This protected section is reserved for co-founder level disclosure only.'
+                              : ' This bot-income illustration stays visible on the foundation and growth asks.'
+                            : ''}
+                        </p>
+                      </MotionDiv>
+                    ) : (
+                      <MotionDiv
+                        key={`${block.id}-locked`}
+                        className="prop-sensitive-mask"
+                        onClick={requestUnlock}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault()
+                            requestUnlock()
+                          }
+                        }}
+                        initial={{ opacity: 0, y: 22 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -12 }}
+                        transition={{ duration: 0.24, ease: 'easeOut' }}
+                      >
+                        <div className="prop-sensitive-mask-grid" aria-hidden="true">
+                          <span>{buildMaskText(20)}</span>
+                          <span>{buildMaskText(16)}</span>
+                          <span>{buildMaskText(18)}</span>
+                          <span>{buildMaskText(22)}</span>
+                          <span>{buildMaskText(14)}</span>
+                          <span>{buildMaskText(19)}</span>
+                        </div>
+                        <UnlockPrompt
+                          title={buildMaskText(8)}
+                          copy=""
+                          onClick={requestUnlock}
+                        />
+                      </MotionDiv>
+                    )}
+                  </AnimatePresence>
                 </article>
               ))}
             </section>
 
             <section className="projection-total">
               <div>
-                <span className="eyebrow">12 Months Projection</span>
-                <h2>Total extracted proposition value: {formatCurrency(totalProjection)}</h2>
+                <span className="eyebrow">
+                  {isProtectedAsk
+                    ? hasAccess
+                      ? '5 Year Super Platform Projection'
+                      : '5 Year Protected Projection'
+                    : '12 Months Projection'}
+                </span>
+                <h2>
+                  {isProtectedAsk
+                    ? hasAccess
+                      ? `Total Super Platform projection: ${formatProjectionFigure(selectedTier.projectionValue)}`
+                      : 'A protected long-horizon layer sits behind the reveal gate.'
+                    : `Total extracted proposition value: ${formatCurrency(totalProjection)}`}
+                </h2>
                 <p>
-                  The source PDF combines A, B, C, and D at a total of 1,165,000. This page preserves that total while
-                  making the mechanics legible enough to present directly on-site.
+                  {isProtectedAsk
+                    ? hasAccess
+                      ? 'The capital ask is tied to a protected Super Platform stake. The visible layer is intentionally partial. Full reveal is positioned for NDA-cleared or co-founder-approved discussions where the real technology level, structure, and ownership frame can be unpacked.'
+                      : 'The visible layer is intentionally partial. The deeper architecture, naming, and strategic structure remain masked until NDA approval or co-founder clearance unlocks the section.'
+                    : 'The lower-entry asks combine A, B, C, and the bot-income layer into one visible proposition stack.'}
                 </p>
               </div>
               <div className="projection-total-box">
-                <span>Combined Total</span>
-                <strong>{formatCurrency(totalProjection)}</strong>
+                <span>{isProtectedAsk ? (hasAccess ? 'Implied Stake Value' : 'Protected Value Layer') : 'Combined Total'}</span>
+                {isProtectedAsk ? (
+                  <AnimatePresence mode="wait" initial={false}>
+                    {hasAccess ? (
+                      <MotionStrong
+                        key="stake-value"
+                        initial={{ opacity: 0, y: 20, filter: 'blur(14px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -10, filter: 'blur(10px)' }}
+                        transition={{ duration: 0.28, ease: 'easeOut' }}
+                      >
+                        {formatProjectionFigure(stakeValue)}
+                      </MotionStrong>
+                    ) : (
+                      <MotionButton
+                        key="stake-value-locked"
+                        type="button"
+                        className="projection-total-lock"
+                        onClick={requestUnlock}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                      >
+                        <span>{buildMaskText(12)}</span>
+                        <small>Reveal after approval</small>
+                      </MotionButton>
+                    )}
+                  </AnimatePresence>
+                ) : (
+                  <MotionStrong
+                    key="combined-total"
+                    initial={{ opacity: 0, y: 20, filter: 'blur(14px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.28, ease: 'easeOut' }}
+                  >
+                    {formatCurrency(totalProjection)}
+                  </MotionStrong>
+                )}
                 <a href="/assets/VP-June-26.pdf" target="_blank" rel="noreferrer">
                   Review the original document
                 </a>
@@ -1319,24 +1696,54 @@ function DealRoomPage() {
       <footer className="dealroom-footer">
         <a href="/">Return to OPAS Home</a>
       </footer>
+
+      <AnimatePresence>
+        {isProtectedAsk && isUnlockPromptOpen ? (
+          <PasswordGate
+            onClose={() => setIsUnlockPromptOpen(false)}
+            onUnlock={() => {
+              setIsUnlockPromptOpen(false)
+              onUnlock()
+            }}
+          />
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }
 
-const ACCESS_PASSWORD = 'Saturday1!1'
-const ACCESS_STORAGE_KEY = 'opai-access-granted'
+const ACCESS_PASSWORD_PART_ONE = 'Saturday'
+const ACCESS_PASSWORD_PART_TWO = '1!1'
+const INVESTOR_PASSWORD = 'Saturday1!1'
 
-function PasswordGate({ onUnlock }) {
-  const [password, setPassword] = useState('')
+function PasswordGate({ onClose, onUnlock }) {
+  const [passwordOne, setPasswordOne] = useState('')
+  const [passwordTwo, setPasswordTwo] = useState('')
+  const [investorPassword, setInvestorPassword] = useState('')
+  const [isInvestorStepActive, setIsInvestorStepActive] = useState(false)
   const [error, setError] = useState('')
+
+  const grantAccess = () => {
+    setError('')
+    onUnlock()
+  }
+
+  const handleInvestorSubmit = (event) => {
+    event.preventDefault()
+
+    if (investorPassword === INVESTOR_PASSWORD) {
+      grantAccess()
+      return
+    }
+
+    setError('Incorrect investor password.')
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (password === ACCESS_PASSWORD) {
-      window.sessionStorage.setItem(ACCESS_STORAGE_KEY, 'true')
-      setError('')
-      onUnlock()
+    if (passwordOne === ACCESS_PASSWORD_PART_ONE && passwordTwo === ACCESS_PASSWORD_PART_TWO) {
+      grantAccess()
       return
     }
 
@@ -1344,39 +1751,116 @@ function PasswordGate({ onUnlock }) {
   }
 
   return (
-    <main className="password-gate-shell">
-      <section className="password-gate-card">
+    <MotionDiv
+      className="password-gate-shell"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <MotionSection
+        className="password-gate-card"
+        initial={{ opacity: 0, y: 26, scale: 0.96, filter: 'blur(14px)' }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, y: 18, scale: 0.98, filter: 'blur(10px)' }}
+        transition={{ duration: 0.24, ease: 'easeOut' }}
+      >
+        <button type="button" className="password-gate-close" onClick={onClose} aria-label="Close unlock prompt">
+          Close
+        </button>
         <span className="password-gate-kicker">Restricted Access</span>
-        <h1>Enter password to continue.</h1>
-        <p>This build is locked behind a single shared password.</p>
+        <h1>Reveal after NDA or co-founder approval.</h1>
+        <p>This layer is intentionally obscured to signal deeper technology, strategic architecture, and ownership mechanics reserved for approved conversations.</p>
+        <div className="password-gate-actions">
+          <button
+            type="button"
+            className="password-gate-nda"
+            onClick={() => {
+              setIsInvestorStepActive(true)
+              setError('')
+            }}
+          >
+            I Have NDA Approval
+          </button>
+          <span>or enter both co-founder passwords</span>
+        </div>
+        {isInvestorStepActive ? (
+          <form className="password-gate-form password-gate-form--investor" onSubmit={handleInvestorSubmit}>
+            <label className="password-gate-field" htmlFor="investor-password">
+              <span>Investor Password</span>
+              <input
+                id="investor-password"
+                type="password"
+                value={investorPassword}
+                onChange={(event) => {
+                  setInvestorPassword(event.target.value)
+                  if (error) setError('')
+                }}
+                placeholder="Enter investor password"
+                autoComplete="current-password"
+              />
+            </label>
+            <div className="password-gate-inline-actions">
+              <button type="submit" className="password-gate-submit">
+                Verify Investor Access
+              </button>
+              <button
+                type="button"
+                className="password-gate-secondary"
+                onClick={() => {
+                  setIsInvestorStepActive(false)
+                  setInvestorPassword('')
+                  setError('')
+                }}
+              >
+                Back
+              </button>
+            </div>
+          </form>
+        ) : null}
         <form className="password-gate-form" onSubmit={handleSubmit}>
-          <label className="password-gate-field" htmlFor="access-password">
-            <span>Password</span>
+          <label className="password-gate-field" htmlFor="cofounder-one-password">
+            <span>Co-Founder 1</span>
             <input
-              id="access-password"
+              id="cofounder-one-password"
               type="password"
-              value={password}
+              value={passwordOne}
               onChange={(event) => {
-                setPassword(event.target.value)
+                setPasswordOne(event.target.value)
                 if (error) setError('')
               }}
               placeholder="Enter password"
               autoComplete="current-password"
             />
           </label>
-          {error ? <p className="password-gate-error">{error}</p> : null}
-          <button type="submit" className="password-gate-submit">
-            Unlock
-          </button>
+          <label className="password-gate-field" htmlFor="cofounder-two-password">
+            <span>Co-Founder 2</span>
+            <input
+              id="cofounder-two-password"
+              type="password"
+              value={passwordTwo}
+              onChange={(event) => {
+                setPasswordTwo(event.target.value)
+                if (error) setError('')
+              }}
+              placeholder="Enter password"
+              autoComplete="current-password"
+            />
+          </label>
+          <div className="password-gate-inline-actions">
+            <button type="submit" className="password-gate-submit">
+              Unlock
+            </button>
+          </div>
         </form>
-      </section>
-    </main>
+        {error ? <p className="password-gate-error">{error}</p> : null}
+      </MotionSection>
+    </MotionDiv>
   )
 }
 
 function App() {
   const [route, setRoute] = useState(() => normalizeRoute(window.location.pathname))
-  const [hasAccess, setHasAccess] = useState(() => window.sessionStorage.getItem(ACCESS_STORAGE_KEY) === 'true')
+  const [hasAccess, setHasAccess] = useState(false)
 
   useEffect(() => {
     const onPopState = () => setRoute(normalizeRoute(window.location.pathname))
@@ -1388,11 +1872,9 @@ function App() {
     document.title = route === '/dealroom' ? 'OPAS | Deal Room' : 'OPAS | OPAI Ecosystem'
   }, [route])
 
-  if (route === '/dealroom' && !hasAccess) {
-    return <PasswordGate onUnlock={() => setHasAccess(true)} />
-  }
-
-  return route === '/dealroom' ? <DealRoomPage /> : <HomeLanding />
+  return route === '/dealroom'
+    ? <DealRoomPage hasAccess={hasAccess} onUnlock={() => setHasAccess(true)} />
+    : <HomeLanding />
 }
 
 export default App
