@@ -3128,10 +3128,6 @@ footer {
   color: inherit;
 }
 
-.projection-chip--a {
-  grid-template-rows: auto 136px 52px auto auto;
-}
-
 .projection-chip h3 {
   display: block;
   margin-top: 7px;
@@ -3402,14 +3398,21 @@ footer {
 }
 
 .projection-chip {
+  display: grid;
+  grid-template-rows: auto minmax(4.8rem, auto) auto auto auto;
+  align-content: start;
+  gap: 8px;
   padding: 20px 22px;
   border-radius: 26px;
   background: linear-gradient(135deg, rgba(255, 122, 217, 0.12), rgba(52, 255, 138, 0.08)), rgba(255, 255, 255, 0.03);
   min-height: 0;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .projection-chip--a,
 .prop-card--a {
+  grid-template-rows: auto minmax(4.8rem, auto) auto auto auto;
   border-color: rgba(255, 122, 217, 0.24);
   background:
     radial-gradient(circle at top right, rgba(255, 122, 217, 0.14), transparent 42%),
@@ -3441,11 +3444,16 @@ footer {
 }
 
 .projection-chip strong {
-  font-size: clamp(1.9rem, 2.15vw, 2.55rem);
+  display: block;
+  max-width: 100%;
+  margin-top: 10px;
+  font-size: clamp(1.45rem, 1.65vw, 2.05rem);
   color: #ffffff;
   text-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
-  white-space: nowrap;
-  line-height: 0.9;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 0.96;
 }
 
 .prop-grid {
@@ -3803,9 +3811,14 @@ footer {
   }
 
   .projection-chip {
+    grid-template-rows: auto minmax(3.1rem, auto) auto auto auto;
     padding: 12px 14px;
     border-radius: 16px;
     min-height: 92px;
+  }
+
+  .projection-chip--a {
+    grid-template-rows: auto minmax(3.1rem, auto) auto auto auto;
   }
 
   .projection-chip span {
@@ -4040,6 +4053,14 @@ footer {
   .extract-card {
     padding: 11px 12px;
     border-radius: 14px;
+  }
+
+  .projection-chip {
+    grid-template-rows: auto minmax(2.8rem, auto) auto auto auto;
+  }
+
+  .projection-chip--a {
+    grid-template-rows: auto minmax(2.8rem, auto) auto auto auto;
   }
 
   .summary-pill strong,

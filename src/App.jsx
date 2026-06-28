@@ -22,6 +22,7 @@ const propositionBlocks = [
     synopsis: 'High-velocity user growth scenario with recurring subscription expansion.',
     summary: 'Maps 100K to 1M users into revenue and 5% share outcomes over a 1-7 month window.',
     note: 'Repeat subscriptions will contribute additionally.',
+    scaleColumns: [3, 4],
     headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', '5% Share'],
     rows: [
       ['100K', '1-2 months', '1M', '300K', '25,000'],
@@ -37,6 +38,7 @@ const propositionBlocks = [
     synopsis: 'Lower-entry participation route built around a capped value frame.',
     summary: 'Shows a 50,000 user path with a 6-month revenue target and capped participation value.',
     note: 'Single capped scenario extracted from the proposition PDF.',
+    scaleColumns: [3, 4],
     headers: ['Users', 'Timeline', 'Revenue', 'Avg. Potential Earning', 'Capping'],
     rows: [['50,000', '6 months', '500,000', '400,000', '500,000']],
   },
@@ -48,6 +50,7 @@ const propositionBlocks = [
     synopsis: 'Token-side upside framed through ITO and listing value translation.',
     summary: 'Connects team token allocation, ITO pricing, and listing valuation into one value story.',
     note: 'Priority exit at ITO. Team token note preserved from the source proposition.',
+    scaleColumns: [1, 3, 5],
     headers: ['Total Supply', '5% of Team Tokens', 'ITO Price', 'ITO Value', 'Listing Price', 'Listing Value'],
     rows: [['21,000,000,000', '31,500,000', '0.02', '630,000', '0.5', '15,750,000']],
   },
@@ -59,16 +62,17 @@ const propositionBlocks = [
     synopsis: 'Execution-based yield layer attached to a fixed capital allocation.',
     summary: 'Presents the 5% monthly assumption and its annualized result in a simplified performance model.',
     note: 'Monthly return assumption taken directly from the proposition.',
+    scaleColumns: [0, 2, 3],
     headers: ['Allocation', 'Anticipated Performance', 'Monthly AR', '1 Year'],
     rows: [['100,000', '5%', '5,000', '60,000']],
   },
 ]
 
 const projectionSummary = [
-  { label: 'A', title: 'Potential Equity Projection', synopsis: 'Growth scenario', summary: '5% share path', tone: 'a', value: '75,000' },
-  { label: 'B', title: 'OPAI ID', synopsis: 'Capped route', summary: 'Recurring entry model', tone: 'b', value: '400,000' },
-  { label: 'C', title: 'OPAS', synopsis: 'Token value lens', summary: 'ITO to listing bridge', tone: 'c', value: '630,000' },
-  { label: 'D', title: 'Trading Bot', synopsis: 'Performance layer', summary: '12-month output view', tone: 'd', value: '60,000' },
+  { label: 'A', title: 'Potential Equity Projection', synopsis: 'Growth scenario', summary: '5% share path', tone: 'a', value: 75000 },
+  { label: 'B', title: 'OPAI ID', synopsis: 'Capped route', summary: 'Recurring entry model', tone: 'b', value: 400000 },
+  { label: 'C', title: 'OPAS', synopsis: 'Token value lens', summary: 'ITO to listing bridge', tone: 'c', value: 630000 },
+  { label: 'D', title: 'Trading Bot', synopsis: 'Performance layer', summary: '12-month output view', tone: 'd', value: 60000 },
 ]
 
 const propositionIntro = {
@@ -121,6 +125,69 @@ function formatCurrency(value) {
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(value)
+}
+
+function formatScaledFigure(value, source) {
+  const decimals = String(source).includes('.') ? String(source).split('.')[1].length : 0
+
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(value)
+}
+
+function parseCompactNumber(cell) {
+  const match = String(cell).trim().match(/^([\d.]+)\s*([KM])$/i)
+  if (!match) {
+    return null
+  }
+
+  const value = Number(match[1])
+  const unit = match[2].toUpperCase()
+  const multiplier = unit === 'M' ? 1000000 : 1000
+
+  return value * multiplier
+}
+
+function formatCompactNumber(value, source) {
+  const match = String(source).trim().match(/^([\d.]+)\s*([KM])$/i)
+  if (!match) {
+    return formatScaledFigure(value, source)
+  }
+
+  const decimals = String(match[1]).includes('.') ? String(match[1]).split('.')[1].length : 0
+  const unit = match[2].toUpperCase()
+  const divisor = unit === 'M' ? 1000000 : 1000
+  const scaled = value / divisor
+
+  return `${scaled.toFixed(decimals).replace(/\.0+$/, '').replace(/(\.\d*[1-9])0+$/, '$1')}${unit}`
+}
+
+function scaleRowCell(cell, multiplier) {
+  if (typeof cell !== 'string' || cell.includes('%') || /month/i.test(cell) || /K$|M$/i.test(cell)) {
+    return cell
+  }
+
+  const numeric = Number(cell.replace(/,/g, ''))
+  if (Number.isNaN(numeric)) {
+    return cell
+  }
+
+  return formatScaledFigure(numeric * multiplier, cell)
+}
+
+function scaleUserCell(cell, multiplier) {
+  const compactValue = parseCompactNumber(cell)
+  if (compactValue !== null) {
+    return formatCompactNumber(compactValue * multiplier, cell)
+  }
+
+  const numeric = Number(String(cell).replace(/,/g, ''))
+  if (Number.isNaN(numeric)) {
+    return cell
+  }
+
+  return formatScaledFigure(numeric * multiplier, cell)
 }
 
 function polarToCartesian(cx, cy, r, angle) {
@@ -946,9 +1013,35 @@ function DealRoomPage() {
   const [selectedTierId, setSelectedTierId] = useState(onboardingTiers[0].id)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const selectedTier = onboardingTiers.find((tier) => tier.id === selectedTierId) ?? onboardingTiers[0]
-  const activeProjectionSummary = projectionSummary
-  const activePropositionBlocks = propositionBlocks
-  const totalProjection = activeProjectionSummary.reduce((sum, item) => sum + Number(item.value.replace(/,/g, '')), 0)
+  const baseTierAmount = onboardingTiers[0].amount
+  const selectedTierIndex = onboardingTiers.findIndex((tier) => tier.id === selectedTier.id)
+  const capitalMultiple = selectedTier.amount / baseTierAmount
+  const tierBonusRate = selectedTierIndex * 0.05
+  const userAcquisitionMultiplier = 1 + selectedTierIndex * 0.6
+  const tierBenefitMultiplier = capitalMultiple * (1 + tierBonusRate)
+  const tierBenefitLabel =
+    selectedTierIndex === 0
+      ? `1x base allocation from ${formatCurrency(baseTierAmount)}`
+      : `${capitalMultiple}x base allocation with ${selectedTierIndex * 5}% extra token benefit`
+  const activeProjectionSummary = projectionSummary.map((item) => ({
+    ...item,
+    benefitValue: Math.round(item.value * tierBenefitMultiplier),
+  }))
+  const activePropositionBlocks = propositionBlocks.map((block, index) => ({
+    ...block,
+    benefitValue: activeProjectionSummary[index]?.benefitValue ?? 0,
+    benefitLabel: tierBenefitLabel,
+    scaledRows: block.rows.map((row) =>
+      row.map((cell, cellIndex) => {
+        if (cellIndex === 0 && block.headers[cellIndex] === 'Users') {
+          return scaleUserCell(cell, userAcquisitionMultiplier)
+        }
+
+        return block.scaleColumns.includes(cellIndex) ? scaleRowCell(cell, tierBenefitMultiplier) : cell
+      })
+    ),
+  }))
+  const totalProjection = activeProjectionSummary.reduce((sum, item) => sum + item.benefitValue, 0)
 
   return (
     <div className={`dealroom-shell dealroom-shell--${selectedTier.id}`}>
@@ -1024,7 +1117,7 @@ function DealRoomPage() {
                     <span className="brand-word brand-word-opas">OPAS</span> expansion curve.
                   </h1>
                   <p className="lede">
-                    {selectedTier.label} begins at {formatCurrency(selectedTier.amount)} and expands through staged capital tiers.
+                    {selectedTier.label} begins at {formatCurrency(selectedTier.amount)} and follows the {capitalMultiple}x base allocation model with {selectedTierIndex * 5}% extra token benefit over the {formatCurrency(baseTierAmount)} base ask.
                   </p>
                 </div>
                 <div className="prop-summary">
@@ -1074,7 +1167,7 @@ function DealRoomPage() {
                     <span>Segment {item.label}</span>
                     <h3>{item.title}</h3>
                     <small>{item.synopsis}</small>
-                    <strong>{formatCurrency(Number(item.value.replace(/,/g, '')))}</strong>
+                    <strong>{formatCurrency(item.benefitValue)}</strong>
                     <b>{item.summary}</b>
                   </a>
                 ))}
@@ -1106,6 +1199,12 @@ function DealRoomPage() {
                       <span>Summary</span>
                       <p>{block.summary}</p>
                     </div>
+                    <div className="prop-summary-line">
+                      <span>Benefit</span>
+                      <p>
+                        {formatCurrency(block.benefitValue)} under the {selectedTier.label} ask with {block.benefitLabel}.
+                      </p>
+                    </div>
                   </div>
                   <div className="prop-table-wrap">
                     <table className="prop-table">
@@ -1117,7 +1216,7 @@ function DealRoomPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        {block.rows.map((row) => (
+                        {block.scaledRows.map((row) => (
                           <tr key={row.join('-')}>
                             {row.map((cell, index) => (
                               <td
@@ -1133,7 +1232,7 @@ function DealRoomPage() {
                     </table>
                   </div>
                   <div className="prop-mobile-rows">
-                    {block.rows.map((row) => (
+                    {block.scaledRows.map((row) => (
                       <article key={`${block.id}-${row.join('-')}`} className="prop-mobile-row">
                         {row.map((cell, index) => (
                           <div key={`${block.id}-mobile-${cell}-${index}`} className="prop-mobile-cell">
