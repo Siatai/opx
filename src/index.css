@@ -2743,6 +2743,83 @@ footer {
   justify-content: flex-end;
 }
 
+.dealroom-mobile-menu-button,
+.dealroom-mobile-deals {
+  display: none;
+}
+
+.dealroom-mobile-menu-button {
+  align-items: center;
+  gap: 12px;
+  border: 1px solid color-mix(in srgb, var(--dealroom-secondary) 28%, transparent);
+  border-radius: 18px;
+  padding: 10px 12px;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--dealroom-secondary) 12%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  color: #f5fbff;
+  cursor: pointer;
+}
+
+.dealroom-mobile-menu-bars {
+  display: grid;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.dealroom-mobile-menu-bars i {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #f5fbff;
+}
+
+.dealroom-mobile-menu-copy {
+  display: grid;
+  text-align: left;
+}
+
+.dealroom-mobile-menu-copy small {
+  color: rgba(245, 251, 255, 0.72);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dealroom-mobile-menu-copy strong {
+  font-family: "Nevera", "Sharkon Demo", sans-serif;
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
+.dealroom-mobile-deals {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+
+.dealroom-mobile-deals-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 16, 0.66);
+  backdrop-filter: blur(8px);
+}
+
+.dealroom-mobile-deals-panel {
+  position: absolute;
+  top: 78px;
+  left: 8px;
+  right: 8px;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--dealroom-secondary) 24%, transparent);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(15, 19, 35, 0.97), rgba(7, 10, 20, 0.98));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+}
+
 .dealroom-ghost-link,
 .dealroom-primary-link {
   display: inline-flex;
@@ -3637,8 +3714,9 @@ footer {
     position: static;
     width: min(100% - 16px, 1240px);
     padding: 12px;
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
     gap: 10px;
     border-radius: 20px;
   }
@@ -3649,11 +3727,37 @@ footer {
     gap: 10px;
   }
 
+  .dealroom-mobile-menu-button {
+    display: inline-flex;
+    justify-self: end;
+  }
+
+  .dealroom-mobile-menu-bars i {
+    transition: transform 160ms ease, opacity 160ms ease;
+  }
+
+  .dealroom-mobile-menu-button.is-open .dealroom-mobile-menu-bars i:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .dealroom-mobile-menu-button.is-open .dealroom-mobile-menu-bars i:nth-child(2) {
+    opacity: 0;
+  }
+
+  .dealroom-mobile-menu-button.is-open .dealroom-mobile-menu-bars i:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .dealroom-mobile-deals.is-open {
+    display: block;
+  }
+
   .dealroom-topbar-actions {
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
     width: 100%;
+    grid-column: 1 / -1;
   }
 
   .dealroom-topbar-actions a {
@@ -3668,6 +3772,10 @@ footer {
 
   .dealroom-layout {
     gap: 14px;
+  }
+
+  .dealroom-sidebar {
+    display: none;
   }
 
   .dealroom-brand-name {

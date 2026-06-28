@@ -1012,6 +1012,7 @@ function HomeLanding() {
 function DealRoomPage() {
   const [selectedTierId, setSelectedTierId] = useState(onboardingTiers[0].id)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isMobileDealsOpen, setIsMobileDealsOpen] = useState(false)
   const selectedTier = onboardingTiers.find((tier) => tier.id === selectedTierId) ?? onboardingTiers[0]
   const baseTierAmount = onboardingTiers[0].amount
   const selectedTierIndex = onboardingTiers.findIndex((tier) => tier.id === selectedTier.id)
@@ -1043,6 +1044,33 @@ function DealRoomPage() {
   }))
   const totalProjection = activeProjectionSummary.reduce((sum, item) => sum + item.benefitValue, 0)
 
+  const renderDealTabs = (closeMenu = false) => (
+    <div className="tier-tab-stack" role="tablist" aria-label="Onboarding classes">
+      {onboardingTiers.map((tier) => {
+        const isActive = tier.id === selectedTier.id
+
+        return (
+          <button
+            key={tier.id}
+            type="button"
+            className={`tier-tab tier-tab--${tier.id}${isActive ? ' is-active' : ''}`}
+            onClick={() => {
+              setSelectedTierId(tier.id)
+              setIsSidebarCollapsed(true)
+              if (closeMenu) {
+                setIsMobileDealsOpen(false)
+              }
+            }}
+            aria-pressed={isActive}
+          >
+            <span>{tier.label}</span>
+            <strong>{formatCurrency(tier.amount)}</strong>
+          </button>
+        )
+      })}
+    </div>
+  )
+
   return (
     <div className={`dealroom-shell dealroom-shell--${selectedTier.id}`}>
       <div className="dealroom-topbar">
@@ -1053,12 +1081,41 @@ function DealRoomPage() {
             <span className="dealroom-brand-sub">Deal Room</span>
           </div>
         </a>
+        <button
+          type="button"
+          className={`dealroom-mobile-menu-button${isMobileDealsOpen ? ' is-open' : ''}`}
+          onClick={() => setIsMobileDealsOpen((current) => !current)}
+          aria-expanded={isMobileDealsOpen}
+          aria-controls="dealroom-mobile-deals"
+          aria-label="Open deal menu"
+        >
+          <span className="dealroom-mobile-menu-bars" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="dealroom-mobile-menu-copy">
+            <small>Deals</small>
+            <strong>{selectedTier.label}</strong>
+          </span>
+        </button>
         <div className="dealroom-topbar-actions">
           <a className="dealroom-ghost-link" href="/">Back to Home</a>
           <a className="dealroom-primary-link" href="/assets/VP-June-26.pdf" target="_blank" rel="noreferrer">
             Open Original PDF
           </a>
         </div>
+      </div>
+
+      <div className={`dealroom-mobile-deals${isMobileDealsOpen ? ' is-open' : ''}`} id="dealroom-mobile-deals">
+        <div className="dealroom-mobile-deals-backdrop" onClick={() => setIsMobileDealsOpen(false)} aria-hidden="true" />
+        <section className="dealroom-mobile-deals-panel">
+          <div className="dealroom-sidebar-head">
+            <span className="eyebrow">Onboarding Classes</span>
+            <h2>Select a capital class.</h2>
+          </div>
+          {renderDealTabs(true)}
+        </section>
       </div>
 
       <main className="dealroom-main">
@@ -1081,27 +1138,7 @@ function DealRoomPage() {
                     <span className="eyebrow">Onboarding Classes</span>
                     <h2>Select a capital class.</h2>
                   </div>
-                  <div className="tier-tab-stack" role="tablist" aria-label="Onboarding classes">
-                    {onboardingTiers.map((tier) => {
-                      const isActive = tier.id === selectedTier.id
-
-                      return (
-                        <button
-                          key={tier.id}
-                          type="button"
-                          className={`tier-tab tier-tab--${tier.id}${isActive ? ' is-active' : ''}`}
-                          onClick={() => {
-                            setSelectedTierId(tier.id)
-                            setIsSidebarCollapsed(true)
-                          }}
-                          aria-pressed={isActive}
-                        >
-                          <span>{tier.label}</span>
-                          <strong>{formatCurrency(tier.amount)}</strong>
-                        </button>
-                      )
-                    })}
-                  </div>
+                  {renderDealTabs()}
                 </>
               )}
             </section>
