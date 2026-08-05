@@ -1135,6 +1135,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isMobileDealsOpen, setIsMobileDealsOpen] = useState(false)
   const [isUnlockPromptOpen, setIsUnlockPromptOpen] = useState(false)
+  const [hasProtectedAccess, setHasProtectedAccess] = useState(false)
   const selectedTier = onboardingTiers.find((tier) => tier.id === selectedTierId) ?? onboardingTiers[0]
   const baseTierAmount = onboardingTiers[0].amount
   const capitalMultiple = selectedTier.amount / baseTierAmount
@@ -1244,7 +1245,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
     : [...activePropositionBlocks, activeBotIncomeSection]
 
   const requestUnlock = () => {
-    if (isProtectedAsk && !hasAccess) {
+    if (isProtectedAsk && !hasProtectedAccess) {
       setIsUnlockPromptOpen(true)
     }
   }
@@ -1262,6 +1263,9 @@ function DealRoomPage({ hasAccess, onUnlock }) {
             onClick={() => {
               setSelectedTierId(tier.id)
               setIsSidebarCollapsed(true)
+              if (tier.protectedAsk && !hasProtectedAccess) {
+                setIsUnlockPromptOpen(true)
+              }
               if (closeMenu) {
                 setIsMobileDealsOpen(false)
               }
@@ -1270,11 +1274,23 @@ function DealRoomPage({ hasAccess, onUnlock }) {
           >
             <span>{tier.label}</span>
             <strong>{formatCurrency(tier.amount)}</strong>
+            {tier.protectedAsk ? (
+              <b>{hasProtectedAccess ? 'Access granted' : 'Password protected'}</b>
+            ) : null}
           </button>
         )
       })}
     </div>
   )
+
+  if (!hasAccess) {
+    return (
+      <PasswordGate
+        onClose={() => window.location.assign('/')}
+        onUnlock={onUnlock}
+      />
+    )
+  }
 
   return (
     <div className={`dealroom-shell dealroom-shell--${selectedTier.id}`}>
@@ -1359,7 +1375,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
                     <span className="brand-word brand-word-opas">OPAS</span> expansion curve.
                   </h1>
                   <p className="lede">
-                    {isProtectedAsk && hasAccess
+                    {isProtectedAsk && hasProtectedAccess
                       ? `${selectedTier.label} begins at ${formatCurrency(selectedTier.amount)} and positions the ask around a protected Super Platform allocation. The concealed layer hints at the depth of the stack, the level of the tech, and the ownership logic reserved for approved conversations only.`
                       : isProtectedAsk
                         ? `${selectedTier.label} begins at ${formatCurrency(selectedTier.amount)} and opens into a protected layer where the deeper architecture, stack depth, and ownership logic stay masked until NDA approval or co-founder clearance.`
@@ -1375,7 +1391,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
                     <>
                       <article className="summary-pill summary-pill-projection">
                         <RevealField
-                          hasAccess={hasAccess}
+                          hasAccess={hasProtectedAccess}
                           label="Stake in Super Platform"
                           lockedLabel="Protected Stake Layer"
                           value={formatPercent(selectedTier.stakePercent)}
@@ -1385,7 +1401,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
                       </article>
                       <article className="summary-pill summary-pill-ito">
                         <RevealField
-                          hasAccess={hasAccess}
+                          hasAccess={hasProtectedAccess}
                           label="5-Year Super Platform Projection"
                           lockedLabel="5-Year Protected Projection"
                           value={formatProjectionFigure(selectedTier.projectionValue)}
@@ -1434,7 +1450,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
                 <span className="eyebrow">Snapshot</span>
                 <h2>
                   {isProtectedAsk
-                    ? hasAccess
+                    ? hasProtectedAccess
                       ? 'Segment snapshot across the four sections.'
                       : 'Segment snapshot across the visible sections.'
                     : 'Segment snapshot across the four value sections.'}
@@ -1442,7 +1458,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
               </div>
               <div className="projection-band">
                 {protectedProjectionSummary.map((item) => (
-                  hasAccess || !isProtectedAsk || item.label !== 'D' ? (
+                  hasProtectedAccess || !isProtectedAsk || item.label !== 'D' ? (
                     <MotionAnchor
                       key={item.label}
                       className={`projection-chip projection-chip--${item.tone}`}
@@ -1498,14 +1514,14 @@ function DealRoomPage({ hasAccess, onUnlock }) {
                   <div className="prop-card-head">
                     <div>
                       <span className="card-kicker">
-                        {hasAccess || !isProtectedAsk || block.id !== 'D' ? `${block.id}. ${block.tag}` : `Section ${block.id}`}
+                        {hasProtectedAccess || !isProtectedAsk || block.id !== 'D' ? `${block.id}. ${block.tag}` : `Section ${block.id}`}
                       </span>
-                      <h2>{hasAccess || !isProtectedAsk || block.id !== 'D' ? block.title : buildMaskText(16)}</h2>
+                      <h2>{hasProtectedAccess || !isProtectedAsk || block.id !== 'D' ? block.title : buildMaskText(16)}</h2>
                     </div>
                     <div className="accent-orb" aria-hidden="true" />
                   </div>
                   <AnimatePresence mode="wait" initial={false}>
-                    {hasAccess || !isProtectedAsk || block.id !== 'D' ? (
+                    {hasProtectedAccess || !isProtectedAsk || block.id !== 'D' ? (
                       <MotionDiv
                         key={`${block.id}-revealed`}
                         className="prop-sensitive-panel"
@@ -1625,31 +1641,31 @@ function DealRoomPage({ hasAccess, onUnlock }) {
               <div>
                 <span className="eyebrow">
                   {isProtectedAsk
-                    ? hasAccess
+                    ? hasProtectedAccess
                       ? '5 Year Super Platform Projection'
                       : '5 Year Protected Projection'
                     : '12 Months Projection'}
                 </span>
                 <h2>
                   {isProtectedAsk
-                    ? hasAccess
+                    ? hasProtectedAccess
                       ? `Total Super Platform projection: ${formatProjectionFigure(selectedTier.projectionValue)}`
                       : 'A protected long-horizon layer sits behind the reveal gate.'
                     : `Total extracted proposition value: ${formatCurrency(totalProjection)}`}
                 </h2>
                 <p>
                   {isProtectedAsk
-                    ? hasAccess
+                    ? hasProtectedAccess
                       ? 'The capital ask is tied to a protected Super Platform stake. The visible layer is intentionally partial. Full reveal is positioned for NDA-cleared or co-founder-approved discussions where the real technology level, structure, and ownership frame can be unpacked.'
                       : 'The visible layer is intentionally partial. The deeper architecture, naming, and strategic structure remain masked until NDA approval or co-founder clearance unlocks the section.'
                     : 'The lower-entry asks combine A, B, C, and the bot-income layer into one visible proposition stack.'}
                 </p>
               </div>
               <div className="projection-total-box">
-                <span>{isProtectedAsk ? (hasAccess ? 'Implied Stake Value' : 'Protected Value Layer') : 'Combined Total'}</span>
+                <span>{isProtectedAsk ? (hasProtectedAccess ? 'Implied Stake Value' : 'Protected Value Layer') : 'Combined Total'}</span>
                 {isProtectedAsk ? (
                   <AnimatePresence mode="wait" initial={false}>
-                    {hasAccess ? (
+                    {hasProtectedAccess ? (
                       <MotionStrong
                         key="stake-value"
                         initial={{ opacity: 0, y: 20, filter: 'blur(14px)' }}
@@ -1703,7 +1719,7 @@ function DealRoomPage({ hasAccess, onUnlock }) {
             onClose={() => setIsUnlockPromptOpen(false)}
             onUnlock={() => {
               setIsUnlockPromptOpen(false)
-              onUnlock()
+              setHasProtectedAccess(true)
             }}
           />
         ) : null}
